@@ -1,4 +1,4 @@
-# 华为OD算法题解
+# 华为OD算法题解 {docsify-ignore-all}
 
 本项目主要基于Python语言完成华为OD算法题的所有题解。
 
@@ -6,12 +6,6 @@
 
 ## 在线阅读地址
 在线阅读地址：https://relph1119.github.io/huawei-od-python
-
-## 协作规范
-1. 默认使用Python语言
-2. 做完一道题后，需提交程序及markdown文档，文档命名按题号
-3. 程序提交至codes文件夹，markdown文档提交至docs文件夹，并上传GitHub仓库
-4. markdowm文档格式：包含题目标题、题目描述、输入输出示例、解题思路、代码、运行结果；文档命名：001_题目名.md
 
 ## 环境安装
 ### Python版本
