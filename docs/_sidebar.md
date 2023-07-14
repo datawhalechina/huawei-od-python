@@ -23,6 +23,10 @@
       * [284 投篮大赛](choice100/284_shooting-competition.md)
       * [285 数组的中心位置](choice100/285_the-middle-position-of-array.md)
       * [286 整理扑克牌](choice100/286_adjust-poker.md)
+      * [287 新员工座位安排系统](choice100/287_seat-assignment.md)  
+      * [288 新学校选址](choice100/288_choose-location-of-the-new-school.md)  
+      * [289 日志采集系统](choice100/289_log-collection-system.md)  
+      * [290 星际篮球争霸赛](choice100/290_star-basketball-competition.md)  
     * 200分题
     * 其他100分题
 
