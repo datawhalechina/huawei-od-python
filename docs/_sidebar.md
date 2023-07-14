@@ -25,3 +25,14 @@
       * [286 整理扑克牌](choice100/286_adjust-poker.md)
     * 200分题
     * 其他100分题
+      * [001 AI识别面板](others100/001_AI-recognition-panel.md)
+      * [002 GPU调度](others100/002-GPU%20scheduling.md)
+      * [003-IPv4地址转换](others100/003-convert%20IPv4%20addresses%20to%20integers.md)
+      * [004-MVP争夺战](others100/004-MVP%20race.md)
+      * [005_N进制减法](others100/005_N%20decimal%20subtraction.md)
+      * [006_RSA加密算法](others100/006_RSA%20encryption%20algorithm.md)
+      * [007_TLV编码](others100/007_TLV%20code.md)
+      * [008_VLAN资源池](others100/008_VLAN%20resource%20pool.md)
+      * [009_We Are A Team](others100/009_We%20Are%20A%20Team.md)
+      * [141_构成的正方形数量](others100/141_Number-of-squares.md)
+
