@@ -17,5 +17,11 @@
       * [278 开心消消乐](choice100/278_have-fun.md)
       * [279 异常的打卡记录](choice100/279_abnormal-attendance-records.md)
       * [280 微服务的集成测试](choice100/280_integration-testing-of-microservices.md)  
+      * [281 打印文件](choice100/281_print-file.md)
+      * [282 找出通过车辆最多的颜色](choice100/282_count-vehicle-colors.md)
+      * [283 找数字](choice100/283_find-number.md)
+      * [284 投篮大赛](choice100/284_shooting-competition.md)
+      * [285 数组的中心位置](choice100/285_the-middle-position-of-array.md)
+      * [286 整理扑克牌](choice100/286_adjust-poker.md)
     * 200分题
     * 其他100分题
