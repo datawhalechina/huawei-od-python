@@ -15,5 +15,7 @@
       * [276 寻找密码](choice100/276_find-key.md)
       * [277 寻找链表的中间结点](choice100/277_find-the-middle-node-of-the-linked-list.md)
       * [278 开心消消乐](choice100/278_have-fun.md)
+      * [279 异常的打卡记录](choice100/279_abnormal-attendance-records.md)
+      * [280 微服务的集成测试](choice100/280_integration-testing-of-microservices.md)  
     * 200分题
     * 其他100分题
