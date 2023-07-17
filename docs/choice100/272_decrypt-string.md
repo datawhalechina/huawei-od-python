@@ -22,7 +22,7 @@
 
 ## 输入描述
 
-```
+```text
 input_string1
 input_string2
 ```
@@ -40,13 +40,13 @@ input_string2
 ### 示例一
 
 **输入：**
-```
+```text
 123admyffc79pt
 ssyy
 ```
 
 **输出：**
-```
+```text
 pt
 ```
 
@@ -60,13 +60,13 @@ pt
 ### 示例二
 
 **输入：**
-```
+```text
 123admyffc79ptaagghi2222smeersst88mnrt
 ssyyfgh
 ```
 
 **输出：**
-```
+```text
 mnrt
 ```
 
@@ -78,13 +78,13 @@ mnrt
 ### 示例三
 
 **输入：**
-```
+```text
 abcmnq
 rt
 ```
 
 **输出：**
-```
+```text
 Not Found
 ```
 

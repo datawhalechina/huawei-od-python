@@ -26,52 +26,52 @@
 ### 示例一
 
 **输入：**
-```
+```text
 ab cd
 ab
 ```
 
 **输出：**
-```
+```text
 true
 ```
 
 ### 示例二
 
 **输入：**
-```
+```text
 ab ef
 aef
 ```
 
 **输出：**
-```
+```text
 false
 ```
 
 ### 示例三
 
 **输入：**
-```
+```text
 ab bcd ef
 cbd fe
 ```
 
 **输出：**
-```
+```text
 true
 ```
 
 ### 示例四
 
 **输入：**
-```
+```text
 ab bcd ef
 cb fe
 ```
 
 **输出：**
-```
+```text
 false
 ```
 
