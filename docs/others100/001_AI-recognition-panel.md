@@ -52,7 +52,7 @@ AI识别到面板上有N(1≤N≤100)个指示灯，灯大小一样，任意两�
 
 ## 解题代码
 
-```py
+```python
 # coding: gbk
 # 要设置编码
 n = int(input()) #输入行数
@@ -109,5 +109,29 @@ result.extend([light[0]for light in lights[row_start_index:n]])
 
 # 将列表 result 中的元素转换为字符串，并将它们连接起来
 print(''.join(map(str,result)))
+
+#  另一种解法
+# def main():
+#     n = int(input())  # 输入行数
+
+#     lights = []
+
+#     for _ in range(n):
+#         input_data = list(map(int, input().split()))
+#         id = input_data[0]
+#         x1 = input_data[1]
+#         y1 = input_data[2]
+#         x2 = input_data[3]
+#         y2 = input_data[4]
+#         lights.append([id, (x1 + x2)//2, (y1 + y2)//2, (x2 - x1)//2])
+#     # 按照灯的 y 坐标和 x 坐标进行排序
+#     lights.sort(key=lambda a: (a[2], a[1]))
+#     # 从排序后的灯列表中提取灯的id
+#     result = [light[0] for light in lights]
+#     # 将结果以空格分隔的字符串形式打印出来
+#     print(' '.join(map(str, result)))
+
+# if __name__ == "__main__":
+#     main()
 ```
 
