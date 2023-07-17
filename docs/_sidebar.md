@@ -29,4 +29,5 @@
       * [290 星际篮球争霸赛](choice100/290_star-basketball-competition.md)  
     * 200分题
     * 其他100分题
+      * [001 AI识别面板](others100/001_AI-recognition-panel.md)
 
