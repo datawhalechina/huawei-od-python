@@ -31,4 +31,4 @@
     * 其他100分题
       * [001 AI识别面板](others100/001_AI-recognition-panel.md)
       * [121 最大相连男生数](others100/121_maximum-connection-number-of-boys.md)
-
+      * [122 最小传递延时](others100/122_minimal-delivery-delay.md)  
