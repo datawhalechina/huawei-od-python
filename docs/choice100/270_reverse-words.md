@@ -20,24 +20,24 @@
 ### 示例一
 
 **输入：**
-```
+```text
 yM eman si boB.
 ```
 
 **输出：**
-```
+```text
 My name is Bob.
 ```
 
 ### 示例二
 
 **输入：**
-```
+```text
 woh era uoy ? I ma enif.
 ```
 
 **输出：**
-```
+```text
 how are you ? I am fine.
 ```
 

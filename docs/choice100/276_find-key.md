@@ -25,12 +25,12 @@
 ### 示例一
 
 **输入：**
-```
+```text
 h he hel hell hello
 ```
 
 **输出：**
-```
+```text
 hello
 ```
 
@@ -40,12 +40,12 @@ hello
 ### 示例二
 
 **输入：**
-```
+```text
 b eredderd bw bww bwwl bwwln bwwlm
 ```
 
 **输出：**
-```
+```text
 bwwln
 ```
 

@@ -29,4 +29,6 @@
       * [290 星际篮球争霸赛](choice100/290_star-basketball-competition.md)  
     * 200分题
     * 其他100分题
+      * [001 AI识别面板](others100/001_AI-recognition-panel.md)
+      * [121 最大相连男生数](others100/121_maximum-connection-number-of-boys.md)
 

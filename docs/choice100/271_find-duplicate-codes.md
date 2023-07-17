@@ -21,39 +21,39 @@
 ### 示例一
 
 **输入：**
-```
+```text
 hello123world
 hello123abc4
 ```
 
 **输出：**
-```
+```text
 hello123
 ```
 
 ### 示例二
 
 **输入：**
-```
+```text
 private_void_method
 public_void_method
 ```
 
 **输出：**
-```
+```text
 _void_method
 ```
 
 ### 示例三
 
 **输入：**
-```
+```text
 hiworld
 hiweb
 ```
 
 **输出：**
-```
+```text
 hiw
 ```
 

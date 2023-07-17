@@ -24,24 +24,24 @@
 ### 示例一
 
 **输入：**
-```
+```text
 This is an apple
 ```
 
 **输出：**
-```
+```text
 an is This aelpp
 ```
 
 ### 示例二
 
 **输入：**
-```
+```text
 My sister is in the house not in the yard
 ```
 
 **输出：**
-```
+```text
 in in eht eht My is not adry ehosu eirsst
 ```
 

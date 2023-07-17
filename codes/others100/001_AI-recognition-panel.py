@@ -1,56 +1,57 @@
-# coding: gbk
-# ÒªÉèÖÃ±àÂë
-n = int(input()) #ÊäÈëĞĞÊı
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: Spridra
+@file: 265_AI-Processor-Combination.py
+@time: 2023/7/17 09:02
+@project: huawei-od-python
+@desc: 001 AIè¯†åˆ«é¢æ¿
+"""
 
-lights = []
 
-for x in range(n):
-    # input»ñÈ¡ÓÃ»§ÊäÈëºóÊ¹ÓÃsplit°´¿Õ¸ñ·Ö¸ô³ÉÒ»¸ö×Ö·û´®ÁĞ±í£¬²¢Í¨¹ımap½«Ã¿¸öÔªËØÓ³Éä³ÉÕûÊı
-    input_data = list(map(int, input().split()))
-    # ½ÓÏÂÀ´ÒÀ´Î½«¸ÃÁĞ±íµÄÔªËØÌîÈë
-    id = input_data[0]
-    x1 = input_data[1]
-    y1 = input_data[2]
-    x2 = input_data[3]
-    y2 = input_data[4]
-    # ÓÃid,xy×ø±êµÄÆ½¾ùÖµºÍ×ø±êµÄ²îÖµÒ»°ë£¨Ò²¾ÍÊÇµÆÅİµÄ¿í°ë¾¶£©×éºÏ³ÉÒ»¸öÊı×éÔÙÑ¹ÈëlightsÖĞ
-    lights.append([id, (x1 + x2)//2, (y1 + y2)//2,(x2-x1)//2])
+def solve_method(lights):
+    lights_list = []
+    for light in lights:
+        id = light[0]
+        x1 = light[1]
+        y1 = light[2]
+        x2 = light[3]
+        y2 = light[4]
+        # id, xåæ ‡çš„å¹³å‡å€¼, yåæ ‡çš„å¹³å‡å€¼, ç¯é«˜åŠå¾„
+        lights_list.append([id, (x1 + x2) // 2, (y1 + y2) // 2, (y2 - y1) // 2])
 
-# ÀûÓÃÄÚÖÃº¯Êı½øĞĞÅÅĞò
-# ×¢£ºlambda ÊÇÒ»¸öÔÚPythonÖĞÓÃÓÚ´´½¨ÄäÃûº¯ÊıµÄ¹Ø¼ü×Ö¡£
-#   ÄäÃûº¯ÊıÊÇÒ»ÖÖÃ»ÓĞÃû³ÆµÄº¯Êı£¬Í¨³£ÓÃÓÚ±àĞ´¼ò¶ÌµÄ¹¦ÄÜ´úÂë¡£
-# ÓÃ·¨£º
-#   Èçlambda arguments: expression
-#       arguments ÊÇº¯ÊıµÄ²ÎÊı£¬¿ÉÒÔÊÇÒ»¸ö»ò¶à¸ö¡£
-#       expression ÊÇº¯ÊıÖ´ĞĞµÄ±í´ïÊ½¡£Ò²¾ÍÊÇ×îºóÕâ¸öÄäÃûº¯Êı·µ»ØµÄÖµ
-# ¶ÔÓÚÏÂÃæÕâ¸öÄäÃûº¯ÊıÆäÊµ¾ÍÏàµ±ÓÚ 
-# def key(a): 
-#   a[2] # ·µ»ØÁËÊı×éµÄµÚÈı¸ö±äÁ¿
-# ´«ÈëÄäÃûº¯ÊıµÄ²ÎÊıÊÇaÊı×é£¬¶ÔlightsÅÅĞòµÄkeyÊÇlightsÖĞÃ¿¸öÊı×éµÄµÚÈı¸öÔªËØ£¬Ò²¾ÍÊÇy×ø±êµÄÆ½¾ùÖµ
-# Ê¹µÃlightsÖĞµÄÔªËØÒÀ´Î°´yĞÄÅÅĞĞ´ÓĞ¡µ½´óÅÅĞò
-lights.sort(key=lambda a: a[2])
+    # å°†ç¯æŒ‰è¡Œç²—æ’
+    lights_list.sort(key=lambda x: x[2])
 
-# ÕâÀï¿ÉÒÔÊä³ölights¿´¿´
+    result = []
 
-result = []
-# Ã¿Ò»ĞĞµÄÆğÊ¼Ë÷Òı
-row_start_index = 0
-for i in range(1,n):
-    # ÒªÇóÁ½¸öµÆ¸ßµÍÆ«²î²»³¬¹ıµÆ°ë¾¶ËãÍ¬Ò»ĞĞ
-    # ÅĞ¶Ïy×ø±êÖ®²îÒ²¾ÍÊÇµÆ¸ß¶È²îÊÇ·ñĞ¡ÓÚµÆµÄ°ë¾¶
-    # Èç¹û´óÓÚÔò±íÊ¾ÊÇĞÂµÄÒ»ĞĞÁË
-    if lights[i][2] - lights[row_start_index][2] > lights[row_start_index][3]:
-        # ¶ÔÆğÊ¼ĞĞrow_start_indexµ½µ±Ç°ĞĞiµÄ×ÓÁĞ±í½øĞĞÅÅĞò£¬°´ÕÕÃ¿¸öÔª×éµÄ x ×ø±ê½øĞĞÅÅĞò
-        lights[row_start_index:i] = sorted(lights[row_start_index:i],key=lambda a:a[1])
-        # Ê¹ÓÃÁĞ±íÍÆµ¼Ê½½«ÆğÊ¼ĞĞµ½µ±Ç°ĞĞµÄ id Éú³ÉÁĞ±íÌí¼Óµ½ result ÁĞ±íÖĞ£¬¾ßÌåÈçÏÂ£º
-        #   ¶ÔÁĞ±í lights[row_start_index:i] ÖĞµÄÃ¿¸öÔªËØ light
-        #   È¡³öÆäÖĞµÄµÚÒ»¸öÔªËØ£¬²¢½«ÕâĞ©ÔªËØ×é³ÉÒ»¸öĞÂµÄÁĞ±í
-        result.extend([light[0] for light in lights[row_start_index:i]])
-        # ¸üĞÂÆğÊ¼ĞĞµÄË÷Òı£¬½«ÆäÉèÖÃÎªµ±Ç°ĞĞµÄË÷Òı
-        row_start_index = i
-# ÒòÎª×îºóÄÇÒ»ĞĞifÒ»Ö±ÂÌµÆÏÂÈ¥£¬ËùÒÔµÃ¶ÔÊ£ÏÂµÄÅÅĞò½øĞĞÊÕÎ²¹¤×÷
-lights[row_start_index:n] = sorted(lights[row_start_index:n],key=lambda a:a[1])
-result.extend([light[0]for light in lights[row_start_index:n]])
+    # è®¾ç½®æ¯ä¸€è¡Œçš„èµ·å§‹ç´¢å¼•
+    row_start_index = 0
+    # å…ˆä½¿ç”¨ç¬¬1è¡Œç¬¬1ä¸ªä½œä¸ºåŸºå‡†ç¯
+    for i in range(1, len(lights_list)):
+        # é«˜ä½åå·®è¶…è¿‡ç¯é«˜åº¦çš„ä¸€åŠ
+        if lights_list[i][2] - lights_list[row_start_index][2] > lights_list[row_start_index][3]:
+            # æŠŠä¹‹å‰çš„ç¯æŒ‰xåæ ‡æ’åºï¼Œå¹¶å­˜å…¥ç»“æœåˆ—è¡¨ä¸­
+            lights_list[row_start_index:i] = sorted(lights_list[row_start_index:i], key=lambda x: x[1])
+            result.extend([light[0] for light in lights_list[row_start_index:i]])
+            # è®°å½•æ–°ä¸€è¡Œå¯¹åº”çš„ç¯ä½ç½®
+            row_start_index = i
 
-# ½«ÁĞ±í result ÖĞµÄÔªËØ×ª»»Îª×Ö·û´®£¬²¢½«ËüÃÇÁ¬½ÓÆğÀ´
-print(' '.join(map(str,result)))
+    # æŠŠè¯¥è¡Œå‰©ä½™çš„ç¯å…¨éƒ¨åŠ å…¥åˆ°ç»“æœåˆ—è¡¨ä¸­
+    lights_list[row_start_index:] = sorted(lights_list[row_start_index:], key=lambda x: x[1])
+    result.extend([light[0] for light in lights_list[row_start_index:]])
+
+    return result
+
+
+if __name__ == '__main__':
+    lights = [
+        [1, 0, 0, 2, 2],
+        [2, 6, 1, 8, 3],
+        [3, 3, 2, 5, 4],
+        [5, 5, 4, 7, 6],
+        [4, 0, 4, 2, 6]
+    ]
+
+    assert solve_method(lights) == [1, 2, 3, 4, 5]
+
