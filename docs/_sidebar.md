@@ -39,4 +39,10 @@
       * [127 最短耗时](others100/127_the-least-time.md)  
       * [128 最近的医院](others100/128_the-nearest-hospital.md)  
       * [129 最近的点](others100/129_the-nearest-point.md)  
-      * [130 最长公共后缀](others100/130_the-longest-common-suffix.md)  
+      * [130 最长公共后缀](others100/130_the-longest-common-suffix.md) 
+      * [131 最长合法表达式](others100/131_the-longest-legal-expression.md)
+      * [132 最长的元音字符串](others100/132_the-longest-vowel-string.md)
+      * [133 最长连续交替方波信号](others100/133_the-longest-continuous-alternating-square-wave-signal.md)
+      * [134 最长连续子串](others100/134_the-longest-consecutive-substring.md)
+      * [135 有效子字符串](others100/135_valid-substring.md)
+    
