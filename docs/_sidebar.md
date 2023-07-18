@@ -32,3 +32,6 @@
       * [001 AI识别面板](others100/001_AI-recognition-panel.md)
       * [121 最大相连男生数](others100/121_maximum-connection-number-of-boys.md)
       * [122 最小传递延时](others100/122_minimal-delivery-delay.md)  
+      * [123 最小叶子节点](others100/123_minimum-leaf-node.md)  
+      * [124 最小步骤数](others100/124_minimum-number-of-steps.md)  
+      * [125 最少交换次数](others100/125_minimum-number-of-exchanges.md)  
