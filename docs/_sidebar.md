@@ -45,4 +45,9 @@
       * [133 最长连续交替方波信号](others100/133_the-longest-continuous-alternating-square-wave-signal.md)
       * [134 最长连续子串](others100/134_the-longest-consecutive-substring.md)
       * [135 有效子字符串](others100/135_valid-substring.md)
+      * [136 服务依赖、服务失效判断](others100/136_service-dependencies.md)
+      * [137 服务器耗能](others100/137_server-power-consumption.md)
+      * [138 机器人走迷宫](others100/138_robots-walk-mazes.md)
+      * [139 机智的外卖员](others100/139_witty-delivery-boy.md)
+      * [140 正方形数量、构成正方形的数量](others100/140_number-of-squares.md)
     
