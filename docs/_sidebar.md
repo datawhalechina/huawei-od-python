@@ -50,4 +50,5 @@
       * [138 机器人走迷宫](others100/138_robots-walk-mazes.md)
       * [139 机智的外卖员](others100/139_witty-delivery-boy.md)
       * [140 正方形数量、构成正方形的数量](others100/140_number-of-squares.md)
+      * [201 运动会](others100/201_interscholasticmeet.md)
     

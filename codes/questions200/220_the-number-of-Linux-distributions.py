@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 220_The-number-of-Linux-distributions.py
+@file: 220_the-number-of-Linux-distributions.py
 @time: 2023/7/15
 @project: huawei-od-python
 @desc: 220 Linux发行版的数量
