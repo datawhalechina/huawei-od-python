@@ -51,4 +51,6 @@
       * [139 机智的外卖员](others100/139_witty-delivery-boy.md)
       * [140 正方形数量、构成正方形的数量](others100/140_number-of-squares.md)
       * [201 运动会](others100/201_interscholasticmeet.md)
-    
+      * [202 连续子串](others100/202_continuous-substrings.md)
+      * [203 连续字母长度、求第K长的字符串长度](others100/203_consecutive-letter-length.md)
+      * [204 选修课](others100/204_elective-courses.md)
