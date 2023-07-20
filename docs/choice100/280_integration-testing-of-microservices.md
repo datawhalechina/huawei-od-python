@@ -123,4 +123,40 @@ def dfs(arr, k):
 def solve_method(arr, k):
     total_time = dfs(arr, k - 1)
     return total_time
+
+if __name__ == '__main__':
+    k = 3
+    useTime = [
+        [5, 0, 0],
+        [1, 5, 0],
+        [0, 1, 5]
+    ]
+    assert solve_method(useTime, k) == 15
+
+    k = 2
+    useTime = [
+        [5, 0, 0],
+        [1, 10, 1],
+        [1, 0, 11]
+    ]
+    assert solve_method(useTime, k) == 26
+
+    k = 4
+    useTime = [
+        [2, 0, 0, 0],
+        [0, 3, 0, 0],
+        [1, 1, 4, 0],
+        [1, 1, 1, 5],
+    ]
+    assert solve_method(useTime, k) == 12
+
+    k = 5
+    useTime = [
+        [1, 0, 0, 0, 0],
+        [0, 2, 0, 0, 0],
+        [1, 1, 3, 0, 0],
+        [1, 1, 0, 4, 0],
+        [0, 0, 1, 1, 5]
+    ]
+    assert solve_method(useTime, k) == 11
 ```

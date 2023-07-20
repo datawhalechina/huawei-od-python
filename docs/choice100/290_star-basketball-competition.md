@@ -71,4 +71,8 @@ def solve_method(arr):
                 return sum_score // i
 
     return sum_score
+
+
+if __name__ == '__main__':
+    assert solve_method([5, 2, 1, 5, 2, 1, 5, 2, 1]) == 6
 ```

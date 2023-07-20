@@ -103,4 +103,20 @@ def solve_method(times, start, end):
     backtracking(times, start, end, paths, result)
 
     return -1 if len(result) == 0 else min(result)
+
+
+if __name__ == '__main__':
+    times = [[1, 2, 11],
+             [2, 3, 13],
+             [1, 3, 50]]
+    assert solve_method(times, 1, 3) == 24
+
+    times = [[1, 2, 11],
+             [2, 3, 13],
+             [1, 3, 50],
+             [3, 4, 55],
+             [4, 5, 35],
+             [2, 4, 15],
+             [3, 5, 40]]
+    assert solve_method(times, 1, 5) == 61
 ```

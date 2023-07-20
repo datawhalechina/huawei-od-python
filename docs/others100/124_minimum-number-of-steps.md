@@ -80,4 +80,9 @@ def solve_method(nums):
                 break
 
     return -1 if min_step == math.inf else min_step
+
+
+if __name__ == '__main__':
+    assert solve_method([7, 5, 9, 4, 2, 6, 8, 3, 5, 4, 3, 9]) == 2
+    assert solve_method([1, 2, 3, 7, 1, 5, 9, 3, 2, 1]) == -1
 ```

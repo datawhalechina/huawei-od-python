@@ -132,4 +132,23 @@ def solve_method(X, Y, obstacles):
     A_cells = sum(row.count("B") for row in dp)
 
     return B_cells, A_cells
+
+
+if __name__ == '__main__':
+    obstacles = [
+        [0, 2],
+        [1, 2],
+        [2, 2],
+        [4, 1],
+        [5, 1]
+    ]
+    assert solve_method(6, 4, obstacles) == (2, 3)
+
+    obstacles = [
+        [2, 0],
+        [2, 1],
+        [3, 0],
+        [3, 1]
+    ]
+    assert solve_method(6, 4, obstacles) == (0, 4)
 ```

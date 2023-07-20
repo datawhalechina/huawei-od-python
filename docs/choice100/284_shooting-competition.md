@@ -130,4 +130,18 @@ def solve_method(ops):
         return sum(scores)
     except ValueError:
         return -1
+
+    
+if __name__ == '__main__':
+    ops = [5, 2, "C", "D", "+"]
+    assert solve_method(ops) == 30
+
+    ops = [5, -2, 4, "C", "D", 9, "+", "+"]
+    assert solve_method(ops) == 27
+
+    ops = [1]
+    assert solve_method(ops) == 1
+
+    ops = ["+"]
+    assert solve_method(ops) == -1
 ```

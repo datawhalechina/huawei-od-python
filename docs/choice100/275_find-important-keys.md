@@ -79,4 +79,9 @@ def solve_method(key, line):
     except ValueError:
         # 如果不存在，则返回-1
         return -1
+
+
+if __name__ == '__main__':
+    assert solve_method("abc", "s,sdf123  A2c4b") == 2
+    assert solve_method("abc", "s,sdf123 A2c4bd 523[]") == -1
 ```

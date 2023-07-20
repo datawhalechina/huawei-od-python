@@ -83,4 +83,11 @@ def solve_method(tasks, N):
                     result += 1
 
     return max(result, len(tasks))
+
+
+if __name__ == '__main__':
+    assert solve_method([2, 2, 2, 3], 2) == 6
+    assert solve_method([2, 2, 2, 3, 3, 1], 2) == 6
+    assert solve_method([2, 2, 2, 3, 3, 3], 2) == 6
+    assert solve_method([2, 2, 1], 3) == 3
 ```

@@ -106,4 +106,15 @@ def solve_method(T):
         result.append(color_map[get_color(n, k)])
 
     return result
+
+
+if __name__ == '__main__':
+    T = [[1, 0],
+         [2, 1],
+         [3, 2],
+         [4, 6],
+         [5, 8]]
+    assert solve_method(T) == ["red", "red", "blue", "blue", "blue"]
+    T = [[64, 73709551616]]
+    assert solve_method(T) == ["red"]
 ```

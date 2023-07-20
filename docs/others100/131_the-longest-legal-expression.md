@@ -76,4 +76,8 @@ def solve_method(line):
         return eval(nums[0])
     else:
         return 0
+
+
+if __name__ == '__main__':
+    assert solve_method("1-2abcd") == -1
 ```

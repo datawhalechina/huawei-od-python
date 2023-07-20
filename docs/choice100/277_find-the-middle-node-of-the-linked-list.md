@@ -81,4 +81,21 @@ def solve_method(head, link):
 
     # 获取中间结点的数据
     return data[len(data) // 2]
+
+
+if __name__ == '__main__':
+    head = "00100"
+    n = 4
+    link = {"00000": [4, -1],
+            "00100": [1, "12309"],
+            "33218": [3, "00000"],
+            "12309": [2, "33218"]}
+    assert solve_method(head, link) == 3
+
+    head = "10000"
+    n = 3
+    link = {"76892": [7, "12309"],
+            "12309": [5, -1],
+            "10000": [1, "76892"]}
+    assert solve_method(head, link)
 ```

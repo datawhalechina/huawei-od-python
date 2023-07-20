@@ -65,4 +65,11 @@ def solve_method(setA, setB, R):
                 break
 
     return result
+
+
+if __name__ == '__main__':
+    setA = [1, 5, 5, 10]
+    setB = [1, 3, 8, 8, 20]
+    R = 5
+    assert solve_method(setA, setB, R) == [[1, 1], [5, 8], [5, 8]]
 ```

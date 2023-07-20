@@ -148,4 +148,25 @@ class EmployeeRecord:
         if self.actual_device_number == self.registered_device_number:
             return True
         return False
+
+
+
+if __name__ == '__main__':
+    clockRecords = [
+        ["100000", 10, 1, "ABCD", "ABCD"],
+        ["100000", 50, 10, "ABCD", "ABCD"]
+    ]
+    assert solve_method(clockRecords) == "100000,10,1,ABCD,ABCD;100000,50,10,ABCD,ABCD"
+
+    clockRecords = [
+        ["100000", 10, 1, "ABCD", "ABCD"],
+        ["100000", 80, 10, "ABCE", "ABCD"]
+    ]
+    assert solve_method(clockRecords) == "100000,80,10,ABCE,ABCD"
+
+    clockRecords = [
+        ["100000", 10, 1, "ABCD", "ABCD"],
+        ["100000", 80, 10, "ABCE", "ABCE"]
+    ]
+    assert solve_method(clockRecords) == "null"
 ```

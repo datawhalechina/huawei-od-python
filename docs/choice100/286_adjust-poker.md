@@ -100,4 +100,9 @@ def solve_method(poker_arr):
         result.extend(split_pokers)
 
     return result
+
+
+if __name__ == '__main__':
+    assert solve_method([1, 3, 3, 3, 2, 1, 5]) == [3, 3, 3, 1, 1, 5, 2]
+    assert solve_method([4, 4, 2, 1, 2, 1, 3, 3, 3, 4]) == [4, 4, 4, 3, 3, 2, 2, 1, 1, 3]
 ```

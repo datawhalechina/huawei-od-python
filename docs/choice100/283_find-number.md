@@ -95,4 +95,13 @@ def solve_method(arr):
                 result[i][j] = min_diff
 
     return result
+
+
+if __name__ == '__main__':
+    arr = [
+        [0, 3, 5, 4, 2],
+        [2, 5, 7, 8, 3],
+        [2, 5, 4, 2, 4]
+    ]
+    assert solve_method(arr) == [[-1, 4, 2, 3, 3], [1, 1, -1, -1, 4], [1, 1, 2, 3, 2]]
 ```

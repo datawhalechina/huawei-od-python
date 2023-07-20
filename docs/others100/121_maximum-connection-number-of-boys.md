@@ -66,4 +66,13 @@ def solve_method(arr):
                 max_len = max(max_len, dfs(pos, arr, i, j, 0))
 
     return max_len
+
+
+if __name__ == '__main__':
+    arr = [
+        ["F", "M", "M", "F"],
+        ["F", "M", "M", "F"],
+        ["F", "F", "F", "M"]
+    ]
+    assert solve_method(arr) == 3
 ```

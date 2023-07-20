@@ -84,4 +84,9 @@ def solve_method(line):
             return code
 
     return ""
+
+
+if __name__ == '__main__':
+    assert solve_method("h he hel hell hello") == "hello"
+    assert solve_method("b eredderd bw bww bwwl bwwln bwwlm") == "bwwln"
 ```

@@ -69,4 +69,8 @@ def solve_method(arr):
             l_prod *= arr[i]
 
     return -1
+
+
+if __name__ == '__main__':
+    assert solve_method([2, 5, 3, 6, 5, 6]) == 3
 ```

@@ -99,4 +99,26 @@ def solve_method(print_list):
                 result.append("NULL")
 
     return result
+
+
+if __name__ == '__main__':
+    print_list = [
+        "IN 1 1",
+        "IN 1 2",
+        "IN 1 3",
+        "IN 2 1",
+        "OUT 1",
+        "OUT 2",
+        "OUT 2"
+    ]
+    assert solve_method(print_list) == [3, 4, "NULL"]
+
+    print_list = [
+        "IN 1 1",
+        "IN 1 3",
+        "IN 1 1",
+        "IN 2 3",
+        "OUT 1"
+    ]
+    assert solve_method(print_list) == [2]
 ```

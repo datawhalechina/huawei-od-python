@@ -79,4 +79,14 @@ def backstracking(n, k, start_index, path, result):
         path.append(i)
         backstracking(n, k, i + 1, path, result)
         path.pop()
+
+
+if __name__ == '__main__':
+    num = 3
+    paths_length = [
+        [0, 2, 1],
+        [1, 0, 2],
+        [2, 1, 0],
+    ]
+    assert solve_method(num, paths_length) == 3
 ```

@@ -90,4 +90,9 @@ def solve_method(arr):
         score = max(score, calc_score(arr, i))
 
     return score
+
+
+if __name__ == '__main__':
+    assert solve_method([1, 98, 1]) == 98
+    assert solve_method([50, 60, 1]) == 50
 ```

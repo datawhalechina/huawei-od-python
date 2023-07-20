@@ -106,4 +106,14 @@ def solve_method(servers, errors):
     good_nodes = [node for node in nodes if node not in paths]
 
     return ",".join(good_nodes) if len(good_nodes) != 0 else ","
+
+
+if __name__ == '__main__':
+    servers = "a1-a2,a5-a6,a2-a3"
+    errors = "a5,a2"
+    assert solve_method(servers, errors) == "a6,a3"
+
+    servers = "a1-a2"
+    errors = "a2"
+    assert solve_method(servers, errors) == ","
 ```

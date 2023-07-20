@@ -149,4 +149,10 @@ def get_available_strings(string1):
         avail_strings.append(tmp_string)
 
     return avail_strings
+
+
+if __name__ == '__main__':
+    assert solve_method("123admyffc79pt", "ssyy") == "pt"
+    assert solve_method("123admyffc79ptaagghi2222smeersst88mnrt", "ssyyfgh") == "mnrt"
+    assert solve_method("abcmnq", "rt") == "Not Found"
 ```

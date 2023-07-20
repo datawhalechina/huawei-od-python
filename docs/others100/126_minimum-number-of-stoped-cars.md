@@ -68,4 +68,9 @@ def solve_method(line):
         if car_len != 0:
             count += 1
     return count
+
+
+if __name__ == '__main__':
+    assert solve_method("1,0,1") == 2
+    assert solve_method("1,1,0,0,1,1,1,0,1") == 3
 ```

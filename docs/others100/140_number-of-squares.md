@@ -99,4 +99,21 @@ def solve_method(points):
             count += 1
 
     return count
+
+
+if __name__ == '__main__':
+    points = [
+        [1, 3],
+        [2, 4],
+        [3, 1]
+    ]
+    assert solve_method(points) == 0
+
+    points = [
+        [0, 0],
+        [1, 2],
+        [3, 1],
+        [2, -1]
+    ]
+    assert solve_method(points) == 1
 ```

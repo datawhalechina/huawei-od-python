@@ -91,4 +91,9 @@ def solve_method(arr):
     backtracking(arr, min_pos, paths)
     paths.reverse()
     return paths
+
+
+if __name__ == '__main__':
+    assert solve_method([3, 5, 7, -1, -1, 2, 4]) == [3, 7, 2]
+    assert solve_method([5, 9, 8, -1, -1, 7, -1, -1, -1, -1, -1, 6]) == [5, 8, 7, 6]
 ```

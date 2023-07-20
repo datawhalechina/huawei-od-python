@@ -82,4 +82,10 @@ def solve_method(arr, k):
     # 得到最少交换次数
     result = m - max(dp)
     return result
+
+
+if __name__ == '__main__':
+    assert solve_method([1, 3, 1, 4, 0], 2) == 1
+    assert solve_method([0, 0, 0, 1, 0], 2) == 0
+    assert solve_method([2, 3, 2], 1) == 0
 ```

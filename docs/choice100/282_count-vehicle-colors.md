@@ -75,4 +75,9 @@ def solve_method(cars: list, time_windows: int):
         max_color = max(max_color, counter.most_common(1)[0][1])
 
     return max_color
+
+
+if __name__ == '__main__':
+    assert solve_method([0, 1, 2, 1], 3) == 2
+    assert solve_method([0, 1, 2, 1], 2) == 1
 ```

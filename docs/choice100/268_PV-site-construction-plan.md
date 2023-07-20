@@ -104,4 +104,21 @@ def solve_method(row, col, width, power, region):
                 result += 1
 
     return result
+
+
+if __name__ == '__main__':
+    row, col, width, power = 2, 5, 2, 6
+    region = [[1, 3, 4, 5, 8],
+              [2, 3, 6, 7, 1]]
+    assert solve_method(row, col, width, power, region) == 4
+
+    row, col, width, power = 2, 5, 1, 6
+    region = [[1, 3, 4, 5, 8],
+              [2, 3, 6, 7, 1]]
+    assert solve_method(row, col, width, power, region) == 3
+
+    row, col, width, power = 2, 5, 1, 0
+    region = [[1, 3, 4, 5, 8],
+              [2, 3, 6, 7, 1]]
+    assert solve_method(row, col, width, power, region) == 10
 ```

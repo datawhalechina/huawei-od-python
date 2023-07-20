@@ -74,4 +74,10 @@ def solve_method(s, l):
             last_valid_index = -1
             break
     return last_valid_index
+
+
+if __name__ == '__main__':
+    assert solve_method("ace", "abcde") == 4
+    assert solve_method("fgh", "abcde") == -1
+    assert solve_method("acce", "abcdec") == -1
 ```

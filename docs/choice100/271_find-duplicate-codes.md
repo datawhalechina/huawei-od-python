@@ -87,4 +87,10 @@ def solve_method(text1, text2):
                     end = i - 1
     # 返回最长公共子串                
     return text1[end - max_length + 1: end + 1]
+
+
+if __name__ == '__main__':
+    assert solve_method("hello123world", "hello123abc4") == "hello123"
+    assert solve_method("private_void_method", "public_void_method") == "_void_method"
+    assert solve_method("hiworld", "hiweb") == "hiw"
 ```

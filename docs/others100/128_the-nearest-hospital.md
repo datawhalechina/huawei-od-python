@@ -49,4 +49,8 @@ def solve_method(x, y, m, l, n):
         return "Walk"
     else:
         return "Same"
+
+
+if __name__ == '__main__':
+    assert solve_method(50, 5, 500, 30, 90) == "Walk"
 ```

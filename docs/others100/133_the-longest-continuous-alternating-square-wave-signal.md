@@ -67,4 +67,8 @@ def solve_method(line):
     result.sort(key=lambda x: len(x), reverse=True)
     # 如果存在，返回最大长度，如果不存在，返回-1
     return result[0] if len(result) != 0 else -1
+
+
+if __name__ == '__main__':
+    assert solve_method("0010101010110000101000010") == "010101010"
 ```

@@ -74,4 +74,9 @@ def solve_method(arr):
                 max_value = friend_value
                 max_pos = i
     return max_pos + 1
+
+
+if __name__ == '__main__':
+    assert solve_method([0, 1, 0]) == 1
+    assert solve_method([1, 1, 0, 1, 2, 1, 0]) == 3
 ```

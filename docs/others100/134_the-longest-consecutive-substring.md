@@ -115,4 +115,12 @@ def solve_method(line):
             start += 1
 
     return max_length
+
+
+if __name__ == '__main__':
+    assert solve_method("abC124ACb") == 4
+    assert solve_method("a5") == 2
+    assert solve_method("aBB9") == 2
+    assert solve_method("abcdef") == -1
+    assert solve_method("a12b234g1234") == 8
 ```

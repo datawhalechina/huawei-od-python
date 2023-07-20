@@ -49,4 +49,9 @@ def solve_method(string):
     result = p.findall(string)
     result.sort(key=lambda x: len(x), reverse=True)
     return len(result[0]) if len(result) != 0 else 0
+
+
+if __name__ == '__main__':
+    assert solve_method("asdbuiodevauufgh") == 3
+    assert solve_method("fgh") == 0
 ```

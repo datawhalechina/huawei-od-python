@@ -78,4 +78,9 @@ def solve_method(arr):
         pre = pre[-j + 1:]
 
     return pre
+
+
+if __name__ == '__main__':
+    assert solve_method(["abc", "bbc", "c"]) == "c"
+    assert solve_method(["aa", "bb", "cc"]) == "@Zero"
 ```

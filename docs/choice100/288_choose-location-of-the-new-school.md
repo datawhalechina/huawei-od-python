@@ -46,4 +46,8 @@ def solve_method(arr):
         return arr[len(arr) // 2 - 1]
     else:
         return arr[len(arr) // 2]
+
+
+if __name__ == '__main__':
+    assert solve_method([0, 20, 40, 10, 30]) == 20
 ```

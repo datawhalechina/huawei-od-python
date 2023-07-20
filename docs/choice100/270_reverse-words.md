@@ -65,4 +65,11 @@ def solve_method(line):
             result += char
 
     return result
+
+if __name__ == '__main__':
+    s = "yM eman si boB."
+    assert solve_method(s) == "My name is Bob."
+
+    s = "woh era uoy ? I ma enif."
+    assert solve_method(s) == "how are you ? I am fine."
 ```

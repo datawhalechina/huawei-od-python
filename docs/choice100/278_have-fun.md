@@ -113,4 +113,17 @@ def dfs(n, m, arr, path):
             path.append([new_x, new_y])
     # 继续处理列表中的位置，连锁反应
     dfs(n, m, arr, path)
+
+
+if __name__ == '__main__':
+    arr = [[1, 0, 1],
+           [0, 1, 0],
+           [1, 0, 1]]
+    assert solve_method(3, 3, arr) == 1
+
+    arr = [[1, 1, 0, 0],
+           [0, 0, 0, 1],
+           [0, 0, 1, 1],
+           [1, 1, 1, 1]]
+    assert solve_method(4, 4, arr) == 2
 ```

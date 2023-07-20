@@ -67,4 +67,8 @@ def solve_method(N, M):
             dp[i] = min(dp[i - 1] + 1, dp[(i + 1) // 2] + 2)
 
     return dp[M]
+
+
+if __name__ == '__main__':
+    assert solve_method(5, 17) == 4
 ```

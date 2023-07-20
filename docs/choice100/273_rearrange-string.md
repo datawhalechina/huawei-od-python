@@ -74,4 +74,9 @@ def solve_method(string):
 
     result = " ".join(result)
     return result
+
+if __name__ == '__main__':
+    assert solve_method("This is an apple") == "an is This aelpp"
+    assert solve_method("My sister is in the house not in the yard") \
+           == "in in eht eht My is not adry ehosu eirsst"
 ```

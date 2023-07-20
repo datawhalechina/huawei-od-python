@@ -116,4 +116,12 @@ def solve_method(task_times):
             result += 4
 
     return result
+
+
+if __name__ == '__main__':
+    task_times = [[2, 5], [8, 9]]
+    assert solve_method(task_times) == 20
+
+    task_times = [[4, 8], [1, 6], [2, 9]]
+    assert solve_method(task_times) == 34
 ```

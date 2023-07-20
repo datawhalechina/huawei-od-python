@@ -92,4 +92,22 @@ def solve_method(newspaper, anonymousLetter):
             return False
 
     return True
+
+
+if __name__ == '__main__':
+    newspaper = ["ab", "cd"]
+    anonymousLetter = ["ab"]
+    assert solve_method(newspaper, anonymousLetter) is True
+
+    newspaper = ["ab", "ef"]
+    anonymousLetter = ["aef"]
+    assert solve_method(newspaper, anonymousLetter) is False
+
+    newspaper = ["ab", "bcd", "ef"]
+    anonymousLetter = ["cbd", "fe"]
+    assert solve_method(newspaper, anonymousLetter) is True
+
+    newspaper = ["ab", "bcd", "ef"]
+    anonymousLetter = ["cb", "fe"]
+    assert solve_method(newspaper, anonymousLetter) is False
 ```
