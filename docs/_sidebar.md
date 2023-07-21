@@ -54,3 +54,8 @@
       * [202 连续子串](others100/202_continuous-substrings.md)
       * [203 连续字母长度、求第K长的字符串长度](others100/203_consecutive-letter-length.md)
       * [204 选修课](others100/204_elective-courses.md)
+      * [205 选座位](others100/205_choose-the-seat.md)
+      * [206 速战速决、士兵突击](others100/206_soldier-assault.md)
+      * [207 重组字符串](others100/207_reassemble-the-string.md)
+      * [208 阿里巴巴找黄金宝箱（2）](others100/208_Alibaba-looks-for-gold-treasure-chests-2.md)
+      * [209 阿里巴巴找黄金宝箱（3）](others100/209_Alibaba-looks-for-gold-treasure-chests-3.md)
