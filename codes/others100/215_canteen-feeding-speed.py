@@ -14,7 +14,7 @@ def solve_method(total, M, N, P):
     result = max_speed
     # 二分查找，速度范围为[min_speed, max_speed]
     while min_speed <= max_speed:
-        mid = (min_speed + max_speed) // 2
+        mid = min_speed + (max_speed - min_speed) // 2
         # 检查该速度是否能满足
         if check_speed(mid, M, N, P):
             # 如果能满足
