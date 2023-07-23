@@ -71,5 +71,3 @@ if __name__ == '__main__':
     matrix = [list(input()) for _ in range(N)]
 
     print(solution(M, N, matrix))
-
-
