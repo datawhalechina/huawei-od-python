@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 222_Number-without-101.py
+@file: 222_number-without-101.py
 @time: 2023/7/23
 @project: huawei-od-python
 @desc: 222 不含101的数

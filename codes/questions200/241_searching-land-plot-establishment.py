@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 241_Searching-land-plot-establishment.py
+@file: 241_searching-land-plot-establishment.py
 @time: 2023/7/24
 @project: huawei-od-python
 @desc: 241 探索地块建立
