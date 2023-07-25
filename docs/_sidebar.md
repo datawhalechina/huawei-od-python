@@ -30,6 +30,11 @@
     * 200分题
     * 其他100分题
       * [001 AI识别面板](others100/001_AI-recognition-panel.md)
+      * [101 数据最节约的备份方法](others100/101_the-most-economical-way-to-back-up-data.md)
+      * [102 数组合并](others100/102_array-merge.md)
+      * [103 数组排序](others100/103_array-sort.md)
+      * [104 数组组成的最小数字](others100/104_array-make-up-minimum-number.md)
+      * [105 整数分解](others100/105_integer-factorization.md)
       * [121 最大相连男生数](others100/121_maximum-connection-number-of-boys.md)
       * [122 最小传递延时](others100/122_minimal-delivery-delay.md)  
       * [123 最小叶子节点](others100/123_minimum-leaf-node.md)  
