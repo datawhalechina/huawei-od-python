@@ -41,23 +41,24 @@
 ## 解题代码
 
 ```python
-def solve_method(line):
+def solve_method():
+	line=input().strip()
 	split = line.split(",")
-	list = []
-	map = {}
+	num_list = []
+	num_map = {}
 	for item in split:
 		num = int(item)
-		if num not in list:
-			list.append(num)
-		if num in map:
-			map[num] += 1
+		if num not in num_list:
+			num_list.append(num)
+		if num in num_map:
+			num_map[num] += 1
 		else:
-			map[num] = 1
+			num_map[num] = 1
 
 
 	res = []
-	for i in list:
-		ints = [i, map[i]]
+	for i in num_list:
+		ints = [i, num_map[i]]
 		res.append(ints)
 
 	res.sort(key=lambda x: x[1], reverse=True)
@@ -66,7 +67,10 @@ def solve_method(line):
 	for i in range(len(res)):
 		result.append(str(res[i][0]))
 
-	print(",".join(result))
+	return ",".join(result)
+
+if __name__ == "__main__":
+	print(solve_method())
 ```
 
 ## 代码运行结果
