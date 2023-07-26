@@ -1,50 +1,64 @@
-# coding:utf-8
-import sys
-# ¶ÁÈ¡ÊäÈëÒ»ĞĞ²¢·Ö¸î×ª»»ÎªÕûÊı¸³Öµ¸øn£¬m
-n,m = map(int,sys.stdin.readline().split())
-# ¹ØÏµ¼¯ºÏ
-relationship_sets = []
-# ´ıÑéÖ¤µÄ¹ØÏµ
-verify_relationships = []
-# ¶ÁÈ¡mĞĞ
-for i in range(m):
-    relationship = sys.stdin.readline().strip().split()
-    # Öğ¸ö¸³Öµ
-    x,y,relation = map(int,relationship)
-    # ²»µÈÓÚ0Ö¤Ã÷ÒªÑéÖ¤
-    if relation != 0:
-        verify_relationships.append(relationship)
-    else:
-        set_added = False
-        for j in range(len(relationship_sets)):
-            # È¡³ö¹ØÏµ¼¯ºÏÖĞµÄÃ¿¸öset
-            set_ = relationship_sets[j]
-            # Ö»ĞèÒªÅĞ¶ÏÆäÖĞÒ»¸öÊÇ·ñÔÚÆäÖĞ
-            if x in set_ or y in set_:
-                # ¼ÓÈë¸Ã¼¯ºÏ
-                set_.add(x)
-                set_.add(y)
-                set_added = True
-                break
-        # ²»´æÔÚÔòÁíÍâ´´½¨ĞÂµÄ¼¯ºÏ²¢°Ñxy´æÈë
-        if not set_added:
-            new_set = set()
-            new_set.add(x)
-            new_set.add(y)
-            relationship_sets.append(new_set)
- # ´¦Àí´ıÑéÖ¤µÄ¼¯ºÏ
-for i in range(len(verify_relationships)):
-    relationship = verify_relationships[i]
-    x,y,relation = map(int,relationship)
-    if relation != 1:
-        print("da pian zi")
-        continue
-    is_team = False
-    for j in range(len(relationship_sets)):
-        set_=relationship_sets[j]
-        if x in set_ and y in set_:
-            print("we are a team")
-            is_team = True
-            break
-    if not is_team:
-        print("we are not a team")
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 009_we-are-a-team.py
+@time: 2023/7/26 15:19
+@project: huawei-od-python
+@desc: 009 We Are A Team
+"""
+
+
+def solve_method(n, messages):
+    result = []
+    # å›¢é˜Ÿåˆ—è¡¨ï¼Œæ¯ä¸ªå›¢é˜Ÿéƒ½æ˜¯ä¸€ä¸ªseté›†åˆ
+    relations = []
+    for message in messages:
+        # å¦‚æœcä¸ºå…¶ä»–å€¼ï¼Œæˆ–å½“å‰è¡Œaæˆ–bè¶…å‡º1\~nçš„èŒƒå›´ï¼Œè¾“å‡ºda pian ziã€‚
+        if message[2] not in [0, 1] or message[0] > n or message[1] > n:
+            result.append("da pian zi")
+        else:
+            if message[2] == 0:
+                # å¦‚æœcä¸º0ï¼Œæ·»åŠ åˆ°å¯¹åº”çš„å›¢é˜Ÿä¸­
+                set_added = False
+                for relation in relations:
+                    if message[0] in relation or message[1] in relation:
+                        relation.add(message[0])
+                        relation.add(message[1])
+                        set_added = True
+                        break
+                if not set_added:
+                    relations.append({message[0], message[1]})
+            if message[2] == 1:
+                # å¦‚æœcä¸º1ï¼Œåˆ¤æ–­aå’Œbæ˜¯å¦åœ¨ä¸€ä¸ªå›¢é˜Ÿ
+                is_team = False
+                for relation in relations:
+                    if message[0] in relation and message[1] in relation:
+                        result.append("We are a team")
+                        is_team = True
+                        break
+
+                if not is_team:
+                    result.append("We are not a team")
+
+    return result
+
+if __name__ == '__main__':
+    messages = [[1, 2, 0],
+                [4, 5, 0],
+                [2, 3, 0],
+                [1, 2, 1],
+                [2, 3, 1],
+                [4, 5, 1],
+                [1, 5, 1]]
+    assert solve_method(5, messages) == ["We are a team", "We are a team",
+                                         "We are a team", "We are not a team"]
+
+    messages = [[1, 2, 0],
+                [1, 2, 1],
+                [1, 5, 0],
+                [2, 3, 1],
+                [2, 5, 1],
+                [1, 3, 2]]
+    assert solve_method(5, messages) == ["We are a team", "We are not a team",
+                                         "We are a team", "da pian zi"]

@@ -1,53 +1,51 @@
-# È¥³ıÊ×Î²¿Õ°××Ö·û
-input_str = input().strip()
-request = int(input().strip())
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 008_vlan-resource-pool.py
+@time: 2023/7/26 14:19
+@project: huawei-od-python
+@desc: 008 VLANèµ„æºæ± 
+"""
 
-# ¡°£¬¡± ²ğ·Ö
-input_list = input_str.split(",")
-result_set = set()
 
-for i in input_list:
-    # ÅĞ¶ÏÊÇ·ñ°üº¬ "-"
-    if "-" in i:
-        # ½« - Á½¶Ë²ğ·Ö×ªÕûĞÍ
-        start,end = map(int,i.split("-"))
-        # ±éÀúÌí¼Ó
-        for j in range(start,end +1):
-            result_set.add(j)
-    else:
-        # µ¥¸ö×Ö·ûÖ±½ÓÌí¼Ó
-        result_set.add(int(i))
+def solve_method(pool, vlan_id):
+    # æ ¹æ®åŸèµ„æºæ± ï¼Œå¾—åˆ°æ‰€æœ‰å¯ç”¨çš„vlané›†åˆ
+    pools = set()
+    for vlan in pool:
+        if "-" in vlan:
+            vlan_seq = vlan.split("-")
+            for i in range(int(vlan_seq[0]), int(vlan_seq[1]) + 1):
+                pools.add(i)
+        else:
+            pools.add(int(vlan))
 
-# ´ÓÁĞ±íÖĞÉ¾³ıÖ¸¶¨ÔªËØ
-result_set.remove(request)
-# ×ª»»ÎªÁĞ±í
-result_list = list(result_set)
-# ¶ÔÆäÅÅĞò
-result_list.sort()
+    # åˆ é™¤ç”³è¯·çš„vlan
+    if vlan_id in pools:
+        pools.remove(vlan_id)
 
-# È·¶¨ÆğÊ¼
-start = result_list[0]
-last = start
-output_list = []
+    # å°†å‰©ä¸‹çš„èµ„æºæŒ‰ä»å°åˆ°å¤§æ’åº
+    pools = sorted(list(pools))
 
-# ´ÓµÚ¶ş¸öÔªËØ¿ªÊ¼±éÀú
-for i in range(1,len(result_list)):
-    cur = result_list[i]
-    # Èç¹ûcurµÈÓÚlastµÄºóĞòÔªËØ
-    if cur == last +1:
-        # ¸üĞÂÎ²Êı
-        last = cur
-    else:
-        # ·ñÔò½«startµ½lastµÄÔªËØÌí¼Ó½øoutput_listÀïÃæ
-        output_list.append((start,last))
-        # ¸üĞÂÆğÊ¼
-        start = last = cur
-# °ÑÊ£ÏÂµÄ¼ÓÈë
-output_list.append((start,last))
+    # å¾—åˆ°å„æ®µçš„å§‹æœ«vlan
+    result = []
+    start_vlan = pools[0]
+    end_vlan = start_vlan
+    for i in range(1, len(pools)):
+        cur_vlan = pools[i]
+        if cur_vlan == end_vlan + 1:
+            end_vlan = cur_vlan
+        else:
+            result.append((start_vlan, end_vlan))
+            start_vlan = end_vlan = cur_vlan
 
-# Ê¹ÓÃÁĞ±íÍÆµ¼Ê½¹¹½¨Ò»¸ö×Ö·û´®ÁĞ±í output_str
-# ²¢Ê¹ÓÃ ",".join(output_str) ·½·¨ÒÔ¶ººÅÎª·Ö¸ô·û½«ÆäÁ¬½Ó³ÉÒ»¸ö×Ö·û´®¡£
-# ÁĞ±íÍÆµ¼Ê½»á¸ù¾İ·¶Î§Ôª×é (start, last) ÊÇ·ñÏàµÈ£¬
-# Ê¹ÓÃ²»Í¬µÄ¸ñÊ½½øĞĞ¸ñÊ½»¯
-output_str =",".join(["{}-{}".format(i,j) if i!=j else "{}".format(i) for i,j in output_list])
-print(output_str)
+    result.append((start_vlan, end_vlan))
+
+    # æŒ‰é¢˜ç›®æ ¼å¼è¾“å‡ºèµ„æºæ± çš„å­—ç¬¦ä¸²
+    return [str(start) + "-" + str(end) if start != end else str(start) for start, end in result]
+
+
+if __name__ == '__main__':
+    assert solve_method(["1-5"], 2) == ["1", "3-5"]
+    assert solve_method(["20-21", "15", "18", "30", "5-10"], 15) == ["5-10", "18", "20-21", "30"]
+    assert solve_method(["5", "1-3"], 10) == ["1-3", "5"]

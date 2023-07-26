@@ -1,36 +1,43 @@
-# coding: utf-8
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 003_convert-IPv4-addresses-to-integers.py
+@time: 2023/7/26 10:07
+@project: huawei-od-python
+@desc: 003 IPv4åœ°å€è½¬æ¢æˆæ•´æ•°
+"""
 
-def solve_method(ip:str):
-    # ÒÔ#·Ö¸ô×Ö·û´®
-    strings = ip.split("#")
-    # »ñÈ¡³¤¶È
-    length = len(strings)
-    count = 0
-    # ÖÃÎªºÏ·¨
-    is_valid = True
-    # Ê×ÏÈ¸Ã×Ö·û´®µÃÊÇËÄĞ¡½Ú
-    if length == 4:
-        for i in range(length):
-            # È¡³öÃ¿Ò»¸öÊı
-            n = int(strings[i])
-            # µÚÒ»¸öÊıµÄÈ¡Öµ·¶Î§ÊÇ1~128
-            if i==0 and (n < 1 or n > 128):
-                is_valid = False
-                break
-            # ¹ıÂËÆäËûÎ»ÖÃÉÏµÄ·Ç·¨
-            elif n < 0 or n > 255:
-                is_valid = False
-                break
-            # ·ÖÎö¿ÉµÃ³öÒ»¸öÊıÖµ¶ÔÓ¦Á½Î»Ê®Áù½øÖÆÊıÒ²¾ÍÊÇ°ËÎ»¶ş½øÖÆÊı
-            # Î»ÔËËã×óÒÆ£¨3-i£©¸ö°ËÎ»
-            count+=n<<(8*(3-i))
-    else:
-        is_valid = False
-    if is_valid:
-        print(count)
-    else:
-        print("invalid IP")
 
-if __name__ =='__main__':
-    ip = input()
-    solve_method(ip)
+def check_ip(ip):
+    is_valid = False
+    if "#" in ip:
+        ip_strings = ip.split("#")
+        length = len(ip_strings)
+        if length == 4 \
+                and 1 <= int(ip_strings[0]) <= 128 \
+                and 0 <= int(ip_strings[1]) <= 255 \
+                and 0 <= int(ip_strings[2]) <= 255 \
+                and 0 <= int(ip_strings[3]) <= 255:
+            is_valid = True
+
+    return is_valid
+
+
+def solve_method(ip):
+    if check_ip(ip):
+        ip_strings = ip.split("#")
+        num = 0
+        for ip_string in ip_strings:
+            num += int(ip_string)
+            num = num << 8
+
+        num = num >> 8
+        return num
+    else:
+        return "invalid IP"
+
+
+if __name__ == '__main__':
+    assert solve_method("100#101#1#5") == 1684340997
+    assert solve_method("1#2#3") == "invalid IP"

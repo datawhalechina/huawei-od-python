@@ -30,6 +30,14 @@
     * 200分题
     * 其他100分题
       * [001 AI识别面板](others100/001_AI-recognition-panel.md)
+      * [002 GPU调度](others100/002_GPU-scheduling.md)
+      * [003 IPv4地址转换成整数](others100/003_convert-IPv4-addresses-to-integers.md)
+      * [005 N进制减法](others100/005_n-decimal-subtraction.md)
+      * [006 RSA加密算法](others100/006_rsa-encryption-algorithm.md)
+      * [007 TLV编码](others100/007_tlv-code.md)
+      * [008 VLAN资源池](others100/008_vlan-resource-pool.md)
+      * [009 We Are A Team](others100/009_we-are-a-team.md)
+      * [010 不等式](others100/010_inequality.md)
       * [101 数据最节约的备份方法](others100/101_the-most-economical-way-to-back-up-data.md)
       * [102 数组合并](others100/102_array-merge.md)
       * [103 数组排序](others100/103_array-sort.md)

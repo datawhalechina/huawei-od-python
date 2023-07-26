@@ -1,45 +1,59 @@
-# coding:utf-8
-from typing import List
-def solve_method(line:str)->None:
-    # ½ÓÊÜ×Ö·û´®ÒÔ ¡°£º¡±·Ö¸î
-    split1 = line.split(";")
-    right = True
-    error_list:List[int] = []
-    # µ¹ÊýµÚÒ»µÄÏÞÖÆÌõ¼þ
-    limits = split1[-1].split(",")
-    # µ¹ÊýµÚ¶þµÄÄ¿±êÖµ
-    aims = split1[-2].split(",")
-    # µ¹ÊýµÚÈýµÄ±äÁ¿
-    vars_=split1[-3].split(",")
-    # ÏÞÖÆÌõ¼þÓÐ¼¸¸öÊ½×Ó¾ÍÓÐ¼¸¸ö
-    for i in range(len(limits)):
-        value =0
-        # ½«Ä¿±êÖµ×ª»»Îª¸¡µã
-        aim = float(aims[i])
-        #ÏµÊý
-        split_=split1[i].split(",")
-        for j in range(len(split_)):
-            # ÏµÊý³Ë±äÁ¿
-            value += float(split_[j]) * int(vars_[j])
-        limit = limits[i]
-        # È¡¾ø¶Ô²îÖµ
-        e = int(abs(value - aim))
-        # Æ¥ÅäÏÞÖÆÌõ¼þ
-        if limit ==">":
-            right = (value > aim) and right
-            error_list.append(e)
-        elif limit == "<":
-            right = (value < aim) and right
-            error_list.append(e)
-        elif limit ==">=":
-            right = (value >= aim)and right
-            error_list.append(e)
-        elif limit =="<=":
-            right = (value <= aim)and right
-            error_list.append(e)
-        else:
-            right = False
-    print(right,max(error_list))
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 010_inequality.py
+@time: 2023/7/26 16:24
+@project: huawei-od-python
+@desc: 010 ä¸ç­‰å¼
+"""
 
-line = input()
-solve_method(line)
+
+def check_and_calc(value, b, sign):
+    if sign == ">":
+        return value > b
+    elif sign == "<":
+        return value < b
+    elif sign == ">=":
+        return value >= b
+    elif sign == "<=":
+        return value <= b
+    elif sign == "=":
+        return value == b
+
+
+def solve_method(A, X, B, signs):
+    result = []
+    right = True
+    for a, b, sign in zip(A, B, signs):
+        # è®¡ç®—å·¦ä¾§valueå€¼
+        value = 0
+        for i in range(len(a)):
+            value += a[i] * X[i]
+
+        # è®¡ç®—è¯¯å·®
+        e = int(abs(value - b))
+        # éªŒè¯ä¸ç­‰å¼æ˜¯å¦æˆç«‹
+        right = check_and_calc(value, b, sign) and right
+        # å­˜å‚¨è¯¯å·®
+        result.append(e)
+
+    return "true" if right else "false", max(result)
+
+
+if __name__ == '__main__':
+    A = [[2.3, 3, 5.6, 7, 6],
+         [11, 3, 8.6, 25, 1],
+         [0.3, 9, 5.3, 66, 7.8]]
+    X = [1, 3, 2, 7, 5]
+    B = [340, 670, 80.6]
+    sign = ["<=", "<=", "<="]
+    assert solve_method(A, X, B, sign) == ("false", 458)
+
+    A = [[2.36, 3, 6, 7.1, 6],
+         [1, 30, 8.6, 2.5, 21],
+         [0.3, 69, 5.3, 6.6, 7.8]]
+    X = [1, 13, 2, 17, 5]
+    B = [340, 67, 300.6]
+    sign = ["<=", "<=", "<="]
+    assert solve_method(A, X, B, sign) == ("false", 758)

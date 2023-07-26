@@ -1,46 +1,28 @@
-# coding:utf-8
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 007_tlv-code.py
+@time: 2023/7/26 13:54
+@project: huawei-od-python
+@desc: 007 TLVç¼–ç 
+"""
 
-# def solveMethod(tag:str,source:str)->None:
-#     p=0
-#     # µü´úÉ¨Ãè
-#     while p < len (source):
-#         # È¡×Ö·û´®µÄ0~1Î»ÖÃÉÏµÄ
-#         curTag = source[p:p + 2]
-#         # ÒòÎªÊÇĞ¡¶ËĞòËùÒÔÒªÄæ¹ıÀ´Æ´½Ó
-#         lenHEX = source[p + 6:p + 8] + source[p + 3:p + 5]
-#         # ×ª»»ÎªÊ®½øÖÆ
-#         lenDEC = int(lenHEX,16)
-#         # ÅĞ¶ÏÆ¥Åätag
-#         if tag == curTag:
-#             # È¡³öÍùºólenDEC¸öÎ»ÖÃµÄ×Ö·û
-#             value = source[p +9: p +9 + lenDEC * 3]
-#             print(value)
-#         p += 9 + lenDEC * 3
 
-# if __name__ == '__main__':
-#     tag = input()
-#     source = input()
-#     solveMethod(tag,source)
+def solve_method(tag, source):
+    index = 0
+    while index < len(source):
+        cur_tag = source[index]
+        # å°ç«¯åº
+        length = int(source[index + 2] + source[index + 1], 16)
+        if tag == cur_tag:
+            value = source[index + 3: index + 3 + length]
+            return value
 
-# ¸Ä½ø°æ
-def solveMethod(tag:str,source:str)->None:
-    p=0
-    # µü´úÉ¨Ãè
-    while p < len (source):
-        # È¡×Ö·û´®µÄ0~1Î»ÖÃÉÏµÄ
-        curTag = source[p]
-        # ÒòÎªÊÇĞ¡¶ËĞòËùÒÔÒªÄæ¹ıÀ´Æ´½Ó
-        lenHEX = source[p+2] + source[p+1]
-        # ×ª»»ÎªÊ®½øÖÆ
-        lenDEC = int(lenHEX,16)
-        # ÅĞ¶ÏÆ¥Åätag
-        if tag == curTag:
-            # È¡³öÍùºólenDEC¸öÎ»ÖÃµÄ×Ö·û
-            value = source[p +3: p +3 + lenDEC]
-            print(' '.join(value))
-        p += 3 + lenDEC
+        index += 3 + length
+
 
 if __name__ == '__main__':
-    tag = input()
-    source = input().split(" ")
-    solveMethod(tag,source)
+    source = ["32", "01", "00", "AE", "90", "02", "00", "01", "02", "30", "03", "00",
+              "AB", "32", "31", "31", "02", "00", "32", "33", "33", "01", "00", "CC"]
+    assert solve_method("31", source) == ["32", "33"]

@@ -1,30 +1,35 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 006_rsa-encryption-algorithm.py
+@time: 2023/7/26 11:17
+@project: huawei-od-python
+@desc: 006 RSAåŠ å¯†ç®—æ³•
+"""
+
+
 def solve_method(num):
-    # ¶¨Òå¿Õ¼¯ºÏ´æ´¢Òò×Ó
-    factors=set()
+    # æ‰¾å‡ºæ‰€æœ‰å°äºnumçš„ç´ æ•°
     tmp = num
-    # ³õÊ¼Òò×ÓÎª2
     f = 2
+    factors = set()
     while tmp != 1:
-        # ÅĞ¶ÏtmpÊÇ·ñÄÜ±»fÕû³ı
         if tmp % f != 0:
-            # ²»ÄÜÔò¼Ó1
-            f+=1
+            f += 1
         else:
-            # ½«¿ÉÒÔÕû³ıµÄÒò×Ó¼ÓÈësetÖĞ
             factors.add(f)
-            # ÇóÉÌ
-            tmp //f
-    # Ë«ÖØÑ­»·ÅĞ¶ÏÁ½¸öÒò×Ó³Ë»ıÊÇ·ñÎªnum
+            tmp //= f
+
+    # æ‰¾å‡ºä¸¤ä¸ªç´ æ•°ï¼Œæ»¡è¶³å› æ•°åˆ†è§£
     for f1 in factors:
         for f2 in factors:
             if f1 * f2 == num:
-                min_factor = min(f1,f2)
-                max_factor = max(f1,f2)
-                # ¸ñÊ½»¯Êä³ö
-                print(f"{min_factor}{max_factor}")
-                return
-    print("-1 -1")
+                return min(f1, f2), max(f1, f2)
 
-if __name__ == "__main__":
-    num = int(input())
-    solve_method(num)
+    return -1, -1
+
+
+if __name__ == '__main__':
+    assert solve_method(15) == (3, 5)
+    assert solve_method(27) == (-1, -1)
