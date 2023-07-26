@@ -2,10 +2,10 @@
 # encoding: utf-8
 """
 @author: HuRuiFeng
-@file: 008_vlan-resource-pool.py
+@file: 007_vlan-resource-pool.py
 @time: 2023/7/26 14:19
 @project: huawei-od-python
-@desc: 008 VLAN资源池
+@desc: 007 VLAN资源池
 """
 
 

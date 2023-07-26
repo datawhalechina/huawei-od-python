@@ -2,10 +2,10 @@
 # encoding: utf-8
 """
 @author: HuRuiFeng
-@file: 007_tlv-code.py
+@file: 006_tlv-code.py
 @time: 2023/7/26 13:54
 @project: huawei-od-python
-@desc: 007 TLV编码
+@desc: 006 TLV编码
 """
 
 

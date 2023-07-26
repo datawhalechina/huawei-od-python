@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-@author: Spridra
-@file: 265_AI-Processor-Combination.py
+@author: HuRuiFeng
+@file: 001_AI-recognition-panel.py
 @time: 2023/7/17 09:02
 @project: huawei-od-python
 @desc: 001 AI识别面板

@@ -2,10 +2,10 @@
 # encoding: utf-8
 """
 @author: HuRuiFeng
-@file: 010_inequality.py
+@file: 009_inequality.py
 @time: 2023/7/26 16:24
 @project: huawei-od-python
-@desc: 010 不等式
+@desc: 009 不等式
 """
 
 

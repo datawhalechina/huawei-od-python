@@ -2,10 +2,10 @@
 # encoding: utf-8
 """
 @author: HuRuiFeng
-@file: 005_n-decimal-subtraction.py
+@file: 004_n-decimal-subtraction.py
 @time: 2023/7/26 10:35
 @project: huawei-od-python
-@desc: 005 N进制减法
+@desc: 004 N进制减法
 """
 
 

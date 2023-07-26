@@ -2,10 +2,10 @@
 # encoding: utf-8
 """
 @author: HuRuiFeng
-@file: 006_rsa-encryption-algorithm.py
+@file: 005_rsa-encryption-algorithm.py
 @time: 2023/7/26 11:17
 @project: huawei-od-python
-@desc: 006 RSA加密算法
+@desc: 005 RSA加密算法
 """
 
 

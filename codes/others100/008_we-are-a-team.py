@@ -2,10 +2,10 @@
 # encoding: utf-8
 """
 @author: HuRuiFeng
-@file: 009_we-are-a-team.py
+@file: 008_we-are-a-team.py
 @time: 2023/7/26 15:19
 @project: huawei-od-python
-@desc: 009 We Are A Team
+@desc: 008 We Are A Team
 """
 
 
