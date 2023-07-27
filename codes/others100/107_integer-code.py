@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2023-07-26 14:01:22
+# @Author  : catcooc 
+# @email   ： 
+# @Link    : https://github.com/catcooc
+# @Version : $Id$
+
 def solve_method(num):
 	binary = bin(num)[2:]
 	length = len(binary)
@@ -12,10 +20,12 @@ def solve_method(num):
 		hex_  = hex(int(bin_,2)).upper()[2:].zfill(2)
 		builder += hex_
 
-	print(builder)
+	#print(builder)
+	return builder
 
 
 
 if __name__ == "__main__":
-	num = int(input().strip())
-	solve_method(num)
+	assert solve_method(0) == '00' 
+	assert solve_method(100) == '64' 
+	assert solve_method(1000) == 'E807' 
