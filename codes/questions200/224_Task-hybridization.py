@@ -7,38 +7,30 @@
 @project: huawei-od-python
 @desc: 224 任务混部
 """
-import heapq
+from collections import defaultdict
 
-def solution(tasksInfo, taskNum):
-    # 按任务的 开始时间 进行排序
-    tasksInfo.sort(key = lambda task:task[0])
 
-    # 初始化优先级队列
-    priorityQ = []
-    result = 0
+def solve_method(tasks):
+    # 时刻所占服务器数量的字典，key为时刻，value为服务器数量
+    time_servers = defaultdict(int)
 
-    # 遍历每个任务
-    for i in range(taskNum):
-        # 当优先级队列中元素 小于 当前任务的开始时间，说明该任务占用的服务器可释放
-        while priorityQ and priorityQ[0] <= tasksInfo[i][0]:
-            heapq.heappop(priorityQ)
+    for task in tasks:
+        parallelism = task[2]
+        for i in range(task[0], task[1]):
+            time_servers[i] += parallelism
 
-        # 将 当前要执行的任务 的 结束时间，丢入优先级队列
-        for j in range(tasksInfo[i][2]):
-            heapq.heappush(priorityQ, tasksInfo[i][1])
+    # 取出服务器数量最大的那个
+    return max(time_servers.values())
 
-        # 记录优先级长度，即占用服务器的最大个数
-        result = max(result, len(priorityQ))
-    return result
 
 if __name__ == '__main__':
-    while(True):
-        # 处理输入格式
-        taskNum = int(input())
-        tasksInfo = [list(map(int, input().split())) for _ in range(taskNum)]
+    tasks = [[2, 3, 1],
+             [6, 9, 2],
+             [0, 5, 1]]
 
-        print(solution(tasksInfo, taskNum))
+    assert solve_method(tasks) == 2
 
-        ifExit = input("Input exit or quit to quit.\n")
-        if ifExit in ["exit", "quit"]:
-            break
+    tasks = [[3, 9, 2],
+             [4, 7, 3]]
+
+    assert solve_method(tasks) == 5

@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 226_Elegant-array.py
+@file: 226_elegant-array.py
 @time: 2023/7/27
 @project: huawei-od-python
 @desc: 226 优雅数组

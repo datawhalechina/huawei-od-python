@@ -8,27 +8,17 @@
 @desc: 222 不含101的数
 """
 
-def solution(l, r):
-    count = 0
-    x = 0b0000_0000_0000_0000_0000_0000_0000_0111
 
+def solve_method(l, r):
+    count = 0
     for i in range(l, r + 1):
-        n = i
-        while n >= 5:
-            # 看是否有101(5)
-            if ((x & n) - 5) == 0:
-                count += 1
-                break
-            n >>= 1
-    return r - l + 1 - count
+        i_bin = bin(i)
+        if '101' not in i_bin:
+            count += 1
+
+    return count
+
 
 if __name__ == '__main__':
-    while(True):
-        # 处理输入格式
-        l = int(input().strip())
-        r = int(input().strip())
-        print(solution(l, r))
-
-        ifExit = input("Input exit or quit to quit.\n")
-        if ifExit in ["exit", "quit"]:
-            break
+    assert solve_method(1, 10) == 8
+    assert solve_method(10, 20) == 7

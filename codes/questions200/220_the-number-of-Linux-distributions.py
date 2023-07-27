@@ -7,46 +7,39 @@
 @project: huawei-od-python
 @desc: 220 Linux发行版的数量
 """
-matrix = []
 
-# DFS搜索函数
-def dfs(i, count, visited):
+
+def dfs(matrix, i, count, visited):
     # 标记节点i已访问
     visited[i] = 1
     # 记录遍历的结点数
-    count[0] += 1   
-    
-    for j in range(N):
+    count[0] += 1
+
+    for j in range(len(matrix)):
         # 对邻接矩阵中相连结点做DFS
         if matrix[i][j] == 1 and visited[j] == 0:
-            dfs(j, count, visited)
-            
-def solution():
+            dfs(matrix, j, count, visited)
+
+
+def solve_method(matrix):
     # 初始化访问数组    
-    visited = [0] * N  
+    visited = [0] * len(matrix)
     res = 0
-    
-    for i in range(N): 
+
+    for i in range(len(matrix)):
         # 发现新连通分量进行DFS 
         if visited[i] == 0:
             count = [0]
-            dfs(i, count, visited)
+            dfs(matrix, i, count, visited)
             # 记录最大结点数
             res = max(res, count[0])
-            
+
     return res
 
+
 if __name__ == '__main__':
-    while True:
-        # 读入数据        
-        N = int(input())
-        for _ in range(N):
-            matrix.append(list(map(int, input().split())))
-        
-        # 调用函数
-        print(solution())
-        
-        # 判断是否退出
-        ifExit = input("Input exit or quit to quit.\n")
-        if ifExit in ["exit", "quit"]:
-            break
+    matrix = [[1, 1, 0, 0],
+              [1, 1, 1, 0],
+              [0, 1, 1, 0],
+              [0, 0, 0, 1]]
+    assert solve_method(matrix) == 3

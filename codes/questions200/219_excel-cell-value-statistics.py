@@ -9,69 +9,74 @@
 """
 import re
 
-addSubPattern = re.compile(r'[\+\-]')
+add_sub_pattern = re.compile(r'[\\+\-]')
 # ([A-Z])? 匹配一个可选的大写字母，用来表示列号
 # ([0-9]+) 匹配一个或多个数字，用来表示行号
 # (:) 匹配一个冒号，用来分隔起始和结束的单元格
 # ([A-Z])?([0-9]+) 重复前面的模式，用来匹配结束的单元格
-areaPattern = re.compile(r'([A-Z])?([0-9]+)(:)([A-Z])?([0-9]+)')
+area_pattern = re.compile(r'([A-Z])?([0-9]+)(:)([A-Z])?([0-9]+)')
 
-def getCellValue(cell,sheet):
+
+def get_cell_value(cell, sheet):
     # 如果第一个符号不是A~Z，则为直接数，'A' > '9'
     if cell[0] >= 'A':
-        return int(sheet[int(cell[1])-1][ord(cell[0])-ord('A')])
+        return int(sheet[int(cell[1]) - 1][ord(cell[0]) - ord('A')])
     else:
         return int(cell)
 
+
 def evaluate(value, sheet):
     # 通过正则表达式找到 + / -
-    addSubSig = addSubPattern.search(value)
+    add_sub_sig = add_sub_pattern.search(value)
     c1 = value
-
+    c2 = 0
     # 如果有 + / - ，说明不是单独的 =cell
-    if addSubSig:
-        addSubSig = addSubSig.group()
-        idx = value.index(addSubSig)
+    if add_sub_sig:
+        add_sub_sig = add_sub_sig.group()
+        idx = value.index(add_sub_sig)
         c1 = value[:idx]
-        c2 = value[idx+1:]
-        # 获取单元格的值 或 将 字符串转化为数字
-        c2 = getCellValue(c2,sheet)
+        c2 = value[idx + 1:]
+        # 获取单元格的值 或 将字符串转化为数字
+        c2 = get_cell_value(c2, sheet)
 
     # 获取单元格的值 或 将 字符串转化为数字
-    c1 = getCellValue(c1,sheet)
-    
+    c1 = get_cell_value(c1, sheet)
+
     # 计算表达式的值返回出去
-    if addSubSig:
-        if addSubSig == '+':
+    if add_sub_sig:
+        if add_sub_sig == '+':
             return c1 + c2
         else:
             return c1 - c2
     else:
-        return c1    
-        
-def solution(rows, cols, sheet, area):
+        return c1
+
+
+def solve_method(rows, cols, sheet, area):
     # 将表格中的"=xxx"表达式 计算为数值
     for r in range(rows):
         for c in range(int(cols)):
             if sheet[r][c].startswith('='):
                 sheet[r][c] = evaluate(sheet[r][c][1:], sheet)
-                
+
     # 正则匹配处理统计区域
-    area = areaPattern.search(area)
+    area = area_pattern.search(area)
     # 处理正则匹配拆出来的内容
-    cs, rs, _, ce, re = area.groups()
-    rs, re = int(rs)-1, int(re)-1
-    cs, ce = ord(cs)-ord('A'), ord(ce)-ord('A')
+    c_start, r_start, _, c_end, r_end = area.groups()
+    r_start, r_end = int(r_start) - 1, int(r_end) - 1
+    c_start, c_end = ord(c_start) - ord('A'), ord(c_end) - ord('A')
 
     # 计算需要统计区域的值的和
-    return sum(int(sheet[r][c]) for r in range(rs, re+1) for c in range(cs, ce+1))
-    
+    return sum(int(sheet[r][c]) for r in range(r_start, r_end + 1) for c in range(c_start, c_end + 1))
+
+
 if __name__ == '__main__':
-    # 获取行、列数
-    rows, cols = map(int, input().split())
-    # 将输入的表格存储到sheet中
-    sheet = [input().split() for _ in range(rows)] 
-    # 获取需要统计和的起始和终点
-    area = input()
-    # 调用处理函数
-    print(solution(rows, cols, sheet, area))
+    sheet = [["10", "12", "=C5"],
+             ["15", "5", "6"],
+             ["7", "8", "=3+C2"],
+             ["6", "=B2-A1", "=C2"],
+             ["7", "5", "3"]]
+    assert solve_method(5, 3, sheet, "B2:C4") == 29
+
+    sheet = [["1", "=A1+C1", "3"]]
+    assert solve_method(1, 3, sheet, "A1:C1") == 8

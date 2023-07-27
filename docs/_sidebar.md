@@ -28,6 +28,12 @@
       * [289 日志采集系统](choice100/289_log-collection-system.md)  
       * [290 星际篮球争霸赛](choice100/290_star-basketball-competition.md)  
     * 200分题
+      * [219 Excel单元格数值统计](questions200/219_excel-cell-value-statistics.md)
+      * [220 Linux发行版的数量](questions200/220_the-number-of-Linux-distributions.md)
+      * [221 上班之路](questions200/221_the-road-to-work.md)
+      * [222 不含101的数](questions200/222_number-without-101.md)
+      * [223 云短信平台优惠活动](questions200/223_Cloud-SMS-platform-promotional-activity.md)
+      * [224 任务混部](questions200/224_task-hybridization.md)
     * 其他100分题
       * [001 AI识别面板](others100/001_AI-recognition-panel.md)
       * [002 GPU调度](others100/002_GPU-scheduling.md)
