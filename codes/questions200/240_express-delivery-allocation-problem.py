@@ -7,14 +7,13 @@
 @project: huawei-od-python
 @desc: 240 快递投放问题
 """
-from typing import List, Dict, Set, Tuple
 from collections import defaultdict
-import sys
 
-def solution(want: List[List[str]], cant: List[List[str]]) -> str:
+
+def solve_method(want, cant):
     # 初始化包裹道路信息的 字典 和 无法通行的道路字典
-    want_map: Dict[str, Set[str]] = defaultdict(set)
-    cant_map: Dict[str, Set[str]] = defaultdict(set)
+    want_map = defaultdict(set)
+    cant_map = defaultdict(set)
 
     # 将 want 中 包裹道路信息，按照 [key = package] = "起点-终点"的格式记录在want_map字典里
     for arr in want:
@@ -28,7 +27,7 @@ def solution(want: List[List[str]], cant: List[List[str]]) -> str:
         path = path1 + "-" + path2
         cant_map[path].update(pkgs)
 
-    res: List[str] = []
+    res = []
     for path, want_pkg in want_map.items():
         # 遍历包裹道路信息，在不可通行信息中找 key = 道路
         cant_pkg = cant_map.get(path)
@@ -36,28 +35,24 @@ def solution(want: List[List[str]], cant: List[List[str]]) -> str:
         if cant_pkg is None:
             continue
 
-        # 如果不可通行信息中有对应的包裹，则该包裹不可送达，需记录在结果中
-        for pkg in want_pkg:
-            if pkg in cant_pkg:
-                res.append(pkg)
-    
+        # 将两个集合求交集，即不可通行信息中对应的包裹，记录到结果列表中
+        cant_pkgs = cant_pkg.intersection(want_pkg)
+        res.extend(list(cant_pkgs))
+
     if not res:
         return "none"
 
     # 按照包裹序列进行排序
     res.sort(key=lambda s: int(s[7:]))
 
-    return " ".join(res)
+    return res
+
 
 if __name__ == '__main__':
-    while(True):
-        # 处理输入格式
-        m, n = map(int, input().split())
-        packages = [input().split() for _ in range(m)]
-        barries = [input().split() for _ in range(n)]
-
-        print(solution(packages, barries))
-
-        ifExit = input("Input exit or quit to quit.\n")
-        if ifExit in ["exit", "quit"]:
-            break
+    packages = [["package1", "A", "C"],
+                ["package2", "A", "C"],
+                ["package3", "B", "C"],
+                ["package4", "A", "C"]]
+    barries = [["A", "B", "package1"],
+               ["A", "C", "package2"]]
+    assert solve_method(packages, barries) == ["package2"]

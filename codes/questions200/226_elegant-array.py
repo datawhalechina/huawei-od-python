@@ -7,36 +7,31 @@
 @project: huawei-od-python
 @desc: 226 优雅数组
 """
+from collections import defaultdict
 
-def solution(arr, n, k):
+
+def solve_method(arr, k):
     res = 0
-
+    n = len(arr)
     # i是子数组起点
     for i in range(n):
-        # 统计 arr元素出现次数 的字典容器
-        count = {}
+        # 统计arr元素出现次数字典，key为元素值，value为出现次数
+        count = defaultdict(int)
 
         # j是子数组终点
         for j in range(i, n):
             key = arr[j]
-            # 增加具体元素的计数
-            count[key] = count.get(key, 0) + 1
-            # 出现了k次即记录满足要求的子数组个数
+            # 增加元素值的出现次数
+            count[key] += 1
+            # 出现了k次，即记录满足要求的子数组个数
             if count[key] >= k:
-                # 自j后的子数组均满足要求
+                # 自坐标j后的子数组均满足要求
                 res += n - j
                 break
 
     return res
 
+
 if __name__ == '__main__':
-    while(True):
-        # 处理输入格式
-        n, k = map(int, input().split())
-        arr = list(map(int, input().split()))
-
-        print(solution(arr, n, k))
-
-        ifExit = input("Input exit or quit to quit.\n")
-        if ifExit in ["exit", "quit"]:
-            break
+    assert solve_method([1, 2, 3, 1, 2, 3, 1], 3) == 1
+    assert solve_method([1, 2, 3, 1, 2, 3, 1], 2) == 10

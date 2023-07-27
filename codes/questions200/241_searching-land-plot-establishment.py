@@ -8,32 +8,28 @@
 @desc: 241 探索地块建立
 """
 
-def solution(mat, n, m, threshold, c):
-    ans = 0
+
+def solve_method(mat, n, m, c, threshold):
+    result = 0
     # 遍历矩阵中的每个元素
     for i in range(n - c + 1):
         for j in range(m - c + 1):
-            sum = 0
+            total = 0
 
             # 计算以该元素为起点的c*c个元素之和
             for k in range(c):
                 for l in range(c):
-                    sum += int(mat[i + k][j + l])
-            
-            # 判断是否超预期
-            if sum >= threshold:
-                ans += 1
+                    total += mat[i + k][j + l]
 
-    return ans
+            # 判断是否超预期
+            if total >= threshold:
+                result += 1
+
+    return result
+
 
 if __name__ == '__main__':
-    while(True):
-        # 处理输入格式
-        n, m, c, k = map(int, input().split())
-        matrix = [list(input().split()) for _ in range(n)]
-        
-        print(solution(matrix, n, m, k, c))
+    matrix = [[1, 3, 4, 5, 8],
+              [2, 3, 6, 7, 1]]
 
-        ifExit = input("Input exit or quit to quit.\n")
-        if ifExit in ["exit", "quit"]:
-            break
+    assert solve_method(matrix, 2, 5, 2, 6) == 4

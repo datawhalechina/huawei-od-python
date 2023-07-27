@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 224_Task-hybridization.py
+@file: 224_task-hybridization.py
 @time: 2023/7/25
 @project: huawei-od-python
 @desc: 224 任务混部
