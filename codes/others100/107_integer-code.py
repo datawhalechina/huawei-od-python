@@ -2,30 +2,30 @@
 # -*- coding: utf-8 -*-
 # @Date    : 2023-07-26 14:01:22
 # @Author  : catcooc 
-# @email   ： 
 # @Link    : https://github.com/catcooc
-# @Version : $Id$
+# @desc    : 107 整数编码
 
 def solve_method(num):
-	binary = bin(num)[2:]
-	length = len(binary)
-	builder = ""
-	for i in range(length, 0, -7):
-		start = max(i - 7, 0)
-		bin_ = binary[start:i]
-		if len(bin_) < 7:
-			head = "0" * (7 - len(bin_))
-			bin_= head + bin_
-		bin_ = "0" + bin_ if i - 7 <= 0 else "1" + bin_
-		hex_  = hex(int(bin_,2)).upper()[2:].zfill(2)
-		builder += hex_
+    # 得到二进制
+    binary = bin(num)[2:]
+    length = len(binary)
+    result = ""
+    # 从后向前，每7位遍历一次
+    for i in range(length, 0, -7):
+        start = max(i - 7, 0)
+        bin_7bit = binary[start:i]
+        # 位数不够7位左侧补0
+        bin_7bit = bin_7bit.zfill(7)
+        # 置1表示后面还有更多的字节，置0表示当前字节为最后一个字节
+        bin_7bit = "0" + bin_7bit if i - 7 <= 0 else "1" + bin_7bit
+        # 将二进制转成十六进制，并转成大写字母，然后位数不够2位，左边补0
+        hex_7bit = hex(int(bin_7bit, 2)).upper()[2:].zfill(2)
+        result += hex_7bit
 
-	#print(builder)
-	return builder
-
+    return result
 
 
 if __name__ == "__main__":
-	assert solve_method(0) == '00' 
-	assert solve_method(100) == '64' 
-	assert solve_method(1000) == 'E807' 
+    assert solve_method(0) == '00'
+    assert solve_method(100) == '64'
+    assert solve_method(1000) == 'E807'
