@@ -15,11 +15,11 @@
 
 ## 输入描述
 
-
+一列字母序列，表示骰子旋转操作。
 
 ## 输出描述
 
-
+一串数字序列，依照顺序表示骰子左面 右面 前面 后面 上面 下面 的数字。
 
 ## 示例描述
 
@@ -53,44 +53,36 @@ FCR
 
 ## 解题思路
 
-该代码实现了一个魔方转动的程序，根据输入的指令依次转动魔方。具体来说，该程序使用一个字符串来表示魔方当前的状态，其中字"1"到"6"分别代表魔方的 6 个面，每个面由 4 个小正方形组成。在每次转动中，程序会更新字符串中相应位置的字符，从而模拟魔方动的过程。
-该程序中使用了一个 switch 语句来根据输入的指令执行不同的转动。在 roll 函数中，程序使用了 Python 中 ist 的切片操作来更新字符串中相应位置的字符。
+1. 建立一个`roll_switch`字典，记录不同操作应该交换数字序列的位置。
+2. 遍历字母序列 ，交换`res`序列的位置。
+3. 返回结果。
 
 ## 解题代码
 
 ```python
-res = list("123456")
-
-
-
-
 def solve_method(line):
+	res = ['1', '2', '3', '4', '5', '6']
+	roll_switch={
+	 	"L":lambda:roll(res,0, 2, 4, 6),
+	 	"R":lambda:roll(res,4, 6, 0, 2),
+	 	"F":lambda:roll(res,2, 4, 4, 6),
+	 	"B":lambda:roll(res,4, 6, 2, 4),
+	 	"A":lambda:roll(res,2, 4, 0, 2), 
+	 	"C":lambda:roll(res,0, 2, 2, 4)}
 	for c in line:
-		if c == "L":
-			roll(0, 2, 4, 6)
-		elif c == "R":
-			roll(4, 6, 0, 2)
-		elif c == "F":
-			roll(2, 4, 4, 6)
-		elif c == "B":
-			roll(4, 6, 2, 4)
-		elif c == "A":
-			roll(2, 4, 0, 2)
-		elif c == "C":
-			roll(0, 2, 2, 4)
+		roll_switch[c]()
 
-	print("".join(res))
+	
+	return "".join(res)
 
-def roll(s1, e1 , s2, e2):
-	tmp = list(reversed(res[s1:e1]))
-	res[s1:e1] = res[s2:e2]
-	res[s2:e2] = tmp
-
+def roll(res,s1, e1 , s2, e2):
+	res[s1:e1],res[s2:e2] = res[s2:e2],res[s1:e1][::-1]
+	return res
 
 
 if __name__ == "__main__":
-	line = input().strip()
-	solve_method(line)
+	assert solve_method("LR") == "123456"
+	assert solve_method("FCR") == "342156"
 ```
 
 ## 代码运行结果

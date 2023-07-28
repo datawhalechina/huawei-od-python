@@ -9,7 +9,7 @@
 但是过长的工号会增加同事们的记忆成本，
 现在给出新工号 至少需要分派的人数 `x`
 和新工号中字母的长度 `y`，
-壹澎埋新工号中数字的最短长度 `z`.
+求新工号中数字的最短长度 `z`.
 
 ## 输入描述
 
@@ -27,13 +27,13 @@
 
 **输入：**
 
-```
+```text
 260 1
 ```
 
 **输出：**
 
-```
+```text
 1
 ```
 
@@ -41,13 +41,13 @@
 
 **输入：**
 
-```
+```text
 26 1
 ```
 
 **输出：**
 
-```
+```text
 1
 ```
 
@@ -57,55 +57,54 @@
 
 **输入：**
 
-```
+```text
 2600 1
 ```
 
 **输出：**
 
-```
+```text
 2
 ```
 
-**说明：**  
-
-`13` 张牌中无法组成顺子
-
 ## 解题思路
 
-
+1. 先判断分派人数 `Y`是不是小于给定字母长度`x`加一个数字构成的工号数，如果是返回结果1.
+2. 根据公式$z \geq log(\frac{Y}{26^x})$(`z`为字母长度  `Y`分派人数，给定字母长度`x`)可以得到z的最小值。直接利用上述公式求解然后对结果向上取整。
 
 ## 解题代码
 
 ```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2023-07-28 11:33:18
+# @Author  : catcooc 
+# @email   ： 
+# @Link    : https://github.com/catcooc
+# @Version : $Id$
+
+#import os
 import math
 
 
-def solve_method(line: str):
-	split = line.split(" ")
-	x = int(split[0])
-	y = int(split[1])
+def solve_method(x,y):
 
 	cb = math.pow(26, y)
 
-	if cb > x:
-		print(1)
+	if cb >= x:
+		return 1
 	else:
-		i = 1
-		while cb * (math.pow(10, i)) < x:
-			i += 1
-		print(i)
+		return math.ceil(math.log(x/cb,10))
 
-line = input()
-solve_method(line)
-
-
-```
-
-## 代码运行结果
+if __name__ == "__main__":
+	
+	assert solve_method(260,1) == 1
+	assert solve_method(26,1) == 1
+	assert solve_method(2600,1) == 2
+	assert solve_method(27,1) == 1
+	assert solve_method(2601,1) == 3
 
 ```
-2 9 J 2 3 4 K A 7 9 A 5 6
-3 4 5 6 7
-```
+
+
 
