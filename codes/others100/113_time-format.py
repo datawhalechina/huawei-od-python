@@ -1,20 +1,20 @@
-from typing import List
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2023-07-28 15:07:36
+# @Author  : catcooc 
+# @email   ： 
+# @Link    : https://github.com/catcooc
+# @Version : $Id$
 
 
-def main() -> None :
-	n = int(input())
-	times = [input() for _ in range(n)]
-	solve_method(times)
 
-
-def solve_method(times : List[str]) -> None:
+def solve_method(times):
 	sorted_times = sorted(times, key=get_time)
-	for t in sorted_times:
-		print(t)
+	return sorted_times
 
 
 
-def get_time(time_str: str) -> int:
+def get_time(time_str: str):
 	h = int(time_str.split(':')[0])
 	m = int(time_str.split(':' )[1])
 	s = int(time_str.split(':')[-1].split('.')[0])
@@ -23,4 +23,6 @@ def get_time(time_str: str) -> int:
 
 
 if __name__ == '__main__':
-	main()
+	assert solve_method(["01:41:8.9","1:1:09.211"]) == ["1:1:09.211","01:41:8.9"]
+	assert solve_method(["23:41:08.023","1:1:09.211","08:01:22.0"]) == ["1:1:09.211","08:01:22.0","23:41:08.023"]
+	assert solve_method(["22:41:08.023","22:41:08.23"]) == ["22:41:08.023","22:41:08.23"]

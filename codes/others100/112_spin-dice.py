@@ -1,32 +1,41 @@
-res = list("123456")
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2023-07-28 12:09:14
+# @Author  : catcooc 
+# @email   ： 
+# @Link    : https://github.com/catcooc
+# @Version : $Id$
+
+
 
 
 
 
 def solve_method(line):
+	res = ['1', '2', '3', '4', '5', '6']
+	roll_switch={
+	 	"L":lambda:roll(res,0, 2, 4, 6),
+	 	"R":lambda:roll(res,4, 6, 0, 2),
+	 	"F":lambda:roll(res,2, 4, 4, 6),
+	 	"B":lambda:roll(res,4, 6, 2, 4),
+	 	"A":lambda:roll(res,2, 4, 0, 2), 
+	 	"C":lambda:roll(res,0, 2, 2, 4)}
 	for c in line:
-		if c == "L":
-			roll(0, 2, 4, 6)
-		elif c == "R":
-			roll(4, 6, 0, 2)
-		elif c == "F":
-			roll(2, 4, 4, 6)
-		elif c == "B":
-			roll(4, 6, 2, 4)
-		elif c == "A":
-			roll(2, 4, 0, 2)
-		elif c == "C":
-			roll(0, 2, 2, 4)
+		roll_switch[c]()
 
-	print("".join(res))
+	
+	return "".join(res)
 
-def roll(s1, e1 , s2, e2):
-	tmp = list(reversed(res[s1:e1]))
-	res[s1:e1] = res[s2:e2]
-	res[s2:e2] = tmp
-
+def roll(res,s1, e1 , s2, e2):
+	res[s1:e1],res[s2:e2] = res[s2:e2],res[s1:e1][::-1]
+	return res
 
 
 if __name__ == "__main__":
-	line = input().strip()
-	solve_method(line)
+	assert solve_method("LR") == "123456"
+	assert solve_method("FCR") == "342156"
+
+
+
+
+
