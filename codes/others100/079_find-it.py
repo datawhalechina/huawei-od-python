@@ -11,15 +11,15 @@
 def solve_method(matrix, word):
     def check(row, col, k, visited, word, matrix, m, n):
         if row < 0 or row > m - 1 or col < 0 or col > n - 1 or matrix[row][col] != word[k] or [row, col] in visited:
-            return []
+            return False
         visited.append([row, col])
         if k == len(word) - 1:
-            return [[row, col]]
+            return True
         for d1, d2 in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
             res = check(row + d1, col + d2, k + 1, visited, word, matrix, m, n)
             if res:
-                return [[row, col]] + res
-        return []
+                return res
+        return False
 
     m, n = len(matrix), len(matrix[0])
     for i in range(m):
@@ -28,16 +28,16 @@ def solve_method(matrix, word):
                 visited = []
                 res = check(i, j, 0, visited, word, matrix, m, n)
                 if res:
-                    return res
+                    return [i + 1, j + 1]
     return []
 
 
 if __name__ == '__main__':
-    N = int(input().strip())
-    matrix = [input().strip().split(',') for _ in range(N)]
+    M, N = input().strip().split(' ')
     word = input().strip()
+    matrix = [list(input().strip()) for _ in range(int(N))]
     res = solve_method(matrix, word)
     if res:
-        print(','.join([','.join([str(item[0]), str(item[1])]) for item in res]))
+        print(' '.join([str(res[0]), str(res[1])]))
     else:
-        print('N')
+        print('NO')

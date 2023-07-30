@@ -54,13 +54,14 @@ ACCESS 分别对应二维数组的[0,0][0,1][0,2][1,2] [2,2] [2,3]下标位置
 
 ```python
 def solve_method(matrix, word):
-    def check(row, col, k, word, matrix, m, n):
-        if row < 0 or row > m - 1 or col < 0 or col > n - 1 or matrix[row][col] != word[k]:
+    def check(row, col, k, visited, word, matrix, m, n):
+        if row < 0 or row > m - 1 or col < 0 or col > n - 1 or matrix[row][col] != word[k] or [row, col] in visited:
             return []
+        visited.append([row, col])
         if k == len(word) - 1:
             return [[row, col]]
         for d1, d2 in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
-            res = check(row + d1, col + d2, k + 1, word, matrix, m, n)
+            res = check(row + d1, col + d2, k + 1, visited, word, matrix, m, n)
             if res:
                 return [[row, col]] + res
         return []
@@ -69,7 +70,8 @@ def solve_method(matrix, word):
     for i in range(m):
         for j in range(n):
             if matrix[i][j] == word[0]:
-                res = check(i, j, 0, word, matrix, m, n)
+                visited = []
+                res = check(i, j, 0, visited, word, matrix, m, n)
                 if res:
                     return res
     return []
