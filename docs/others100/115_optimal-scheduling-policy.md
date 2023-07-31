@@ -2,19 +2,13 @@
 
 ## 题目描述
 
-在通信系统中有一个常见的问题是对用户进行不同策略的调度
-会得到不同系统消耗的性能
-假设由 `N` 个待串行用户，每个用户可以使用 `A/B/C` 三种不同的调度策略
-不同的策略会消耗不同的系统资源
-请你根据如下规则进行用户调度
-并返回总的消耗资源数
-规则是: 相邻的用户不使用相同的调度策略
+在通信系统中有一个常见的问题是对用户进行不同策略的调度，会得到不同系统消耗的性能。假设由 `N` 个待串行用户，每个用户可以使用 `A/B/C` 三种不同的调度策略。不同的策略会消耗不同的系统资源，相邻的用户不使用相同的调度策略，要求返回对系统资源消耗最少的策略。
 例如:
 第一个用户使用 A 策略 则第二个用户只能使用 B 和 C 策略
 对单的用户而言，不同的调度策略对系统资源的消耗可以规划后抽象为数值
-例如
+例如：
 某用户分别使用 `ABC` 策略的系统消耗，分别为 `15 8 17`
-每个用户依次选择当前所能选择的对系统资源消耗最少的策略,局部最优如果有多个满足要求的策略，选最后一
+每个用户依次选择当前所能选择的对系统资源消耗最少的策略,局部最优如果有多个满足要求的策略，选最后一个
 
 ## 输入描述
 
@@ -32,7 +26,7 @@
 
 **输入：**
 
-```
+```text
 3
 15 8 17
 12 20 9
@@ -41,7 +35,7 @@
 
 **输出：**
 
-```
+```text
 24
 ```
 
@@ -54,34 +48,46 @@
 
 ## 解题思路
 
-该代码的算法思路和前一份代码很相似，是基于贪心算法的。对于每个用户，它都会选择当前可以选择的对系统资源消耗最少的会略。但是，该代码使用了一种不同的方法来寻找当前可以选择的策略。
-
-具体地，对于第i个用户，它只考虑了与上一个用户选择不同的策略，因为相邻的用户不能使用相同的调度策略。如果是第一个用户，那么它可以选择任意一个策略;否则，它只能从其他策略中选择一个。
 
 
+1. 遍历用户策略数组arr,当指标`preIndex=None`时在当前用户三个策略中寻找资源消耗最小值`minTime`，如果`preIndex!=None`，则在`preIndex`标记以外的策略中寻找资源消耗最小值`minTime`。
+2. 如果当前用户策略资源消耗有两个最小值则记`preIndex=None`，只有一个最小值则记`preIndex`为最小值策略坐标。
+3. 累加得到的策略资源消耗最小值`res += minTime`。
+4. 重复1-3 直到遍历结束，返回结果`res`。
 
 ## 解题代码
 
 ```python
-n = int(input())
-res = 0
-preIndex = -1
-for i in range(n):
-	times = list(map(int, input().split()))
-	if preIndex == -1:
-		minTime = min(times)
-		preIndex = times.index(minTime)
-	else:
-		minTime = min(times[:preIndex] + times[preIndex + 1:])
-		preIndex = times.index(minTime)
-	res += minTime
-print(res)
+def solve_method(arr):
+	
+	res = 0
+	preIndex = None
+	for i in range(len(arr)):
+		times = list(map(int, arr[i].split()))
+		if preIndex == None:
+
+			minTime = min(times)
+			preIndex = times.index(minTime)
+			
+			if  minTime in  times[:preIndex] + times[preIndex + 1:]:
+				
+				preIndex = None  
+		else:
+			minTime = min(times[:preIndex] + times[preIndex + 1:])
+			preIndex = times.index(minTime)
+			
+			if   minTime in  times[:preIndex] + times[preIndex + 1:]:	
+				preIndex = None 
+		res += minTime
+	return res
+if __name__ == '__main__':
+
+	solve_method(["15 8 17","9 20 9","5 7 11"])==8+9+5
+	solve_method(["15 8 17","12 20 9","5 7 11"])==8+9+11
+
 ```
 
-## 代码运行结果
 
-```
-2 9 J 2 3 4 K A 7 9 A 5 6
-3 4 5 6 7
-```
+
+
 
