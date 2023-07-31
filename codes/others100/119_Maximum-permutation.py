@@ -9,7 +9,7 @@
 def solve_method(nums):
 	nums=nums.split(" ")
 	nums.sort(reverse=True)
-	print(list(map(lambda num: num * 3,nums)))
+	
 
 	return "".join (nums)
 
