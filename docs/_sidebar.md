@@ -27,6 +27,11 @@
         * [288 新学校选址](choice100/288_choose-location-of-the-new-school.md)
         * [289 日志采集系统](choice100/289_log-collection-system.md)
         * [290 星际篮球争霸赛](choice100/290_star-basketball-competition.md)
+        * [291 最多提取子串数目](choice100/291_maximum-number-of-substrings-extracted.md)
+        * [292 最大报酬](choice100/292_max-salary.md)
+        * [293 最小施肥机能效](choice100/293_minimum-applicator-energy-efficiency.md)
+        * [294 最左侧冗余覆盖子串](choice100/294_leftmost-redundant-overlay-substring.md)
+        * [295 最短木板长度](choice100/295_min-board-length.md)
     * 200分题
         * [219 Excel单元格数值统计](questions200/219_excel-cell-value-statistics.md)
         * [220 Linux发行版的数量](questions200/220_the-number-of-Linux-distributions.md)
