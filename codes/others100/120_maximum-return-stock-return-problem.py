@@ -1,4 +1,12 @@
-def calculate_max_profit(input_str):
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2023-07-30 18:42:56
+# @Author  : catcooc 
+# @email   ： 
+# @Link    : https://github.com/catcooc
+# @Version : $Id$
+
+def solve_method(input_str):
 	# 如果输入字符串为空，则返回0
 	if not input_str:
 		return 0
@@ -34,14 +42,13 @@ def calculate_max_profit(input_str):
 		# 如果当前价格比前一个价格高，则将差值加入最大利润
 		if prices[i] > prices[i - 1 ]:
 			max_profit += prices[i] - prices[i - 1]
-
+		
 
 	# 返回最大利润
 	return max_profit
 
-# 读取输入字符串，并计算最大利润
-input_str = input()
-print(calculate_max_profit(input_str))
 
+if __name__ == '__main__':
 
+	assert solve_method("2Y 3S 4S 6Y 8S") == 76
 
