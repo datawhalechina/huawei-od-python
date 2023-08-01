@@ -2,32 +2,31 @@
 
 ## 题目描述
 
-某个充电站，可提供 n 个充电设备，每个充电设备均有对应的输出功率。 
-任意个充电设备组合的输出功率总和，均构成功率集合
-P 的1个元素。 
-功率集合 P 的最优元素，表示最接近充电站最大输出功率 p_max 的元素。
+某个充电站，可提供`n`个充电设备，每个充电设备均有对应的输出功率。任意个充电设备组合的输出功率总和，均构成功率集合`P`的1个元素。请给出功率集合`P`的最优元素，表示最接近充电站最大输出功率`p_max`的元素。
 
 ## 输入描述
 
 输入为三行： 
-第一行为充电设备个数 n。 
-第二行为每个充电设备的输出功率。 
-第三行为充电站最大输出功率 p_max。
+- 第一行是充电设备个数`n`。 
+- 第二行是每个充电设备的输出功率。 
+- 第三行是充电站最大输出功率`p_max`。
 
 ## 输出描述
 
-功率集合 P 的最优元素
+功率集合`P`的最优元素。
 
 ## 备注
 
-1. 充电设备个数 n>0
-2. 最优元素必须小于或等于充电站最大输出功率 p_max。
+1. 充电设备个数n > 0。
+2. 最优元素必须小于或等于充电站最大输出功率`p_max`。
+
+## 示例描述
 
 ### 示例一
 
 **输入：**
 
-```shell
+```text
 4
 50 20 20 60
 90
@@ -35,18 +34,19 @@ P 的1个元素。
 
 **输出：**
 
-```shell
+```text
 90
 ```
 
 **说明：**
+
 当充电设备输出功率50、20、20组合时，其输出功率总和为90，最接近充电站最大充电输出功率，因此最优元素为90。
 
 ### 示例二
 
 **输入：**
 
-```shell
+```text
 2
 50 40
 30
@@ -54,7 +54,7 @@ P 的1个元素。
 
 **输出：**
 
-```shell
+```text
 0
 ```
 
@@ -62,31 +62,36 @@ P 的1个元素。
 所有充电设备的输出功率组合，均大于充电站最大充电输出功率30，此时最优元素值为0。
 
 ## 解题思路
-动态规划，用一个二维数组dp[amount-of-charger][max-power-in-total]表示Actual max power under given condition
+
+**基本思路：** 使用动态规划解题。
+1. 使用动态规划：
+    - 确定dp数组以及下标的含义：dp[i][j]表示前i个充电设备中选取功率不超过j的充电设备的最大功率和。
+    - 确定递推公式：
+         - 当前充电设备功率超过了最大功率j，不选择该充电设备，则dp[i][j] = dp[i - 1][j]。
+         - 选择该充电设备，选择功率和较大的一个，则dp[i][j] = max(dp[i - 1][j], P[i - 1] + dp[i - 1][j - P[i - 1]])。
+    - dp数组初始化：初始化dp[i][j]都为0。
+    - 确定遍历顺序：i从1到`N+1`，j从`min(P)`到`p_max+1`。
+3. 返回在`N`个充电设备中，选取功率不超过`p_max`的充电设备的最大功率和为dp[N][p_max]。
 
 ## 解题代码
 
 ```python
-def solution(N, power, pm):
-	'''
-	N: number of powers
-	power: [power,...]
-	pm: max power
-	'''
-	# dp[amount-of-charger][max-power-in-total]: Actual-max-power under given condition
-	dp = [[0] * (pm + 1) for _ in range(N + 1)]
-	for i in range(1, N + 1):
-		for v in range(min(power), pm + 1):
-			if power[i - 1] > v: # current value greater than max power
-				dp[i][v] = dp[i - 1][v]
-			else:
-				dp[i][v] = max(dp[i - 1][v], power[i - 1] + dp[i - 1][v - power[i - 1]])
-	return dp[N][pm]
+def solve_method(P, p_max):
+    N = len(P)
+    # dp[i][j]表示前i个充电设备中选取功率不超过j的充电设备的最大功率和
+    dp = [[0] * (p_max + 1) for _ in range(N + 1)]
+    for i in range(1, N + 1):
+        for j in range(min(P), p_max + 1):
+            if P[i - 1] > j:
+                # 当前充电设备功率超过了最大功率j，不选择该充电设备
+                dp[i][j] = dp[i - 1][j]
+            else:
+                # 选择该充电设备，选择功率和较大的一个
+                dp[i][j] = max(dp[i - 1][j], P[i - 1] + dp[i - 1][j - P[i - 1]])                
+    return dp[N][p_max]
 
-if __name__ == "__main__":
-	N = int(input())
-	power = list(map(int, input().split()))
-	pm = int(input())
-	print(solution(N, power, pm))
-	# print(solution(4, [50, 20, 20, 60], 90))
+
+if __name__ == '__main__':
+    assert solve_method([50, 20, 20, 60], 90) == 90
+    assert solve_method([50, 40], 30) == 0
 ```

@@ -9,7 +9,7 @@
 
 ![](https://raw.githubusercontent.com/jackielics/image-hosting-service/main/2023-07-23_11-23-17.png?token=GHSAT0AAAAAACE7ANKIUWXY2OOHY4GVOQZMZF4TWNA)
 
-​则输出结果为：
+则输出结果为：
 
 AFG
 
@@ -32,6 +32,8 @@ ABCDEFG 3
 
 ## 输出描述
 箱子摆放结果，如题目示例所示
+
+## 示例描述
 
 ### 示例一
 **输入：**

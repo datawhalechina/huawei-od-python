@@ -32,6 +32,11 @@
         * [293 最小施肥机能效](choice100/293_minimum-applicator-energy-efficiency.md)
         * [294 最左侧冗余覆盖子串](choice100/294_leftmost-redundant-overlay-substring.md)
         * [295 最短木板长度](choice100/295_min-board-length.md)
+        * [296 查找充电设备组合](choice100/296_find-charging-device-combinations.md)
+        * [297 查找单入口空闲区域](choice100/297_finds-a-single-entry-free-area.md)
+        * [298 特异性双端队列](choice100/298_specific-double-ended-que.md)
+        * [299 猜字谜](choice100/299_riddles.md)
+        * [300 相同数字的积木游戏](choice100/300_block-games-with-the-same-number.md)
     * 200分题
         * [219 Excel单元格数值统计](questions200/219_excel-cell-value-statistics.md)
         * [220 Linux发行版的数量](questions200/220_the-number-of-Linux-distributions.md)
