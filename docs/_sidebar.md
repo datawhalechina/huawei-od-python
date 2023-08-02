@@ -37,6 +37,12 @@
         * [298 特异性双端队列](choice100/298_specific-double-ended-que.md)
         * [299 猜字谜](choice100/299_riddles.md)
         * [300 相同数字的积木游戏](choice100/300_block-games-with-the-same-number.md)
+        * [301 知识图谱新词挖掘](choice100/301_knowledge-graph-neologism-mining.md)
+        * [302 租车骑绿岛](choice100/302_car-rental-ride-Green-Island.md)
+        * [303 端口合并](choice100/303_port-merging.md)
+        * [304 箱子之字形摆放](choice100/304_the-boxes-are-arranged-in-a-zigzag-pattern.md)
+        * [305 网上商城优惠活动（一）](choice100/305_Online-mall-promotions-1.md)
+        * [306 自动曝光](choice100/306_automatic-exposure.md)
     * 200分题
         * [219 Excel单元格数值统计](questions200/219_excel-cell-value-statistics.md)
         * [220 Linux发行版的数量](questions200/220_the-number-of-Linux-distributions.md)

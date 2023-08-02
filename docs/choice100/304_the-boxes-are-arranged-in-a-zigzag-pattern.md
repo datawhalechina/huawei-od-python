@@ -1,124 +1,91 @@
 # 304 箱子之字形摆放
 
 ## 题目描述
-有一批箱子（形式为字符串，设为str），
 
-要求将这批箱子按从上到下以之字形的顺序摆放在宽度为 n 的空地，请输出箱子的摆放位置。
+有一批箱子（形式为字符串，设为`str`），要求将这批箱子按从上到下以之字形的顺序摆放在宽度为`n`的空地，请输出箱子的摆放位置。
 
 例如：箱子ABCDEFG，空地宽度为3，摆放结果如图：
 
-![](https://raw.githubusercontent.com/jackielics/image-hosting-service/main/2023-07-23_11-23-17.png?token=GHSAT0AAAAAACE7ANKIUWXY2OOHY4GVOQZMZF4TWNA)
+![之字形摆放](images/304-001-zigzag.png)
 
 则输出结果为：
-
+```text
 AFG
-
 BE
-
 CD
+```
 
 ## 输入描述
-输入一行字符串，通过空格分隔，前面部分为字母或数字组成的字符串str，表示箱子；
 
-后面部分为数字n，表示空地的宽度。例如：
+输入一行字符串，通过空格分隔，前面部分为字母或数字组成的字符串`str`，表示箱子；后面部分为数字`n`，表示空地的宽度。
 
+例如：
+```text
 ABCDEFG 3
+```
 
-备注：
-
-1. 请不要再最后一行输出额外的空行
-2. str只包含字母和数字，1 <= len(str) <= 1000
-3. 1 <= n <= 1000
+**备注：**
+1. 请不要在最后一行输出额外的空行。
+2. `str`只包含字母和数字，字符串长度的取值范围是1 <= len(str) <= 1000。
+3. `n`的取值范围是1 <= n <= 1000。
 
 ## 输出描述
-箱子摆放结果，如题目示例所示
+
+箱子摆放结果，如题目示例所示。
 
 ## 示例描述
 
 ### 示例一
+
 **输入：**
-```shell
+```text
 ABCDEFG 3
 ```
 
 **输出：**
-```shell
+```text
 AFG
 BE
 CD
 ```
 
-**说明：**  
-1. 请不要再最后一行输出额外的空行
-2.  str 只包含字母和数字，1 <= Len(str) <= 1000
-3.  1 <= n <= 1000
-
 ## 解题思路
-- 在 solve_method()函数中，通过使用 split() 函数分字符串 line，可以得到需要输出的字符 str 和每行的字符数n。
-- 将 str 转换为字符列表 chars
+
+1. 初始化位置索引`index`为0。
+2. 初始化顺序标识`asc`，`True`表示从上到下，`False`表示从下到上。
+3. 遍历字符串：
+    - 如果位置索引到了最前面，则顺序标识为`True`，索引为0。
+    - 如果位置索引到了最末尾，则顺序标识为`False`，索引为`n-1`。
+    - 将结果列表上对应的位置存入该字符。
+    - 根据顺序标识，改变位置索引。
+4. 返回结果列表。
 
 ## 解题代码
 
 ```python
-import re
- 
-# 如果端口组间存在2个及以上不同端口相同，则认为这2个端口组互相关联，可以合并。
-# 下面方法实现中：要形成两对“端口值不同的端口对”，即 a = [1,2,3]，b=[2,3,4]可以合并，但是a = [1,3,3]，b=[3,3,4]不可以合并
-def canUnion(port1, port2):
-    set1 = set(port1)
-    set2 = set(port2)
- 
-    same = 0
-    for v in set1:
-        if v in set2:
-            same += 1
-            if same >= 2:
-                return True
- 
-    return False
- 
- 
-# 从头开始尝试合并端口组
-def forPorts(ports):
-    # 这里倒序遍历端口组是为了实现：组外顺序保持输入顺序
-    for i in range(len(ports) - 1, -1, -1):
-        for j in range(i - 1, -1, -1):
-            # 判断两个端口是否可以合并
-            if canUnion(ports[i], ports[j]):
-                # 将后面的端口组，并入前面的端口组，这样就不会破坏组外顺序
-                ports[j].extend(ports[i])
-                ports.pop(i)
-                return True  # 继续尝试合并
- 
-    return False  # 合并尝试结束
- 
- 
-# 组内相同端口仅保留一个，从小到达排序
-def distinctAndSort(port):
-    tmp = list(set(port))
-    tmp.sort()
-    return tmp
- 
- 
-# 算法入口
-def getResult(ports):
-    while True:
-        if not forPorts(ports):
-            break
- 
-    # return list(map(distinctAndSort, ports))
-    return re.sub(f"\\s", "", str(list(map(distinctAndSort, ports))))
- 
- 
-# 输入获取
-m = int(input())
- 
-if m < 1 or m > 10:
-    print("[[]]")
-else:
-    ports = [list(map(int, input().split(","))) for _ in range(m)]
-    if len(list(filter(lambda p: len(p) < 1 or len(p) > 100, ports))) > 0:
-        print("[[]]")
-    else:
-        print(getResult(ports))
+def solve_method(chars, n):
+    result = ["" for _ in range(n)]
+    index = 0
+    # 标识：True表示从上到下，False表示从下到上
+    asc = True
+
+    for c in chars:
+        if index == -1:
+            index = 0
+            asc = True
+        if index == n:
+            index = n - 1
+            asc = False
+        result[index] += c
+
+        if asc:
+            index += 1
+        else:
+            index -= 1
+
+    return result
+
+
+if __name__ == '__main__':
+    assert solve_method("ABCDEFG", 3) == ["AFG", "BE", "CD"]
 ```

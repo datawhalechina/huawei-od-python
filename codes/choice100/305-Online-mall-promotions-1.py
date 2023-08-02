@@ -1,70 +1,123 @@
-m, n, k = map(int, input().split())
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 305-Online-mall-promotions-1.py
+@time: 2023/8/2 11:38
+@project: huawei-od-python
+@desc: 305 网上商城优惠活动（一）
+"""
 
-x = int(input())
 
-prices = []
-for i in range(x):
-    prices.append(int(input()))
-
-def fullSubtraction(price, m):
+def full_discount(res, ticket):
     """
     满减规则
-    :param price: 总价
-    :param m: 满减券数量
-    :return: 总价满减后结果，对应数组含义是 (用券后剩余总价， 剩余满减券数量)
+    :param res: 总价
+    :param ticket: 满减券数量
+    :return: 总价满减后结果，对应数组含义是 (用券后剩余总价， 使用满减券数量)
     """
-    maxCount = int(price / 100)  # 满100最多用1张满减券，满200最多用2张满减券....，price总价最多使用price/100张券
-    count = min(m, maxCount)  # 实际可使用的满减券数量
+    # 满100最多用1张满减券，满200最多用2张满减券....
+    # price总价最多使用price/100张券
+    use_tickets = 0
+    max_count = int(res / 100)
+    # 实际可使用的满减券数量
+    count = min(ticket, max_count)
 
-    price -= count * 10
-    m -= count
+    res -= count * 10
+    ticket -= count
+    use_tickets += count
+    return res, use_tickets
 
-    return price, m
 
-def discount(price, n):
+def discount(res, ticket):
     """
     打折规则
-    :param price: 总价
-    :param n: 打折券数量
-    :return: 总价打折后结果，对应数组含义是 (用券后剩余总价， 剩余打折券数量)
+    :param res: 总价
+    :param ticket: 打折券数量
+    :return: 总价打折后结果，对应数组含义是 (用券后剩余总价， 使用打折券数量)
     """
-    if n >= 1:
-        price = int(price * 0.92)
-    return price, n - 1
+    use_tickets = 0
+    if ticket > 0:
+        res = int(res * 0.92)
+        use_tickets += 1
+    return res, use_tickets
 
-def thresholdFree(price, k):
+
+def threshold_free(res, ticket):
     """
-    无门槛你规则
-    :param price: 总价
-    :param k: 无门槛券数量
-    :return: 门槛券用后结果，对应数组含义是 (用券后剩余总价， 剩余无门槛券数量)
+    无门槛规则
+    :param res: 总价
+    :param ticket: 无门槛券数量
+    :return: 门槛券用后结果，对应数组含义是 (用券后剩余总价， 使用无门槛券数量)
     """
-    while price > 0 and k > 0:
-        price -= 5
-        price = max(price, 0)  # 无门槛券过多会导致优惠后总价小于0，此时我们应该避免
-        k -= 1
-    return price, k
+    use_tickets = 0
+    while res > 0 and ticket > 0:
+        res -= 5
+        # 避免无门槛券过多会导致优惠后总价小于0
+        res = max(res, 0)
+        ticket -= 1
+        use_tickets += 1
+    return res, use_tickets
 
-for price in prices:
-    ans = []
 
-    resM = fullSubtraction(price, m)  # 先满减
+def solve_method(t1, t2, t3, prices):
+    """
+    :param t1: 满减的优惠券
+    :param t2: 打折的优惠券
+    :param t3: 无门槛的优惠券
+    :param prices: 用户的购物价格
+    :return:
+    """
+    result = []
+    for price in prices:
+        res_t1, tickets_t1 = full_discount(price, t1)
+        res_t2, tickets_t2 = discount(price, t2)
+        res_t3, tickets_t3 = threshold_free(price, t3)
+        tickets_res = 0
+        if price < 100:
+            if price <= 62 and t3 > 0:
+                # 先使用无门槛券，再使用打折券
+                res, tickets_res = discount(res_t3, t2)
+                tickets_res += tickets_t3
+            else:
+                # 先使用打折券，再使用无门槛券
+                res, tickets_res = threshold_free(res_t2, t3)
+                tickets_res += tickets_t2
 
-    resMN_N = discount(resM[0], n)  # 满减后打折
-    ans.append((resMN_N[0], m + n - (resM[1] + resMN_N[1])))  # m + n 是满减后打折方式的总券数量， resM[1] + resMN_N[1] 是满减券剩余数+打折券剩余数
+            result.append([res, tickets_res])
+            continue
 
-    resMK_K = thresholdFree(resM[0], k)  # 满减后无门槛
-    ans.append((resMK_K[0], m + k - (resM[1] + resMK_K[1])))
+        if res_t1 < res_t2:
+            copy_res = res_t1
+            tickets_res += tickets_t1
+            # 先使用满减券，再使用无门槛券
+            r3, tickets_r3 = threshold_free(res_t1, t3)
+            # 或者先使用满减券，再使用打折券
+            r2, tickets_r2 = discount(copy_res, t2)
+            if r3 < r2:
+                res = r3
+                tickets_res += tickets_r3
+            else:
+                res = r2
+                tickets_res += tickets_r2
+        else:
+            copy_res = res_t2
+            tickets_res += tickets_t2
+            # 先使用打折券，再使用无门槛券
+            r3, tickets_r3 = threshold_free(res_t2, t3)
+            # 或者使用打折券，再使用满减券
+            r1, tickets_r1 = full_discount(copy_res, t1)
+            if r3 < r1:
+                res = r3
+                tickets_res += tickets_r3
+            else:
+                res = r1
+                tickets_res += tickets_r1
 
-    resN = discount(price, n)  # 先打折
+        result.append([res, tickets_res])
 
-    resNM_M = fullSubtraction(resN[0], m)  # 打折后满减
-    ans.append((resNM_M[0], n + m - (resN[1] + resNM_M[1])))
+    return result
 
-    resNK_K = thresholdFree(resN[0], k)  # 打折后无门槛
-    ans.append((resNK_K[0], n + k - (resN[1] + resNK_K[1])))
 
-    # 对ans进行排序，排序规则是：优先按剩余总价升序，如果剩余总价相同，则再按“使用掉的券数量”升序
-    ans.sort(key=lambda x: (x[0], x[1]))
-
-    print(" ".join(map(str, ans[0])))
+if __name__ == '__main__':
+    assert solve_method(3, 2, 5, [100, 200, 400]) == [[65, 6], [155, 7], [338, 4]]
