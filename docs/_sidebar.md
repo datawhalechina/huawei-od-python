@@ -43,6 +43,13 @@
         * [304 箱子之字形摆放](choice100/304_the-boxes-are-arranged-in-a-zigzag-pattern.md)
         * [305 网上商城优惠活动（一）](choice100/305_Online-mall-promotions-1.md)
         * [306 自动曝光](choice100/306_automatic-exposure.md)
+        * [307 获取最大软件版本号](choice100/307_obtain-the-maximum-software-version-number.md)
+        * [308 获得完美走位](choice100/308_get-the-perfect-position.md)
+        * [309 货币单位换算](choice100/309_currency-unit-conversion.md)
+        * [310 贪心的商人、最大利润](choice100/310_greedy-businessmen-maximum-profit.md)
+        * [311 通信误码](choice100/311_bit-error-rate.md)
+        * [312 静态扫描最优成本](choice100/312_static-scanning-optimal-cost.md)
+        * [313 预订酒店](choice100/313_hotel-reservation.md)
     * 200分题
         * [219 Excel单元格数值统计](questions200/219_excel-cell-value-statistics.md)
         * [220 Linux发行版的数量](questions200/220_the-number-of-Linux-distributions.md)
