@@ -1,23 +1,18 @@
-#  118-最大子矩阵
+# 118 最大子矩阵
 
 ## 题目描述
 
-给定一个二维整数矩阵，要在这个矩阵中，选出一个子矩阵，使得这个子矩阵内所有的数字和尽量大。我们把这个子矩阵成为“和最大子矩阵”，子矩阵的选取原则，是原矩阵中一段相互连续的矩形区域。
+给定一个二维整数矩阵，要在这个矩阵中选出一个子矩阵，使得这个子矩阵内所有的数字和尽量大。我们把这个子矩阵成为“和最大子矩阵”，子矩阵的选取原则，是原矩阵中一段相互连续的矩形区域。
 
 ## 输入描述
 
-输入的第一行包含两个整数 `N`,`M`
-`(1 <= N,M <= 10)`
-表示一个 N 行 M 列的矩阵
-下面有 `N` 行每行有 `M`个整数
-同一行中每两个数字之间有一个空格
-最后一个数字后面没有空格
-所有的数字得在 `-1000 ~ 1000` 之间
+输入的第一行包含两个整数`N`、`M`，表示一个`N`行`M`列的矩阵，取值范围是1 <= N,M <= 10。
+
+接下来有`N`行，每行有`M`个整数，每行数字用空格分隔，数字的取值范围是-1000\~1000。
 
 ## 输出描述
 
-输出一行,一个数字
-表示选出的“和最大子矩阵”内所有数字的和
+输出一个数字，表示选出的“和最大子矩阵”内所有数字的和。
 
 ## 示例描述
 
@@ -40,57 +35,67 @@
 
 **说明：**  
 
-一个 `3*4` 的矩阵中
-后面 `3` 列的和为 `20`,和最大
+一个`3*4`的矩阵中，后面`3`列组成的子矩阵和为20，该子矩阵的和最大。
 
 ## 解题思路
 
-1. 遍历`(0-N*M)`范围内子矩阵左上角位置行位置`start_row` 
+**基本思路：** 使用Kadane's算法计算最大子数组和。
 
-2. 嵌套循环，遍历`(0-N*M)`范围内子矩阵左上角位置列位置`start_col`
+1. 遍历所有可能的上边界：
+    - 初始化dp数组，用于保存每列的累计和。
+    - 遍历所有可能的下边界：
+        - 更新dp数组，计算每列的累计和。
+        - 使用Kadane's算法计算dp数组的最大子数组和。
+        - 更新最大子矩阵和。
+2. 返回最大子矩阵和。    
 
-3. 嵌套循环，遍历`(start_row, N)`范围内子矩阵右下角位置行位置
+**Kadane's算法**
+> Kadane's算法是一种用于在一维数组中寻找最大子数组和的经典算法。它由Jay Kadane在1984年提出，并被广泛应用于解决与最大子数组和相关的问题。
+> 该算法的基本思想是通过动态规划的方式，在遍历数组的过程中，不断更新当前子数组的最大和。算法维护两个变量：`current_sum`表示当前子数组的和，`max_sum`表示迄今为止找到的最大子数组和。
+> 算法的步骤如下：
+> 1. 初始化`current_sum`和`max_sum`为数组第一个元素的值。
+> 2. 从数组的第二个元素开始，遍历数组。
+> 3. 对于每个元素，更新`current_sum`为`current_sum + element`和`element`中的较大值。这表示，如果将当前元素加入到当前子数组中可以得到更大的和，则将其加入，否则从当前元素重新开始计算子数组的和。
+> 4. 更新`max_sum`为`max(current_sum, max_sum)`，即保持迄今为止找到的最大子数组和。
+> 5. 完成数组遍历后，`max_sum`即为最大子数组和。
+> Kadane's算法的优点是它只需要遍历数组一次，因此具有线性的时间复杂度。它的思想也可以应用于二维数组中，如解决最大子矩阵之和问题时的Kadane's算法的变体。
 
-4. 嵌套循环，遍历`(start_col, M)`范围内子矩阵右下角位置行位置
-
-5. 利用`while` 循环求和 子矩阵的所有元素
-
-6. 每次求和完，判断一下求和结果是否小于0 如果小于0 跳出一层循环。
-
-   
 
 ## 解题代码
 
 ```python
+def solve_method(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+    max_sum = float('-inf')
 
-def solve_method(n,m,arr):
-	max_value= 0
-	for start_row in range(n):
-		for start_col in range(m):
-			for end_row in range(start_row, n):
-				sums = 0
-				for end_col in range(start_col, m):
-					row_index = end_row
-					while  row_index >= start_row:
-						sums += arr[row_index][end_col]
-						row_index -= 1
+    # 遍历所有可能的上边界
+    for top in range(rows):
+        # 初始化dp数组，用于保存每列的累计和
+        dp = [0] * cols
 
-					if sums <=0:
-						break
-					max_value = max(max_value, sums)
+        # 遍历所有可能的下边界
+        for bottom in range(top, rows):
+            # 更新辅助数组，计算每列的累计和
+            for i in range(cols):
+                dp[i] += matrix[bottom][i]
 
-	return max_value
+            # 使用Kadane's算法计算辅助数组的最大子数组和
+            current_sum = 0
+            max_temp = float('-inf')
+            for i in range(cols):
+                current_sum = max(dp[i], current_sum + dp[i])
+                max_temp = max(max_temp, current_sum)
 
+            # 更新最大子矩阵和
+            max_sum = max(max_sum, max_temp)
 
-
+    return max_sum
 
 
 if __name__ == '__main__':
-
-	assert solve_method(3,4,[[-3,5,-1,5],[2,4,-2,4],[-1,3,-1,3]]) == 20
-	assert solve_method(3,4,[[-3,50,-10,-5],[-2,-4,-2,-4],[-1,-3,-1,-3]]) == 50
-
-
+    assert solve_method([[-3, 5, -1, 5], [2, 4, -2, 4], [-1, 3, -1, 3]]) == 20
+    assert solve_method([[-3, 50, -10, -5], [-2, -4, -2, -4], [-1, -3, -1, -3]]) == 50
 ```
 
 

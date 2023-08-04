@@ -1,9 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2023-07-26 10:22:50
-# @Author  : catcooc 
-# @Link    : https://github.com/catcooc
-# @desc    : 106 整数对最小和
+# encoding: utf-8
+"""
+@author: catcooc
+@file: 106_minimum-sum-of-integers.py
+@time: 2023-07-26 10:22:50
+@project: huawei-od-python
+@desc: 106 整数对最小和
+"""
+
 
 import heapq
 

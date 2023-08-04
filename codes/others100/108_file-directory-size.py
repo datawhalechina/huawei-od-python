@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2023-07-27 14:30:46
-# @Author  : catcooc 
-# @Link    : https://github.com/catcooc
-# @desc    : 108 文件目录大小
+# encoding: utf-8
+"""
+@author: catcooc
+@file: 108_file-directory-size.py
+@time: 2023-07-27 14:30:46
+@project: huawei-od-python
+@desc: 108 文件目录大小
+"""
 
 
 def get_dir_id(string):

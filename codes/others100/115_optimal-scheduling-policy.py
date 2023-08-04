@@ -1,35 +1,39 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2023-07-31 15:30:29
-# @Author  : catcooc 
-# @email   ： 
-# @Link    : https://github.com/catcooc
-# @Version : $Id$
+# encoding: utf-8
+"""
+@author: catcooc
+@file: 115_optimal-scheduling-policy.py
+@time: 2023-07-31 15:30:29
+@project: huawei-od-python
+@desc: 115 最优调度策略
+"""
+import math
 
-#import os
-def solve_method(arr):
-	
-	res = 0
-	preIndex = None
-	for i in range(len(arr)):
-		times = list(map(int, arr[i].split()))
-		if preIndex == None:
 
-			minTime = min(times)
-			preIndex = times.index(minTime)
-			
-			if  minTime in  times[:preIndex] + times[preIndex + 1:]:
-				
-				preIndex = None  
-		else:
-			minTime = min(times[:preIndex] + times[preIndex + 1:])
-			preIndex = times.index(minTime)
-			
-			if   minTime in  times[:preIndex] + times[preIndex + 1:]:	
-				preIndex = None 
-		res += minTime
-	return res
+def solve_method(resources):
+    min_res = math.inf
+    for r in resources[0]:
+        # 遍历第一个用户的策略
+        total_resource = r
+        preIndex = resources[0].index(r)
+        for i in range(1, len(resources)):
+            resource = resources[i]
+            # 从除了preIndex标记以外的策略中选择对系统资源消耗最小的策略
+            min_resource = min(resource[:preIndex] + resource[preIndex + 1:])
+            preIndex = resource.index(min_resource)
+            total_resource += min_resource
+        min_res = min(min_res, total_resource)
+
+    return min_res
+
+
 if __name__ == '__main__':
+    resources = [[15, 8, 17],
+                 [12, 20, 9],
+                 [11, 7, 5]]
+    assert solve_method(resources) == 24
 
-	solve_method(["15 8 17","9 20 9","5 7 11"])==8+9+5
-	solve_method(["15 8 17","12 20 9","5 7 11"])==8+9+11
+    resources = [[15, 12, 17],
+                 [12, 3, 9],
+                 [11, 7, 5]]
+    assert solve_method(resources) == 23

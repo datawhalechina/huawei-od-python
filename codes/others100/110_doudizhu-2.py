@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2023-07-26 22:50:13
-# @Author  : catcooc 
-# @email   ： 
-# @Link    : https://github.com/catcooc
-# @Desc    : 110 斗地主（2）
+# encoding: utf-8
+"""
+@author: catcooc
+@file: 110_doudizhu-2.py
+@time: 2023-07-26 22:50:13
+@project: huawei-od-python
+@desc: 110 斗地主（2）
+"""
 
 graph = ["3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 # 给牌按顺序标记 以便于后面找连续的牌

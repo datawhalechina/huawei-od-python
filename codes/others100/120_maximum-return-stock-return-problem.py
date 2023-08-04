@@ -1,54 +1,37 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2023-07-30 18:42:56
-# @Author  : catcooc 
-# @email   ： 
-# @Link    : https://github.com/catcooc
-# @Version : $Id$
-
-def solve_method(input_str):
-	# 如果输入字符串为空，则返回0
-	if not input_str:
-		return 0
-
-	#将输入字符串按空格分割成字符串列表
-	price_strings = input_str.split()
-	# 初始化价格列表，长度为价格字符串列表的长度，每个元素都为0
-	prices = [0] * len(price_strings)
-
-	# 遍历价格字符串列表
-	for i in range(len(price_strings)):
-		#取出当前价格字符串
-		price_string = price_strings[i]
-		# 如果价格字符串的最后一个字符不是数字， 则说明输入无效，返回0
-		if not price_string[:-1].isdigit():
-			return 0
-		# 将价格字符串转换为整数
-		value = int(price_string[:-1])
-		# 取出价格字符串的最后一个字符，判断货币类型
-		currency = price_string[-1]
-		# 如果货币类型是"S",则将价格乘以7
-		if currency == "S":
-			value *= 7
-		# 将处理后的价格存入价格列表
-		prices[i] = value
+# encoding: utf-8
+"""
+@author: catcooc
+@file: 120_maximum-return-stock-return-problem.py
+@time: 2023-07-30 18:42:56
+@project: huawei-od-python
+@desc: 120 最大收益股票收益问题
+"""
 
 
-	#初始化最大利润为0
-	max_profit = 0
+def convert_yuan(price: str):
+    value = int(price[:-1])
+    if price.endswith("S"):
+        value *= 7
+    return value
 
-	#遍历价格列表，计算最大利润
-	for i in range(1, len(prices)):
-		# 如果当前价格比前一个价格高，则将差值加入最大利润
-		if prices[i] > prices[i - 1 ]:
-			max_profit += prices[i] - prices[i - 1]
-		
 
-	# 返回最大利润
-	return max_profit
+def solve_method(prices):
+    prices = list(map(convert_yuan, prices))
+
+    length = len(prices)
+    # dp[i][0] 表示第i天持有股票所得现金。
+    # dp[i][1] 表示第i天不持有股票所得最多现金
+    dp = [[0] * 2 for _ in range(length)]
+    dp[0][0] = -prices[0]
+    dp[0][1] = 0
+    for i in range(1, length):
+        # 第i天持有股票所得现金=第i-1天持有股票与第i天买入股票的最大值
+        dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] - prices[i])
+        # 第i天不持有股票所得最多现金=第i-1天不持有股票和第i天卖出股票的最大值
+        dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] + prices[i])
+    return dp[-1][1]
 
 
 if __name__ == '__main__':
-
-	assert solve_method("2Y 3S 4S 6Y 8S") == 76
-
+    assert solve_method(["2Y", "3S", "4S", "6Y", "8S"]) == 76

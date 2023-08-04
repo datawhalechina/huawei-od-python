@@ -1,9 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2023-07-26 14:01:22
-# @Author  : catcooc 
-# @Link    : https://github.com/catcooc
-# @desc    : 107 整数编码
+# encoding: utf-8
+"""
+@author: catcooc
+@file: 107_integer-code.py
+@time: 2023-07-26 14:01:22
+@project: huawei-od-python
+@desc: 107 整数编码
+"""
+
 
 def solve_method(num):
     # 得到二进制
