@@ -89,6 +89,8 @@
         * [029 出错的或电路](others100/029_faulty-or-gate-circuit.md)
         * [030 分积木](others100/030_sharing-blocks.md)
         * [031 分糖果](others100/031_sharing-candies.md)
+        * [032 分苹果](others100/032_sharing-apples.md)
+        * [033 分解质因数](others100/033_find-prime-factors.md)
         * [040 单词反转](others100/040_reverse-words.md)
         * [042 单词接龙](others100/042_words-chain.md)
         * [043 卡片组成的最大数字](others100/043_max-cards-number.md)
