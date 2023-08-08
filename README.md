@@ -22,7 +22,7 @@
 | 021~040 |  陈希（CompassNull）、胡锐锋   |  已完成  |
 | 041~060 |    左凯文（Regankevin） |  待审核  |
 | 061~080 | 张超（BITprogramMan）  |  待审核  |
-| 081~100 | 胡清心（QingXinHu123） |  待审核  |
+| 081~100 | 胡锐锋（Relph1119） |  待审核  |
 | 101~120 |   毛瑞盈（catcooc）、胡锐锋    |  已完成  |
 | 121~140 |  胡锐锋（Relph1119）   |  已完成  |
 | 141~150 |  冯亚林（Yalin Feng）  |  待审核  |
@@ -44,6 +44,8 @@ Python 3.8 Windows环境
 ```shell
 docsify serve ./docs
 ```
+
+
 
 ## 关注我们
 <div align=center>
