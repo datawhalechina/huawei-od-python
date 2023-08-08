@@ -42,12 +42,12 @@ def solve_method(s):
             break
         else:
             days+=1
-    return days
+    return days if days else -1
 
 
 if __name__ == '__main__':
     assert solve_method("1,0,1,0,0,0,1,0,1") == 2
-    assert solve_method("0,0,0,0") == 0
-    assert solve_method("1,1,1,1,1,1,1,1,1") == 0
-    assert solve_method("1") == 0
+    assert solve_method("0,0,0,0") == -1
+    assert solve_method("1,1,1,1,1,1,1,1,1") == -1
+    assert solve_method("1") == -1
     assert solve_method("0,1,1,0") == 1
