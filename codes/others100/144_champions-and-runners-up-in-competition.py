@@ -4,10 +4,11 @@
 @file: 144_champions-and-runners-up-in-competition.py
 @time: 2023/8/8 15:30
 @project: huawei-od-python
-@desc: 144 比赛的冠亚季军
+@desc: 144 比赛的冠亚军
 """
 import math
 from typing import List
+
 
 def solve_method(strengh: List[int]) -> str:
     nums = len(strengh)
@@ -49,12 +50,16 @@ def solve_method(strengh: List[int]) -> str:
         # 失败者不清空;但这一轮的胜利者要清空
         win.clear()
 
-    # rank[]里只包含冠军的id,lose[]的倒数第二、倒数第一位分别是季军、亚军
-    ret = [str(rank[0]), str(lose[-1]), str(lose[-2])]
+    # rank[]里只包含冠军的id,lose[]的倒数第一位是亚军
+    ret = [str(rank[0]), str(lose[-1])]
     return " ".join(ret)
 
 
 if __name__ == '__main__':
     res = solve_method([2, 3, 4, 5])
     print(res)
-    print(res == "3 1 2")
+    print(res == "3 1")
+
+    res2 = solve_method([6, 5, 4, 3, 2, 1])
+    print(res2)
+    print(res2=="0 4")
