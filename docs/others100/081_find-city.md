@@ -74,9 +74,66 @@ DP[i]=max(城市群1的城市个数,城市群2的城市个数,...,城市群`m`�
 ## 解题思路
 
 **基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 初始化dp数组，表示城市的聚集度。
+2. 遍历城市`i`：
+    - 在道路上，删除该城市（即切断通往该城市的所有道路）。
+    - 初始化城市群集合`urban`，每个元素是`set`集合，表示城市群。
+    - 初始化城市群标识，如果有交集，表示有道路连接到这个城市群，则为True，如果没有，则为False
+      - 如果都没有道路连接该城市，则添加单独城市群。
+      - 如果有道路连接该城市，则直接并入已有城市群。
+    - 计算聚集度dp。
+3. 得到最小的聚集度的城市。   
 
 ## 解题代码
+
+```python
+from copy import deepcopy
+
+
+def solve_method(n, city_roads):
+    dp = [0] * n
+    for i in range(1, n + 1):
+        copy_roads = deepcopy(city_roads)
+        urban = []
+
+        for x in copy_roads:
+            if i in x:
+                x.remove(i)
+
+            cities = set(x)
+            if len(urban) == 0:
+                urban.append(cities)
+            else:
+                # 如果有交集，表示有道路连接到这个城市群，则为True，如果没有，则为False
+                mask_city = [True if len(cities.intersection(x)) > 0 else False for x in urban]
+
+                if not any(mask_city):
+                    # 如果都没有，则添加单独城市群
+                    urban.append(cities)
+                else:
+                    # 如果有，则直接并入已有城市群
+                    index = mask_city.index(True)
+                    urban[index] = urban[index].union(cities)
+
+        # 计算聚集度dp
+        dp[i - 1] = max([len(x) for x in urban])
+
+    # 得到最小的聚集度的城市
+    min_value = min(dp)
+    return [i + 1 for i, x in enumerate(dp) if x == min_value]
+
+
+if __name__ == '__main__':
+    roads = [[1, 2],
+             [2, 3],
+             [3, 4],
+             [4, 5]]
+    assert solve_method(5, roads) == [3]
+
+    roads = [[1, 2],
+             [2, 3],
+             [2, 5],
+             [3, 4],
+             [3, 6]]
+    assert solve_method(6, roads) == [2, 3]
+```

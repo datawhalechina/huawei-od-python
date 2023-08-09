@@ -51,10 +51,35 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 
+1. 遍历所有数字列表：
+   - 从0\~`n-1`开始遍历，计算循环左移之后的值
+   - 取出最大值，并累加到结果值中。
+2. 返回结果值。    
 
 ## 解题代码
+
+```python
+def solve_method(arr):
+    result = 0
+    n = len(arr)
+    for ints in arr:
+        max_sum = -1
+        for i in range(n):
+            # 循环左移
+            bin_int = ints[i:] + ints[:i]
+            max_sum = max(max_sum, int(''.join(map(str, bin_int)), 2))
+
+        result += max_sum
+
+    return result
+
+
+if __name__ == '__main__':
+    arr = [[1, 0, 0, 0, 1],
+           [0, 0, 0, 1, 1],
+           [0, 1, 0, 1, 0],
+           [1, 0, 0, 1, 1],
+           [1, 0, 1, 0, 1]]
+    assert solve_method(arr) == 122
+```
