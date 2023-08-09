@@ -1,6 +1,6 @@
-# 166 - 矩形相交的面积
+# 166 矩形相交的面积
 
-## 题目
+## 题目描述
 
 给出3组点坐标(x , y , w , h)，-1000 <x, y<1000，w, h为正整数。
 
@@ -18,7 +18,7 @@
 
 求3组坐标构成的矩形区域重合部分的面积。
 
-## 输入
+## 输入描述
 
 3行输入分别为3个矩形的位置，分别代表"左上角x坐标"，“左上角y坐标”，“矩形宽”，“矩形高”
 
@@ -30,10 +30,10 @@
 输出3个矩形相交的面积，不相交的输出0。
 
 
+## 示例描述
+### 示例一
 
-## 示例一
-
-### 输入
+**输入：**
 
 ```python
 1 6 4 4
@@ -41,13 +41,13 @@
 0 3 7 3
 ```
 
-### 输出
+**输出：**
 
 ```
 2
 ```
 
-### 说明
+**说明：**
 
 给定3个矩形A，B，C
 
@@ -60,6 +60,7 @@ C:左上角坐标(0,3)，宽7，高3
 
 
 ## 解题思路
+**基本思路：**
 
 相交区域一定是由矩形组成的左上坐标和右下坐标围成的最小面积，如何最小化面积？找每个坐标的最小或最大值即可。
 
@@ -92,12 +93,21 @@ def solve_method(s1, s2, s3):
             inter_area.append(max(coro))
         if ind == 1 or ind==2:
             inter_area.append(min(coro))
-    # 右下x一定大于左上x，左上y一定大于右下x。当然也可以不区分，直接相减加上绝对值
-    return (inter_area[3]-inter_area[0])*(inter_area[1]-inter_area[2])
+    # print((inter_area[0], inter_area[1]), (inter_area[2], inter_area[3]))
+    
+    # 右下x一定大于左上x，左上y一定大于右下x,否则不存在相交区域
+    # 如果不相交，也会求取一个面积，为他们最近点围成的面积
+    if (inter_area[2]-inter_area[0])<=0 or (inter_area[1]-inter_area[3])<=0:
+        return 0
+    else:
+        return (inter_area[2]-inter_area[0])*(inter_area[1]-inter_area[3])
 
 
 if __name__ == '__main__':
-    assert solve_method("1 6 4 4", "3 5 3 4", "0 3 7 3") == 2
+    assert solve_method("1 6 4 4", "3 5 3 4", "0 3 7 3") == 2 # 相交，面积为2
+    assert solve_method("2 0 2 2", "0 2 2 2", "4 2 2 2") == 0 # 不相交，面积为0
+    assert solve_method("1 7 2 2", "4 2 2 2", "8 7 2 2") == 0 # 不相交，面积为15
+
 ```
 
 
