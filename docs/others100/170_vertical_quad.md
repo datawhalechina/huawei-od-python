@@ -4,12 +4,12 @@
 
 竖直四子棋的棋盘是竖立起来的，双方轮流选择棋盘的—列下子，棋子因重力落到棋盘底部或者其他棋子之上，当一列的棋子放满时，无法再在这列上下子。—方的4个棋子横、竖或者斜方向连成—线时获胜。现给定一个棋盘和红蓝对弈双方的下子步骤，判断红方或蓝方是否在某一步获胜。下面以一个6 x 5的棋盘图示说明落子过程:
 
-![image-20230809111101515](../../../AppData/Roaming/Typora/typora-user-images/image-20230809111101515.png)
+![170_vertical_quad1](https://github.com/Relph1119/huawei-od-python/docs/others100/images/170_vertical_quad1.png)
+![170_vertical_quad2](https://github.com/Relph1119/huawei-od-python/assets/51115117/e42ce423-165f-427f-a786-c704c046751f)
 
 下面给出横、竖和斜方向四子连线的图示:
 
-![image-20230809111136031](../../../AppData/Roaming/Typora/typora-user-images/image-20230809111136031.png)
-
+![170_vertical_quad2](https://github.com/Relph1119/huawei-od-python/docs/others100/images/170_vertical_quad2.png)
 ## 输入描述
 
 输入为2行，第一行指定棋盘的宽和高，为空格分隔的两个数字
