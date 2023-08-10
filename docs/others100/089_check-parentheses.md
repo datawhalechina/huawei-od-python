@@ -101,10 +101,49 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 初始化括号的字典`pares`。
+2. 初始化栈，用于存储括号。   
+3. 遍历字符串列表：
+   - 如果是左括号，则入栈，并计算当前栈的长度，表示括号深度。
+   - 如果是右括号，如果栈中有对应的左括号，则弹出栈，否则返回0。
+4. 如果栈为空，表示括号都能匹配到，返回最大深度，否则返回0。
 
 ## 解题代码
+
+```python
+def solve_method(string):
+    string = list(string)
+    depth = 0
+    stack = []
+
+    pares = {
+        ")": "(",
+        "]": "[",
+        "}": "{"
+    }
+
+    for char in string:
+        if char in ["(", "[", "{"]:
+            stack.append(char)
+            depth = max(depth, len(stack))
+        elif char in [")", "]", "}"]:
+            if len(stack) == 0:
+                return 0
+            if stack[-1] == pares.get(char):
+                stack.pop()
+            else:
+                return 0
+
+    if len(stack) == 0:
+        return depth
+    else:
+        return 0
+
+
+if __name__ == '__main__':
+    assert solve_method("[]") == 1
+    assert solve_method("([]{()})") == 3
+    assert solve_method("(]") == 0
+    assert solve_method("([)]") == 0
+    assert solve_method(")(") == 0
+```

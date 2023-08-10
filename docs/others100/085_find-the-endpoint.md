@@ -63,10 +63,36 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：**
+1. 从第1步到数组长度的一半的步数遍历：
+   - 根据选择的步长，走出第1步。
+   - 使用`while`循环遍历，当走到最后一个位置时，可以得到最少步数。
+2. 返回最少步数。    
 
 ## 解题代码
+
+```python
+import math
+
+
+def solve_method(nums):
+    n = len(nums)
+    result = math.inf
+    for i in range(1, n // 2):
+        # 根据选择的步长，走出第1步
+        step = 1
+        current_index = i
+        while current_index < n:
+            # 当走到最后一个位置时，可以比较得到最少步数
+            if current_index == n - 1:
+                result = min(result, step)
+            step += 1
+            current_index += nums[current_index]
+
+    return result if result != math.inf else -1
+
+
+if __name__ == '__main__':
+    assert solve_method([1, 2, 3, 7, 1, 5, 9, 3, 2, 1]) == -1
+    assert solve_method([7, 5, 9, 4, 2, 7, 1, 1, 1, 1, 1, 1, 1]) == 2
+```

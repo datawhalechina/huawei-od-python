@@ -44,10 +44,47 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 如果输入参数`m`小于等于1或者大于等于100，输出`ERROR!`。
+2. 初始化`n`个小朋友的编号`nums`。   
+3. 初始化用于`m`计数的`count`、初始化当前遍历到的位置`index`。   
+4. 使用`while`循环遍历，当大于1个小朋友时，继续循环：
+    - 开始计数，如果到达了第`m`个，则该位置的人退出，并修改`count`值从0开始重新计数到M
+    - 如果没有达到第`m`个小朋友，则继续下一个小朋友。
+    - 如果已经循环了一圈，则从0位置开始继续循环报数。
+5. 返回结果，最后一个小朋友的编号`nums[0]`。
 
 ## 解题代码
+
+```python
+def solve_method(n, m):
+    if m <= 1 or m >= 100:
+        return "ERROR!"
+
+    nums = [i for i in range(1, n + 1)]
+    # 用于m的计数
+    count = 0
+    # 当前遍历到的位置
+    index = 0
+    while len(nums) > 1:
+        # 开始计数第count个
+        count += 1
+        if count == m:
+            # 如果到达了第m个，则该位置的人退出
+            nums.pop(index)
+            # 从0开始重新计数到m
+            count = 0
+        else:
+            # 继续下一个人
+            index += 1
+
+        if index == len(nums):
+            # 如果已经循环了一圈，则从0位置开始继续循环报数
+            index = 0
+
+    return nums[0]
+
+
+if __name__ == '__main__':
+    assert solve_method(15, 3) == 5
+    assert solve_method(7, 4) == 2
+```

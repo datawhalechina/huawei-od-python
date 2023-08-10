@@ -34,7 +34,7 @@ URL后缀（一个长度小于100的字符串）
 
 **输入：**
 ```text
-/abc,/bcd
+/abc/,/bcd
 ```
 
 **输出：**
@@ -68,10 +68,27 @@ URL后缀（一个长度小于100的字符串）
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
+1. 对字符串进行`,`分隔，得到字符串列表`urls`。
+2. 将字符串列表中的每一个元素去掉首尾的`/`，然后再用`/`进行拼接。
+3. 如果仅为单个`/`，则返回，否则，需要在头部添加一个`/`。
 4. 返回结果。
 
 ## 解题代码
+
+```python
+def solve_method(urls):
+    urls = urls.split(",")
+    if len(urls) == 0:
+        return "/"
+
+    urls = "/".join([x.strip("/") for x in urls])
+    result = urls if urls == "/" else "/" + urls
+    return result
+
+
+if __name__ == '__main__':
+    assert solve_method("/acm,/bb") == "/acm/bb"
+    assert solve_method("/abc/,/bcd") == "/abc/bcd"
+    assert solve_method("/acd,bef") == "/acd/bef"
+    assert solve_method(",") == "/"
+```
