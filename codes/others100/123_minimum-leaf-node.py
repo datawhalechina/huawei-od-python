@@ -31,7 +31,8 @@ def solve_method(arr):
     min_pos = 0
     for i in range(2, len(arr)):
         val = arr[i]
-        if val not in [0, -1] and val < min_val and i * 2 > len(arr):
+        # 判断叶子节点：当节点的左子节点的下标索引超出了数组长度，或者节点的左子节点和右子节点均为-1时，是叶子节点
+        if val not in [0, -1] and val < min_val and (i * 2 > len(arr) or (arr[2 * i] == -1 and arr[2 * i + 1] == -1)):
             min_val = val
             min_pos = i
     # 回溯，找到路径
@@ -44,3 +45,4 @@ def solve_method(arr):
 if __name__ == '__main__':
     assert solve_method([3, 5, 7, -1, -1, 2, 4]) == [3, 7, 2]
     assert solve_method([5, 9, 8, -1, -1, 7, -1, -1, -1, -1, -1, 6]) == [5, 8, 7, 6]
+    assert solve_method([3, 5, 7, 6, 7, 2, 4, 9, 8, 14, 13, -1, -1]) == [3, 7, 2]

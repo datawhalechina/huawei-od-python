@@ -20,3 +20,4 @@ def solve_method(img):
 if __name__ == '__main__':
     assert solve_method([0, 0, 0, 0]) == 128
     assert solve_method([129, 130, 129, 130]) == -2
+    assert solve_method([-1 -1 -1 -1]) == 128
