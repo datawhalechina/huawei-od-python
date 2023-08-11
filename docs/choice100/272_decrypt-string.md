@@ -106,9 +106,12 @@ Not Found
 ## 解题代码
 
 ```python
+import re
+
+
 def solve_method(string1, string2):
     # 获取有效子串
-    avail_strings = get_available_strings(string1)
+    avail_strings = re.findall(r'[^0-9a-f]+', string1)
 
     # 参考字符串的长度
     string2_len = len(set(string2))
@@ -130,25 +133,6 @@ def solve_method(string1, string2):
                     result = ava_str
 
     return result if len(result) > 0 else "Not Found"
-
-
-def get_available_strings(string1):
-    scrambled_sub = "1234567890abcdef"
-
-    avail_strings = []
-    tmp_string = ""
-    for c in string1:
-        if c not in scrambled_sub:
-            tmp_string += c
-        else:
-            if tmp_string != "":
-                avail_strings.append(tmp_string)
-                tmp_string = ""
-
-    if tmp_string != "":
-        avail_strings.append(tmp_string)
-
-    return avail_strings
 
 
 if __name__ == '__main__':

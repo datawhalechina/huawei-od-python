@@ -48,29 +48,40 @@ CPU同时只能运行一个任务，请编写一个任务调度程序，采用�
 
 ## 解题思路
 
-1. 遍历任务列表`tasks`：
+1. 对`tasks`重新生成，便于进入堆，每个元素的4个值分别是任务优先级、到达时间、执行时间和任务ID。
+2. 遍历任务列表`tasks`：
     - 获取当前时刻的任务`current_task`。
-    - 如果任务不为空，获取优先级最高的任务。
+    - 如果任务不为空，堆顶为优先级最高的任务，获取优先级最高的任务。
     - 如果CPU空闲时间，从等待列表中取出优先级最高的任务执行。
     - 执行任务，运行时间减1，如果执行完毕，则移出等待列表和任务列表，将任务id和当前时间添加到结果列表中。
     - 执行时间加1，继续遍历。
-2. 返回结果列表。    
+3. 返回结果列表。    
 
 ## 解题代码
 
 ```python
+import heapq
+
+
 def solve_method(tasks):
+    """
+    :param tasks: 任务列表：每个元素有4个值，分别是任务ID、任务优先级、执行时间和到达时间
+    :return:
+    """
     time = 0
     waiting_list = []
     result = []
+    # 对tasks重新生成，便于进入堆，每个元素的4个值分别是任务优先级、到达时间、执行时间和任务ID
+    for i, task in enumerate(tasks):
+        task_id, priority, duration, arrival_time = task
+        tasks[i] = [-priority, arrival_time, duration, task_id]
 
     while len(tasks) > 0:
-        current_task = next((task for task in tasks if task[3] == time), None)
+        current_task = next((task for task in tasks if task[1] == time), None)
 
         if current_task is not None:
-            waiting_list.append(current_task)
-            # 按优先级从高到低排序
-            waiting_list = sorted(waiting_list, key=lambda x: -x[1])
+            # 堆顶为优先级最高的任务
+            heapq.heappush(waiting_list, current_task)
             # 取出优先级最高的任务执行
             current_task = waiting_list[0]
         else:
@@ -82,9 +93,10 @@ def solve_method(tasks):
             current_task[2] -= 1
             if current_task[2] == 0:
                 # 任务执行完毕
-                result.append([current_task[0], time + 1])
+                result.append([current_task[3], time + 1])
                 tasks.remove(current_task)
-                waiting_list.remove(current_task)
+                # 从waiting_list堆中移除掉堆顶优先级最大的元素
+                heapq.heappop(waiting_list)
 
         time += 1
 
