@@ -68,58 +68,6 @@
 
 
 
-### 示例三（补充）
-
-**输入：**
-
-```
-5
-0 0
-1 2
-3 1
-2 -1
-1 1
-```
-
-**输出：**
-
-```
-1
-```
-
-**说明：**
-
-虽然多了一个点, 但还是上面的那四个点去构成正方形。
-
-
-
-### 示例四（补充）
-
-**输入：**
-
-```
-7
-0 0
-1 2
-3 1
-2 -1
-1 1
-1 0
-0 1
-```
-
-**输出：**
-
-```
-2
-```
-
-**说明：**
-
-前面的正方形加上(0,0),(0,1),(1,0),(1,1)构成新的一个正方形, 2个。
-
-
-
 ## 解题思路
 
 ### 直接方法：每次选4个点判断
@@ -128,8 +76,9 @@
    - 从`N`个点里**不重复地选出4个点的组合**
    - 判断**4个点能否形成正方形**
    - 当不能再选出新的点的组合时, 循环结束, 返回正方形个数。
-2. 那么怎么从`N`个点里依次选出4个点来呢？
-   - 最简单的想法就是一个用四重循环
+2.   那么怎么从`N`个点里依次选出4个点来呢？
+
+最简单的想法就是一个用四重循环：
 
 ```python
 ...
@@ -144,10 +93,24 @@ for i in range(n-3):
                     count += 1
 ```
 
+不过上面那种写法看起来感觉很冗长，最好使用python内置库`itertools模块`进行组合：
+
+```python
+# 使用 itertools.combinations 生成4个点索引的不重复组合;
+points_combination = itertools.combinations(range(len(points)), 4)
+count = 0
+for combination in points_combination:
+    four_points = [ points[index] for index in combination ]
+```
+
+
+
+
+
 3. 选出了4个点，怎么判断它们可否构成正方形呢？
-   - 我们有4个点的坐标, 每两个点之间可以形成一条边, 就有 4*3/2=6条边。
-   - 正方形的四个顶点之间正好有**四条边**, **两条对角线**, 4+2 也就是这6条边。同时正方形对角线长度是边的根号二倍。
-   - 所以我们可以**计算得到6条边的长度**, 如果这6条边里的**4条短边之间长度相等**, 说明这四条短边就是正方形的四边。而**两条长边之间也长度相等**, 说明这四个顶点可以形成正方形。
+   - 我们有4个点的坐标, 每两个点之间可以形成一条边, 就有6条边。
+   - 正方形的四个顶点之间正好有**四条边**，**两条对角线**，同时正方形对角线长度是边的根号二倍。
+   - 所以我们可以**计算得到6条边的长度**, 如果这6条边里的**4条短边之间长度相等**, 证明这个四边形是菱形。而**两条长边之间也长度相等**，进一步推得它是正方形。
 
 
 
@@ -165,54 +128,32 @@ $$
 #### 解题代码
 
 ```python
-# encoding: utf-8
+import itertools
 from typing import List
 
+def solve_method(points: List[List[int]]) -> int:
+    # 1. 定义 is_square([points1,...,points4]= 点1,点2,点3,点4能否构成正方形
+    def is_square(points: List[List[int]]) -> bool:
+        assert len(points) == 4
+        # 计算每个点两两之间的边长
+        distances = []
+        for i in range(3):
+            for j in range(i + 1, 4):
+                x, y = points[i][0] - points[j][0], points[i][1] - points[j][1]
+                distances.append(x * x + y * y)
 
-def is_square(point1: List[int], point2: List[int], point3: List[int], point4: List[int]) -> bool:
-    """第一种方法, 每次组合选4个点;通过4个点判断能否构成正方形.缺点是复杂度较高, 为O(n^4).
-     :param point1: 第一个点的坐标,需要是列表类型,列表长度需要为2;其他三个参数以此类推
-     :return: 四个点可否构成正方形
-     """
-    points = [point1, point2, point3, point4]
-    distances = []
+        distances.sort()
+        # 条件1：四条边长度相等（保证是菱形）
+        # 条件2：两条对角线长度相等（菱形的两条对角线相等,那么就是正方形）
+        return (distances[0] == distances[1]) and (distances[1] == distances[2]) and (
+                distances[2] == distances[3]) and (distances[4] == distances[5])
 
-    # 每个点两两之间形成一条边,计算这些边的长度(的平方),保存到 distances 里
-    for i in range(3):
-        for j in range(i + 1, 4):
-            x, y = points[i][0] - points[j][0], points[i][1] - points[j][1]
-            distance = x * x + y * y
-            distances.append(distance)
-
-    # 按边的长度排序,默认是升序
-    distances.sort()
-
-    # 条件1：四条边长度相等（保证是菱形）
-    # 条件2：两条对角线长度相等（一个菱形的两条对角线相等,那么这个菱形就是正方形）
-    return (distances[0] == distances[1]) and (distances[1] == distances[2]) and (
-            distances[2] == distances[3]) and (distances[4] == distances[5])
-    
-if __name__ == '__main__':
-    # 1. 处理输入
-    n = int(input())
-    points = []
-    for i in range(n):
-        # input().split()的结果是 一个字符串列表, 如["0","0"]
-        # 我们使用 map(int,input().split()),即对input().split()的里的每个元素执行 int(),即转化为int类型
-        # x,y = (int("0"),int("0")) = 0,0
-        x, y = map(int, input().split())
-        points.append([x, y])
-
-    # 2.计算能构成多少个正方形
+    # 2. 使用  itertools.combinations 生成4个点索引的不重复组合; 调用 is_square 判断点的组合能否构成正方形
+    points_combination = itertools.combinations(range(len(points)), 4)
     count = 0
-    for i in range(n - 3):
-        for j in range(i + 1, n - 2):
-            for k in range(j + 1, n - 1):
-                for p in range(k + 1, n):
-                    if is_square(points[i], points[j], points[k], points[p]):
-                        count += 1
-    # 3. 打印输出
-    print(count)
+    for combination in points_combination:
+        count += 1 if is_square([points[index] for index in combination]) else 0
+    return count
 ```
 
 
@@ -221,13 +162,9 @@ if __name__ == '__main__':
 
 ### 其他方法
 
-该题解法很多，跟数学关系很大。
+该题跟数学关系很大，关键在于两点，第一是怎么**从N个点里挑选出点的组合**，第二**判断点的组合能不能构成正方形**。
 
-它的关键在于两点, 第一是怎么**从N个点里挑选出点的组合**, 第二**判断点的组合能不能构成正方形**。
-
-我们如果从N个点里选出4个点来, 4个点、4个点地进行判断, 时间复杂度就是O(N^4), 这在N不大的时候是可行的。
-
-但其实我们可以每次选点只选3个, 进行更多的分析。这样的好处在于降低时间复杂度, 但是会增加代码实现的难度。
+除了每次4个点选取组合，我们也可以每次少选取点的组合，引入更多的分析。
 
 
 
@@ -235,23 +172,13 @@ if __name__ == '__main__':
 
 #### 每个组合选三个点
 
-1. 假如给定4个点可以组成正方形：`[(0,0),(0,1),(1,0),(1,1)]`
+- 假如给定4个点可以组成正方形：`[(0,0),(0,1),(1,0),(1,1)]`
 
 我们先选出3个点`(0,0),(0,1),(1,0)`, 计算得到3条边 00到01, 00到10, 01到10, 长度分别为1, 1, 根号二。
 
 我们发现有两条边相等, 长边的长度是短边的根号2倍, 说明这三个点是可能构成正方形的。我们再加上一个合适的点就可以构成正方形。
 
-实际上, 如果确定了这三个点, 那最后一个点的位置是确定和唯一的。我们用高中数学里关于向量的知识就可以得到它。通过计算得到这个点坐标, 再判断它是否在我们的输入坐标里, 如果在, 那就可以构成一个正方形。
-
-
-
-2. 而对于4个点`[(0,0),(0,1),(2,0),(1,1)]`
-
-我们选出3个点`(0,0),(0,1),(2,0)`, 计算3条边 00到01, 00到20, 01到20, 长度分别为1, 2, 根号5。这就表明这三个点不可能构成正方形。所以我们跳过这种可能, 不用管最后一个点。
-
-我们每次选3个点就判断, 可以提前进行一次筛选, 效率当然是比选出4个点再判断高。
-
-
+实际上, 如果确定了这三个点, 最后一个点的位置是唯一的。
 
 - 这种办法的时间效率也不是最高的, 我们可以每个组合只选两个点。
 
@@ -263,7 +190,7 @@ if __name__ == '__main__':
 
 同样用高中数学的向量运算, 我们可以用这四个变量x1, x2, y1, y2来表示其他两个顶点。
 
-> Case 1:
+> - Case 1
 >
 > x3=x1+(y1-y2); y3=y1-(x1-x2);
 >
@@ -271,7 +198,7 @@ if __name__ == '__main__':
 >
 > 
 >
-> Case 2:
+> - Case 2
 >
 > x3=x1-(y1-y2); y3=y1+(x1-x2);
 >
@@ -279,49 +206,33 @@ if __name__ == '__main__':
 
 
 
-- 接下来, 我们可以每次用一个二重循环遍历两个点的组合, 然后计算可能的(x3,y3)和(x4,y4), 并检查两个点是否在输入的点集里, 如果在, 计数就+1.
+- 接下来，我们每次用一个二重循环遍历两个点的组合, 然后计算可能的(x3,y3)和(x4,y4), 并检查两个点是否在输入的点集里, 如果在, 计数就+1。
 
-* 按这种方法, 一个正方形**ABCD**会被重复计算**,ABCD,选AB检查CD +1次,选BC检查AD +1次,选CD +1,选AD +1,**所以真实次数还要除以4
+* 按这种方法, 一个正方形**ABCD**会被重复计算4次，所以真实次数还要除以4。
 
 
 
 #### 解题代码
 
 ```python
-def method2(n: int, points: List[List[int]]) -> int:
-    """第二种方法, 每次组合只选2个点.并以这两个点为顶点, 能构成多少个正方形.好处是O(n^2)的时间复杂度.
-     :param n: 坐标个数
-     :param points: 所有点的坐标, 里面的每个元素都是长度为2的列表, 表示每个点的横纵坐标。
-     :return: 四个点可否构成正方形
-     """
+def solve_method2(points: List[List[int]]) -> int:
     count = 0
-    for i in range(n - 1):
-        for j in range(i + 1, n):
-            x1, y1 = points[i][0], points[i][1]
-            x2, y2 = points[j][0], points[j][1]
+    points_combination = itertools.combinations(range(len(points)), 2)
+    for combination in points_combination:
+        index1, index2 = combination[0], combination[1]
+        x1, y1 = points[index1][0], points[index1][1]
+        x2, y2 = points[index2][0], points[index2][1]
 
-            x3, y3, x4, y4 = x1 + (y1 - y2), y1 - (x1 - x2), x2 + (y1 - y2), y2 - (x1 - x2)
-            if [x3, y3] in points and [x4, y4] in points:
-                count += 1
+        x3, y3, x4, y4 = x1 + (y1 - y2), y1 - (x1 - x2), x2 + (y1 - y2), y2 - (x1 - x2)
+        count += 1 if [x3, y3] in points and [x4, y4] in points else 0
 
-            x3, y3, x4, y4 = x1 - (y1 - y2), y1 + (x1 - x2), x2 - (y1 - y2), y2 + (x1 - x2)
-            if [x3, y3] in points and [x4, y4] in points:
-                count += 1
+        x3, y3, x4, y4 = x1 - (y1 - y2), y1 + (x1 - x2), x2 - (y1 - y2), y2 + (x1 - x2)
 
-    # 一个正方形ABCD会被重复计算,ABCD,AB+1,BC+1,CD+1,AD+1,所以真实次数还要除以4
-    count /= 4
-    print(count)
-    return int(count)
+        count += 1 if [x3, y3] in points and [x4, y4] in points else 0
+
+    # 一个正方形ABCD会被重复计算4次,所以真实次数还要除以4. 如: ABCD,AB+1,BC+1,CD+1,AD+1
+    count //= 4
+    return count
 ```
 
 
-
-
-
-## 总结
-
-这个问题是一个比较基础的问题，主要步骤就是：1) 不重复地选出点的组合； 2）判断点的组合能否构成一个正方形。
-
-因为本题`N`的取值范围很小, 在能AC的前提下, 使用最直接的四重循环，每次选取4个点的组合，直接而高效。
-
-但如果`N`的取值较大, 显然后面提到的方法更好。
