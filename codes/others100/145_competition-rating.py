@@ -1,13 +1,11 @@
-#!/usr/bin/env python
 # encoding: utf-8
 """
 @author: Yalin Feng
-@file: 145_competition_rating.py
+@file: 145_competition-rating.py
 @time: 2023/8/9 23:45
 @project: huawei-od-python
 @desc: 145 比赛评分
 """
-
 from typing import List
 from functools import cmp_to_key
 

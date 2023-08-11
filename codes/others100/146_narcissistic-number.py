@@ -1,15 +1,11 @@
-#!/usr/bin/env python
 # encoding: utf-8
 """
 @author: Yalin Feng
-@file: 146_narcissistic_number.py
+@file: 146_narcissistic-number.py
 @time: 2023/8/11 0:30
 @project: huawei-od-python
 @desc: 146 水仙花数
 """
-from typing import List
-
-
 from typing import List
 
 
@@ -31,8 +27,8 @@ def solve_method(N: int, M: int) -> int:
     start, end = 10 ** (N - 1), 10 ** N
 
     for num in range(start, end):
-        sum = 0			# 保存每个数字的幂次之和
-        num_copy = num 	# 用来获取数字的每一位数
+        sum = 0         # 保存每个数字的幂次之和
+        num_copy = num  # 用来获取数字的每一位数
         while num_copy != 0:
             sum += digit_power[(num_copy % 10)][N]
             num_copy //= 10
