@@ -52,10 +52,46 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 如果余数与前几次的余数相同，则表示其中一定存在连续累加为m的数字，可以用于判断。
+1. 初始化结果列表。
+2. 遍历输入数据：
+   - `m`表示发给小明的牌，`pokers`表示后续发的牌。
+   - 遍历后续发的牌：
+        - 计算累加和与`m`的余数。
+        - 如果余数与前几次的余数相同，则表示其中一定存在连续累加为m的数字，返回1。
+   - 否则遍历之后都没有，则返回0。
+   - 将判断结果存入结果列表中。 
+3. 返回结果列表。
 
 ## 解题代码
+
+```python
+def solve_method(cases):
+    result = []
+    for case in cases:
+        m = case[0]
+        pokers = case[1]
+
+        # 累加和
+        pre_sum = 0
+        is_true = 0
+        # 余数集合
+        remainders = set()
+        for poker in pokers:
+            pre_sum = (pre_sum + poker) % m
+            # 如果余数与前几次的余数相同，则表示其中一定存在连续累加为m的数字
+            if pre_sum in remainders:
+                is_true = 1
+                break
+            remainders.add(pre_sum)
+
+        result.append(is_true)
+
+    return result
+
+
+if __name__ == '__main__':
+    cases = [[7, [4, 4, 2, 5, 3, 5, 5]],
+             [11, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]]
+    assert solve_method(cases) == [1, 0]
+```

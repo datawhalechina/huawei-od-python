@@ -35,10 +35,48 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 第0项时，`prev_chars`结果为1，用于存储前一项。
+2. 从第2项开始生成：
+   - 计数器`count`初始化为1，用于记录有多少个数字。
+   - 对前一项的数进行描述：
+        - 如果当前数字与前一个数字相同，计数器加1。
+        - 如果不相同，将计数和数字添加到描述中，重置计数器为1。
+   - 处理最后一个数字，得到前一个数的描述。
+   - 将描述保存到prev_chars变量中。 
+3. 返回结果。
 
 ## 解题代码
+
+```python
+def solve_method(n):
+    prev_chars = "1"
+
+    # 从第2项开始生成
+    for _ in range(1, n + 1):
+        # 获取前一项
+        current = prev_chars
+        # 计数器初始化为1
+        count = 1
+        description = ""
+
+        for i in range(1, len(current)):
+            if current[i] == current[i - 1]:
+                # 如果当前数字与前一个数字相同，计数器加1
+                count += 1
+            else:
+                # 将计数和数字添加到描述中，重置计数器为1
+                description += str(count) + current[i - 1]
+                count = 1
+
+        # 处理最后一个数字，得到前一个数的描述
+        description += str(count) + current[-1]
+        # 将描述保存到prev_chars变量中
+        prev_chars = description
+    
+    return prev_chars
+
+
+if __name__ == '__main__':
+    assert solve_method(0) == "1"
+    assert solve_method(4) == "111221"
+```

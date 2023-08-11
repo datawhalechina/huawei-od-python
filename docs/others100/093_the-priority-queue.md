@@ -50,10 +50,20 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 使用`set`方法进行列表去重。
+2. 对列表进行排序，先按照优先级从大到小，再按照数据从小到大。
+3. 返回结果，取出列表中的数据。
 
 ## 解题代码
+
+```python
+def solve_method(arr):
+    arr = list(set(arr))
+    arr.sort(key=lambda x: (-x[1], x[0]))
+    return [x[0] for x in arr]
+
+
+if __name__ == '__main__':
+    assert solve_method([(10, 1), (20, 1), (30, 2), (40, 3)]) == [40, 30, 10, 20]
+    assert solve_method([(10, 1), (10, 1), (30, 2), (40, 3)]) == [40, 30, 10]
+```

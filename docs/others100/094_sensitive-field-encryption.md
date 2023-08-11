@@ -30,7 +30,7 @@ password__a12345678_timeout_100
 
 **输出：**
 ```text
-password__******_timeout_100
+password_******_timeout_100
 ```
 
 ### 示例二
@@ -48,10 +48,56 @@ aaa_password_"******"_timeout_100_""
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 初始化双引号计数器`quote_count`，用于判断是否在双引号内部
+2. 遍历字符串：
+   - 遇到第一个双引号，双引号计数器加1。
+   - 遇到第二个双引号，将命令字存入列表中，并将当前命令字清空。
+   - 遇到下划线、且当前命令字不为空、且不在双引号内部，判断双引号计数器，如果为2则还原成0，将命令字存入列表中，并将当前命令字清空。
+   - 遇到非下划线字符，或当前命令字为空且字符不为下划线，或当前命令中包含一个双引号，将当前字符添加到当前命令字中。
+3. 将最后一个命令字添加到命令列表。
+4. 对第`k`个命令字进行替换，用`_`拼接，返回结果。
 
 ## 解题代码
+
+```python
+def solve_method(k, string):
+    commands = []
+    command = ""
+    # 双引号计数器，用于判断是否在双引号内部
+    quote_count = 0
+    for ch in string:
+        if ch == '"' and quote_count != 1:
+            # 遇到第一个双引号
+            command += ch
+            quote_count += 1
+        elif ch == '"' and quote_count == 1:
+            # 遇到第二个双引号
+            quote_count += 1
+            command += ch
+            commands.append(command)
+            command = ""
+        elif ch == '_' and command != "" and quote_count != 1:
+            #  遇到下划线，当前命令字不为空，不在双引号内部
+            if quote_count == 2:
+                quote_count = 0
+            commands.append(command)
+            command = ""
+        elif (command == "" and ch != "_") or ('"' in command) or ch != "_":
+            # 遇到非下划线字符，或当前命令字为空且字符不为下划线，或当前命令中包含一个双引号
+            command += ch
+
+    if command != "":
+        # 将最后一个命令字添加到命令列表
+        commands.append(command)
+
+    if k < len(commands):
+        commands[k] = "******" if '"' not in commands[k] else '"******"'
+        return "_".join(commands)
+    else:
+        return "ERROR"
+
+
+if __name__ == '__main__':
+    assert solve_method(1, "password__a12345678_timeout_100") == "password_******_timeout_100"
+    assert solve_method(2, 'aaa_password_"al2_45678"_timeout__100_""_') == 'aaa_password_"******"_timeout_100_""'
+```
