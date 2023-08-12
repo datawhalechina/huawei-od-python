@@ -7,7 +7,7 @@
 @project: huawei-od-python
 @desc: 226 优雅数组
 """
-from collections import defaultdict
+from collections import Counter
 
 
 def solve_method(arr, k):
@@ -15,20 +15,13 @@ def solve_method(arr, k):
     n = len(arr)
     # i是子数组起点
     for i in range(n):
-        # 统计arr元素出现次数字典，key为元素值，value为出现次数
-        count = defaultdict(int)
-
         # j是子数组终点
         for j in range(i, n):
-            key = arr[j]
-            # 增加元素值的出现次数
-            count[key] += 1
-            # 出现了k次，即记录满足要求的子数组个数
-            if count[key] >= k:
-                # 自坐标j后的子数组均满足要求
-                res += n - j
-                break
-
+            # 记录子数组的数字频数
+            counter = Counter(arr[i: j + 1])
+            # 统计最大的次数是否大于等于k，是否为k-优雅数组
+            if counter.most_common(1)[0][1] >= k:
+                res += 1
     return res
 
 

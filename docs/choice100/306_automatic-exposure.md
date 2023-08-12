@@ -54,22 +54,37 @@
 
 ## 解题思路
 
-1. 将图像的像素值截取到[0,255]范围。
-2. 计算新图像的像素均值`avg`。
-3. 用128减去像素均值作为结果。
-4. 使用`math.floor`方法向下取整，返回结果。
+1. 计算当前图像的像素均值与128的差值`diff`。
+2. 比较差值：
+   - 如果差值大于0，则`k`是负数，将`k`持续减1，计算新图像的像素均值，使其大于127。
+   - 如果差值小于0，则`k`是正数，将`k`持续加1，计算新图像的像素均值，使其小于128。
+3. 返回`k`值。
 
 ## 解题代码
 
 ```python
-import math
-
-
 def solve_method(img):
-    new_img = [min(max(0, x), 255) for x in img]
-    avg = sum(new_img) / 4
-    result = 128 - avg
-    return math.floor(result)
+    avg = sum(img) // len(img)
+    diff = avg - 128
+    new_img = img.copy()
+
+    k = 0
+    if diff > 0:
+        # 如果差值大于0，则k是负数
+        while avg > 127:
+            k -= 1
+            avg = get_new_image_avg(new_img, k)
+    if diff < 0:
+        # 如果差值小于0，则k是正数
+        while avg < 128:
+            k += 1
+            avg = get_new_image_avg(new_img, k)
+    return k
+
+
+def get_new_image_avg(new_img, k):
+    new_img = [min(max(0, x + k), 255) for x in new_img]
+    return sum(new_img) // len(new_img)
 
 
 if __name__ == '__main__':
