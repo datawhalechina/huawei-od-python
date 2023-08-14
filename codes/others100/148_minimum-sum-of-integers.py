@@ -10,20 +10,21 @@
 
 def solve_method(string: str) -> int:
     # 检查输入是否有效
-    allowed_character = ['+', '-']
-    allowed_character.extend(list(range(10)))
-    allowed_character.extend([chr(i) for i in range(65, 65 + 26)])
-    allowed_character.extend([chr(i) for i in range(97, 97 + 26)])
-    assert all(set(string)) in allowed_character
+    Legal_chars = ['+', '-']
+    Legal_chars.extend(list(range(10)))
+    Legal_chars.extend([chr(i) for i in range(65, 65 + 26)])
+    Legal_chars.extend([chr(i) for i in range(97, 97 + 26)])
+    if all(set(string)) not in Legal_chars:
+        return -1
 
-    # 遍历字符串中的每一个字符
-    i = 0   # 索引,使用while循环便于我们手动改变i的值
-    sum = 0 # 返回的最小和
+    i = 0
+    sum_val = 0
     chars = list(string)
+    # 遍历字符串中的每一个字符
     while i < len(chars):
         c = chars[i]
 
-        # 遇到"-"，则贪心地往后读取数字，直到遇到非数字字符时，让和减去该数字，出循环。
+        # 遇到"-"，则一直往后读取数字，直到遇到非数字字符时，让和减去该数字。
         if c == '-':
             num = 0
             while i < len(chars):
@@ -31,22 +32,15 @@ def solve_method(string: str) -> int:
                 if chars[i].isdigit():
                     num = num * 10 + int(chars[i])
                 else:
-                    sum += -1 * num
+                    sum_val += -1 * num
                     break
-
         elif c.isdigit():
-            sum += int(c)
-
+            sum_val += int(c)
         i += 1
 
-    return sum
+    return sum_val
 
 
 if __name__ == '__main__':
-    res1 = solve_method("bb1234aa")
-    print(res1)
-    assert res1 == 10
-
-    res2 = solve_method("bb12-34aa")
-    print(res2)
-    assert res2 == -31
+    assert solve_method("bb1234aa") == 10
+    assert solve_method("bb12-34aa") == -31

@@ -10,12 +10,16 @@ import math
 from typing import List
 
 
-def solve_method(strengh: List[int]) -> str:
+def solve_method(strengh: List[int]):
     nums = len(strengh)
-    rank = list(range(0, nums))  # 初始顺序, 代表还要比赛的选手
-    win = []  # 每一轮的胜者
-    lose = []  # 和已经产生的失败者
-    semi_final = {}  # 半决赛 对阵情况(便于输出季军)
+    # 初始顺序，代表还要比赛的选手
+    rank = list(range(0, nums))
+    # 每一轮的胜者
+    win = []
+    # 和已经产生的失败者
+    lose = []
+    # 半决赛 对阵情况(便于输出季军)
+    semi_final = {}
     # 需要比较的轮次：n= log2(nums)的向上取整=log2(nums-1)向下取整+1
     n = int(math.log2(nums - 1)) + 1
 
@@ -53,20 +57,15 @@ def solve_method(strengh: List[int]) -> str:
         # 本轮胜出的选手参加下一轮比赛
         rank = win[:]
 
-    # 循环终止时,rank[]里只包含冠军的id,lose[]的倒数第一位是亚军
+    # 循环终止时，rank里只包含冠军的id，lose的倒数第一位是亚军
     # 季军可以用之前的 semi_final 字典找到
     champion = rank[0]
     second_player = lose[-1]
     third_player = semi_final.get(champion, semi_final.get(second_player))
-    ret = [str(champion), str(second_player), str(third_player)]
-    return " ".join(ret)
+    ret = [champion, second_player, third_player]
+    return ret
 
 
 if __name__ == '__main__':
-    res = solve_method([2, 3, 4, 5])
-    print(res)
-    print(res == "3 1 2")
-
-    res2 = solve_method([7, 6, 5, 4, 3, 2, 1, 0])
-    print(res2)
-    print(res2 == "0 4 2")
+    assert solve_method([2, 3, 4, 5]) == [3, 1, 2]
+    assert solve_method([7, 6, 5, 4, 3, 2, 1, 0]) == [0, 4, 2]
