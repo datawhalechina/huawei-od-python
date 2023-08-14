@@ -35,8 +35,8 @@
 | 265~290 |  胡锐锋（Relph1119）   |  已完成  |
 | 291~313 |   李昌盛（Jack Lee）、胡锐锋   |  已完成  |
 
-
 ## 环境安装
+
 ### Python版本
 Python 3.8 Windows环境
 
@@ -44,8 +44,6 @@ Python 3.8 Windows环境
 ```shell
 docsify serve ./docs
 ```
-
-
 
 ## 关注我们
 <div align=center>
