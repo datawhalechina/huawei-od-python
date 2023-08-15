@@ -10,58 +10,39 @@
 
 
 def solve_method(s):
-    stack = []
+    if s[-1].isdigit():
+        return "!error"
 
-    # 1.初筛
-    # 先判断是否是数字和小写字母
+    # 检查字符串是否合法，判断是否是数字和小写字母
     for i in s:
         if i.isdigit() or (i.isalpha() and i.islower()):
             continue
         else:
             return '!error'
-    
-    # 2.将数字和字母配对在一起
-    stack = []
-    for i in s:
-        if stack:
-            # 数字相邻则相连
-            if i.isdigit():
-                if stack[-1].isdigit():
-                    stack[-1]+=i
-                    continue
-            # 字母前是数字则相连，字母前是相同的字母则相连
-            else:
-                if stack[-1].isdigit() or stack[-1][-1]==i:
-                    stack[-1]+=i
-                    continue
-        # 其余情况直接append
-        stack.append(i)
-        
-    # 将配对的数字和字母组合到一起，存在stack中
-    # print(stack)
 
-    # 3.遍历整个stack内的元素，同时判断元素是否合法
-    res = ''
-    for string in stack:
-        num = ''
-        alpha = ''
-        for char in string:
-            if char.isdigit():
-                num+=char
+    num_str = ""
+    result = ""
+    for ch in s:
+        if ch.isdigit():
+            # 如果为数字，则加入到数字字符串中
+            num_str += ch
+        elif num_str and ch.isalpha():
+            # 如果为字母，并且数字字符串不为空
+            if int(num_str) > 2:
+                # 如果数字大于2，则进行解压操作，存入结果字符串中。
+                result += ch * int(num_str)
+                num_str = ""
             else:
-                alpha+=char
-        # 不合法的规则：既有数字，还有两个字母；或者字母数量大于2
-        if (num and len(alpha)==2) or (len(alpha)>2):
-            return '!error'
+                # 如果数字小于等于2，则返回错误
+                return '!error'
         else:
-            if num:
-                res+=alpha*int(num)
-            else:
-                res+=alpha
-    return res
+            # 如果为字母，则存入结果字符串
+            result += ch
+
+    return result
+
 
 if __name__ == '__main__':
-    assert solve_method("4dff2d") == 'ddddffdd'
-    assert solve_method("24d2ff2d") == '!error'
-    assert solve_method("24dfff2d") == '!error'
-    assert solve_method("4#dff2dabcd") == '!error'
+    assert solve_method("4dff") == 'ddddff'
+    assert solve_method("2dff") == '!error'
+    assert solve_method("4d@A") == '!error'

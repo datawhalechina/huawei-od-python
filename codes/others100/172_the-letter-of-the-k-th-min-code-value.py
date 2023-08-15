@@ -9,17 +9,15 @@
 """
 
 
-def solve_method(k, s):
+def solve_method(s, k):
     # 从小到大按照码值排序
-    sort_alpha = sorted(s)
-    n = len(s)
+    sorted_chars = sorted(s)
 
     # k超过整个s的长度，则取最后一个字符即码值最大的
-    if n<=k-1:
-        return s.index(sort_alpha[-1])
-    else:
-        return s.index(sort_alpha[k-1])
+    c = sorted_chars[-1] if k >= len(sorted_chars) else sorted_chars[k - 1]
+    return s.index(c)
+
 
 if __name__ == '__main__':
-    assert solve_method(3, "AbCdeFG") == 5
-    assert solve_method(4, "fAdDAkBbBq") == 6
+    assert solve_method("AbCdeFG", 3) == 5
+    assert solve_method("fAdDAkBbBq", 4) == 6
