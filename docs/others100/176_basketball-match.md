@@ -58,28 +58,47 @@
 
 **基本思路：**
 
-将该题转化为01背包问题，背包大小为总大小的一半(地板除)，尽量把这个一半装满，越满的话，也越接近另一半的值，两队的差值也就越小。 
+将该题使用贪心的思想（注意题目中明说分成5v5的队伍），先将运动员从大到小排序，哪个队伍能力值总和小进入哪个队伍。
 
-最后用总数sum(s)减去尽量装满后的背包大小dp[-1]得到另一半的大小sum(s)-dp[-1]，最后用另一半的大小减去这个背包大小得到两队的差值(sum(s)-dp[-1])-dp[-1] = sum(s) - 2*dp[-1]
+当某个队伍满了五个人时，剩下的人只能都进入另一个队伍。
 
 ## 解题代码
 
 ```python
 def solve_method(s):
-    s = list(map(int, s.split()))
-    # 转换为背包问题，尽量装满一半，那么两队差距最小
-    bags = sum(s)//2
-    
-    # 装满i时的最大重量
-    dp = [0]*(bags+1)
-    for i in s:
-        for j in reversed(range(i, bags+1)):
-            dp[j] = max(dp[j], dp[j-i]+i)
-    return sum(s) - 2*dp[-1]
+    players = list(map(int, s.split()))
+    total = sum(players)
+    half = total // 2
+    # 从大到小排序
+    players.sort(reverse=True)
+    team_a = []
+    team_b = []
+    # 从大遍历所有运动员，哪个队伍能力值总和小进入哪个队伍
+    # 当某个队伍满了五个人时，剩下的人只能进入另一个队伍
+    for player in players:
+        # 所有队伍未满五人时
+        if len(team_a)!=5 and len(team_b)!=5:
+            if sum(team_a) <= sum(team_b):
+                team_a.append(player)
+            else:
+                team_b.append(player)
+        # 某个队伍满了五人时
+        else:
+            # a队伍满了，则进入b队伍
+            if len(team_a)==5:
+                team_b.append(player)
+            # b队伍满了，则进入a队伍
+            else:
+                team_a.append(player)
+    print(team_a, team_b)
+    return abs(sum(team_a) - sum(team_b))
 
 
 if __name__ == '__main__':
     assert solve_method("1 2 3 4 5 6 7 8 9 10") == 1
+    assert solve_method("1 2 3 4 5 6 7 8 999 10") == 973
+    assert solve_method("1 2 3 4 5 6 7 8 999 1000") == 1
+
 ```
 
 
