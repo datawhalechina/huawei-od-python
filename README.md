@@ -25,7 +25,7 @@
 | 081~100 | 胡锐锋（Relph1119） |  已完成  |
 | 101~120 |   毛瑞盈（catcooc）、胡锐锋    |  已完成  |
 | 121~140 |  胡锐锋（Relph1119）   |  已完成  |
-| 141~150 |  冯亚林（Yalin Feng）  |  待审核  |
+| 141~150 |  冯亚林（Yalin Feng）、胡锐锋  |  已完成  |
 | 151~160 |   李洪荣（duqing12）   |  待审核  |
 | 161~180 | 李宇鸿（PeakWalkerLYH） |  待审核  |
 | 181~200 |   袁畅（voyagebio）    |  待审核  |
@@ -35,8 +35,8 @@
 | 265~290 |  胡锐锋（Relph1119）   |  已完成  |
 | 291~313 |   李昌盛（Jack Lee）、胡锐锋   |  已完成  |
 
-
 ## 环境安装
+
 ### Python版本
 Python 3.8 Windows环境
 
@@ -44,8 +44,6 @@ Python 3.8 Windows环境
 ```shell
 docsify serve ./docs
 ```
-
-
 
 ## 关注我们
 <div align=center>

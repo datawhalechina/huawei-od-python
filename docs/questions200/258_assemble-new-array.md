@@ -21,7 +21,7 @@
 输出的是组装办法数量，`int`类型
 
 ## 备注
-1≤N.length≤30
+1≤M≤30
 1≤N.length≤1000
 
 ## 示例描述
@@ -73,8 +73,10 @@ DFS
 ## 解题代码
 ```python
 def solve_method(nums, m):
+def solve_method(nums, m):
+    min_val = nums[0]
     nums = [num for num in nums if num <= m]
-    return dfs(nums, m, 0, nums[0], 0)
+    return dfs(nums, m, 0, min_val, 0)
 
 def dfs(nums, m, index, min_val, count):
     # 截止条件
@@ -95,4 +97,5 @@ if __name__ == "__main__":
 
     assert solve_method([2], 5) == 1
     assert solve_method([2, 3], 5) == 2
+    assert solve_method([3, 4], 2) == 1
 ```
