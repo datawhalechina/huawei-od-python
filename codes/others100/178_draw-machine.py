@@ -17,17 +17,17 @@ def solve_method(n, e, steps):
     # 总面积
     area = 0
 
-    # 遍历起点到终点的长度e，如果改点在steps中能找到且做了位移，则进行改变
+    # 遍历起点到终点的长度e，如果该点在steps中能找到且做了位移，则进行改变
     for i in range(e):
-        # 位移
         if i in dict_steps:
-            offset+=dict_steps[i]
+            # 更新位移
+            offset += dict_steps[i]
         # 面积即位移大小，向终点走的每一步都要累加计算
-        area+=abs(offset)
-        
+        area += abs(offset)
+
     return area
 
 
 if __name__ == '__main__':
-    assert solve_method(4, 10, [(1,1),(2,1),(3,1),(4,-2)]) == 12
-    assert solve_method(2, 4, [(0,1),(2,-2)]) == 4
+    assert solve_method(4, 10, [(1, 1), (2, 1), (3, 1), (4, -2)]) == 12
+    assert solve_method(2, 4, [(0, 1), (2, -2)]) == 4

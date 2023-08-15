@@ -9,32 +9,26 @@
 """
 
 
-def solve_method(s):
-    # 题目提供的默认常量
-    screen_width = 800
-    screen_length = 600
-    logo_width = 50
-    logo_length = 25
-    
-    x, y, t = list(map(int, s.split()))
-    # 求总长度
-    x+=t
-    y+=t
-    # 一来一回为一个周期，两倍的长度，注意去掉logo长度
-    interval_x = 2*(screen_width-logo_width)
-    interval_y = 2*(screen_length-logo_length)
-    
-    x %= interval_x
-    y %= interval_y
-    
-    # 超过了一半，要反向
-    if x>(screen_width-logo_width):
-        x = interval_x-x
-    if y>(screen_length-logo_length):
-        y = interval_y-y
-    return '{} {}'.format(x, y)
+def solve_method(x, y, t):
+    screen_width, screen_length = 800, 600
+    logo_width, logo_length = 50, 25
+
+    x_dir = 1
+    y_dir = 1
+    for i in range(t):
+        # 继续移动
+        x += x_dir
+        y += y_dir
+
+        # 当达到边缘时，转向
+        if x == 0 or x == screen_width - logo_width:
+            x_dir *= -1
+        if y == 0 or y == screen_length - logo_length:
+            y_dir *= -1
+
+    return x, y
 
 
 if __name__ == '__main__':
-    assert solve_method("0 0 10") == '10 10'
-    assert solve_method("500 570 10") == '510 570'
+    assert solve_method(0, 0, 10) == (10, 10)
+    assert solve_method(500, 570, 10) == (510, 570)
