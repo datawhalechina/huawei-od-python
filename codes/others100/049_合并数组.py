@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q49.py
+@File:049_合并数组.py
 @Date：2023/08/11 0:47
 """
 from typing import List

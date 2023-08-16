@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q57.py
+@File:057-字母消消乐.py
 @Date：2023/08/14 21:00
 """
 

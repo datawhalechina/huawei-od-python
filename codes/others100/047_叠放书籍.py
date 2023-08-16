@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q47.py
+@File:047_叠放书籍.py
 @Date：2023/08/11 0:47
 """
 

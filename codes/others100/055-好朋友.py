@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q55.py
+@File:055-好朋友.py
 @Date：2023/08/14 21:00
 """
 def solve_method(n, ints):

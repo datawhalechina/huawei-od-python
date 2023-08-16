@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q50.py
+@File:050_告诉高速公路充电规划.py
 @Date：2023/08/11 0:47
 """
 # 初始化距离和时间列表

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q46.py
+@File:046_双十一.py
 @Date：2023/08/11 0:47
 """
 def main():

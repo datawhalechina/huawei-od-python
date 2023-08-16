@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q52.py
+@File:052-响应报文时间.py
 @Date：2023/08/11 0:47
 """
 

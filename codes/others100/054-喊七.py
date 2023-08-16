@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 @Author：Kaiwen Zuo
-@File:Q54.py
+@File:054-喊七.py
 @Date：2023/08/11 0:47
 """
 def solve_method(line):
