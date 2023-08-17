@@ -32,9 +32,6 @@ def solve_method(n, d, nums):
     if dp1[n] == 0:
         return -1
     min_diff_sum = dp2[n]
-    for i in range(1, n + 1):
-        if dp1[i] == dp1[n]:
-            min_diff_sum = min(dp2[i], min_diff_sum)
     return min_diff_sum
 
 
