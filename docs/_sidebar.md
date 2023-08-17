@@ -60,6 +60,10 @@
         * [226 优雅数组](questions200/226_elegant-array.md)
         * [240 快递投放问题](questions200/240_express-delivery-allocation-problem.md)
         * [241 探索地块建立](questions200/241_searching-land-plot-establishment.md)
+        * [242 数字加减游戏](questions200/242_number-addition-and-subtraction-game.md) 
+        * [243 无向图染色问题、红黑图](questions200/243_undirected-graph-coloring-problem.md) 
+        * [244 最优资源分配](questions200/244_optimal-resource-allocation.md) 
+        * [245 最佳对手](questions200/245_best-opponent.md) 
     * 其他100分题
         * [001 AI识别面板](others100/001_AI-recognition-panel.md)
         * [002 GPU调度](others100/002_GPU-scheduling.md)
