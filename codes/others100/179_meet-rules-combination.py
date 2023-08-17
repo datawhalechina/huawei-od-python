@@ -9,21 +9,25 @@
 """
 
 from collections import Counter
+
+
 def solve_method(n, nums):
-    s = Counter(nums)
-    
-    for i in range(n-2):
-        for j in range(i+1, n-1):
-            s[nums[i]]-=1
-            s[nums[j]]-=1
-            k = (nums[i]-nums[j])
-            if k%2==0 and k//2 in s and s[k//2]>0:
-                return '{} {} {}'.format(nums[i],nums[j],(k//2))
-            s[nums[i]]+=1
-            s[nums[j]]+=1
+    num_freq = Counter(nums)
+
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            a = nums[i]
+            b = nums[j]
+            num_freq[a] -= 1
+            num_freq[b] -= 1
+            k = a - b
+            if k % 2 == 0 and k // 2 in num_freq and num_freq[k // 2] > 0:
+                return [a, b, (k // 2)]
+            num_freq[a] += 1
+            num_freq[b] += 1
     return 0
 
 
 if __name__ == '__main__':
-    assert solve_method(4, [2,7,3,0]) == '7 3 2'
-    assert solve_method(3, [1,1,1]) == 0
+    assert solve_method(4, [2, 7, 3, 0]) == [7, 3, 2]
+    assert solve_method(3, [1, 1, 1]) == 0
