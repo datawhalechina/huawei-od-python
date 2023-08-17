@@ -5,6 +5,7 @@
 @Date：2023/08/11 0:47
 """
 
+
 def solve_method(line, start, end):
     words = line.split()
     # 检查索引是否有效，如果无效则直接打印原始行
@@ -16,11 +17,12 @@ def solve_method(line, start, end):
             end -= 1
     print(" ".join(words))
 
+
 def main():
     line = input().strip()
     start, end = map(int, input().strip().split())
     solve_method(line, start, end)
 
+
 if __name__ == '__main__':
     main()
-
