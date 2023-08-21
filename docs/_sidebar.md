@@ -69,6 +69,11 @@
         * [248 最少数量线段覆盖](questions200/248_min-number-of-segments-covered.md) 
         * [249 最差产品奖](questions200/249_worst-product-award.md) 
         * [250 服务中心选址、服务中心的最佳位置](questions200/250_best-location-for-service-center.md) 
+        * [251 机器人活动区域](questions200/251_robot-movement-area.md) 
+        * [252 机房布局](questions200/252_cabinets-layout.md) 
+        * [253 查找树中的元素、查找二叉树节点](questions200/253_search-elements-in-the-tree.md) 
+        * [254 求最大数字](questions200/254_find-the-largest-number.md) 
+        * [255 狼羊过河、羊狼农夫过河](questions200/255_wolf-sheep-crossing-the-river.md) 
     * 其他100分题
         * [001 AI识别面板](others100/001_AI-recognition-panel.md)
         * [002 GPU调度](others100/002_GPU-scheduling.md)

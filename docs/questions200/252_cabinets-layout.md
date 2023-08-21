@@ -4,22 +4,15 @@
 
 小明正在规划一个大型数据中心机房，为了使得机柜上的机器都能正常满负荷工作，需要确保在每个机柜边上至少要有一个电箱。
 
-为了简化题目，假设这个机房是一整排，M表示机柜，I表示间隔。请你返回这整排机柜，至少需要多少个电箱。如果无解请返回-1。
+为了简化题目，假设这个机房是一整排，`M`表示机柜，`I`表示间隔。请你返回这整排机柜，至少需要多少个电箱。如果无解请返回-1。
 
 ## 输入描述
 
-`cabinets="MIIM"`
-
-其中M表示机柜，I表示间隔
+输入一行字符串`cabinets`，只能包含`M`和`I`，其中`M`表示机柜，`I`表示间隔，字符串长度范围是1 <= cabinets.length <= 10000
 
 ## 输出描述
-2
 
-表示至少需要2个电箱备注
-
-## 备注
-
-`1<=strlen(cabinets)<=10000` 其中 `cabinets［i］＝'M'`或者`'I'`
+返回至少需要多少个电箱，才能确保在每个机柜边上至少要有一个电箱。
 
 ## 示例描述
 
@@ -89,14 +82,15 @@ I
 - 若某个机柜的左右两侧都有机柜，则无法摆放电箱，返回-1
 - 去除机柜间共用重复电箱的情况：若机柜间放电箱的区域刚好相邻，可去除前一个电箱
 
-**代码思路：**
-1. 外层循环：遍历字符串，寻找机柜所在的位置
-2. 对于每个机柜
-    - 若其左右都没有空间放置电箱（左右均为边界、左右都有电箱），则返回-1
-    - 否则在栈中存入：机柜可放电箱的区域
-    - 判断下一机柜的电箱区域是否和其相邻，若是，则去除当前电箱区域
-    - (注意引入变量fixed：若当前电箱兼顾了两个机柜，该电箱物尽其用 - 后续电箱都不能去除)
-3. 栈中存储最终电箱需放置的区域，长度即为最少电箱数
+1. 初始化电箱区域列表`stack`。
+2. 初始化标识`fixed`，`False`表示与上一个电箱没有共享，`True`表示上一个电箱被共享了。
+3. 遍历字符串，即遍历所有机柜和间隔：
+    - 如果是机柜：
+        - 如果左右都没有空间放置电箱（左右均为边界、左右都有电箱），则返回-1。
+        - 初始化机柜可放电箱的区域`area`。
+        - 判断当前电箱是否能和上一个电箱共享，若是，则去除当前电箱区域  
+        - 将当前区域存入电箱区域列表中。
+4. 返回电箱区域列表的长度，即最终需要电箱的最少个数。
 
 ## 解题代码
 ```python
@@ -114,22 +108,24 @@ def solve_method(cabinets):
             area = [max(0, i-1), min(len(cabinets)-1, i+1)]
             # 去除重复放置的电箱
             if stack and not fixed:
+                # 合并能共享电箱的区域，只取最后一个
                 if stack[-1][1] == area[0]:
                     stack.pop()
                     fixed = True
-                else:
-                    fixed = False
+            else:
+                fixed = False
             stack.append(area)
     return len(stack)
 
 if __name__ == "__main__":
     # MIIM
-    cabinets = input().strip()
-    print(solve_method(cabinets))
+    # cabinets = input().strip()
+    # print(solve_method(cabinets))
 
     assert solve_method("MIIM") == 2
     assert solve_method("MIM") == 1
     assert solve_method("M") == -1
     assert solve_method("MMM") == -1
     assert solve_method("I") == 0
+    assert solve_method("MIMIMIM") == 2
 ```

@@ -5,7 +5,7 @@
 @file: 250_best-location-for-service-center.py
 @time: 2023/8/21 16:23
 @project: huawei-od-python
-@desc: 服务中心选址、服务中心的最佳位置
+@desc: 250 服务中心选址、服务中心的最佳位置
 """
 
 
