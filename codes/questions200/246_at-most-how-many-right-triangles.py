@@ -1,41 +1,42 @@
-def solve_method(N, nums, visited):
-    count = 0
-    for k in range(2, N):
-        c = nums[k]
-        # 排除遍历过的数字
-        if visited[k] == 1:
-            continue
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: Libihan
+@file: 246_at-most-how-many-right-triangles.py
+@time: 2023/8/18 9:22
+@project: huawei-od-python
+@desc: 246 最多几个直角三角形
+"""
+import math
+from collections import Counter
 
-        i = 0; j = k - 1;
-        while i < j:
-            # 排除遍历过的数字
-            while i < j and visited[i] == 1:
-                i += 1
-            while i < j and visited[j] == 1:
-                j -= 1
-            if i == j:
-                break
 
-            if nums[i] ** 2 + nums[j] ** 2 < c ** 2:
-                i += 1
-            elif nums[i] ** 2 + nums[j] ** 2 > c ** 2:
-                j -= 1
-            else:
-                visited[i] = visited[j] = visited[k] = 1
-                count = 1 + solve_method(N, nums, visited)
-                visited[i] = visited[j] = visited[k] = 0
-                break
-    return count
+def solve_method(arr):
+    result = []
+    for nums in arr:
+        nums = nums[1:]
+
+        count = 0
+        counter = Counter(nums)
+        num_keys = list(counter.keys())
+        for i in range(len(num_keys)):
+            for j in range(i + 1, len(num_keys)):
+                a = num_keys[i]
+                b = num_keys[j]
+                if counter[a] > 0 and counter[b] > 0:
+                    c = math.sqrt(a ** 2 + b ** 2)
+                    if c in num_keys and counter[c] > 0:
+                        counter[a] -= 1
+                        counter[b] -= 1
+                        counter[c] -= 1
+                        count += 1
+        result.append(count)
+    return result
+
 
 if __name__ == "__main__":
-    # 1
-    # 7 3 4 5 6 5 12 13
-    # 7 3 4 5 6 6 12 13
-    T = int(input())
-    for _ in range(T):
-        line = list(map(int, input().split()))
-        N = line[0]
-        print(solve_method(N, sorted(line[1:]), [0] * N))
+    arr = [[7, 3, 4, 5, 6, 5, 12, 13]]
+    assert solve_method(arr) == [2]
 
-    assert solve_method(7, [3, 4, 5, 6, 5, 12, 13], [0] * 7) == 2
-    assert solve_method(7, [3, 4, 5, 6, 6, 12, 13], [0] * 7) == 1
+    arr = [[7, 3, 4, 5, 6, 6, 12, 13]]
+    assert solve_method(arr) == [1]

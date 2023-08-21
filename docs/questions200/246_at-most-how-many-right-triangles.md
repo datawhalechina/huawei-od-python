@@ -2,14 +2,15 @@
 
 ## 题目描述
 
-有 N 条线段，长度分别为`a[1]-a[N]`。
+有`N`条线段，长度分别为`a[1]-a[N]`。
 
-现要求你计算这 N 条线段最多可以组合成几个直角三角形，每条线段只能使用一次，每个三角形包含三条线段。
+现要求你计算这`N`条线段最多可以组合成几个直角三角形，每条线段只能使用一次，每个三角形包含三条线段。
 
 ## 输入描述
-第一行输入一个正整数T `(1＜= T＜= 100)`，表示有T组测试数据。
 
-对于每组测试数据，接下来有T行，每行第一个正整数N，表示线段个数`(3<＝N＜20)`，接着是N个正整数，表示每条线段长度`0＜a[i]＜100`
+第一行输入一个正整数`T`，表示有`T`组测试数据，取值范围是1 <= T <= 100。
+
+对于每组测试数据，接下来有`T`行，每行第一个正整数`N`，表示线段个数，取值范围是3 <= N < 20，接着是`N`个正整数，表示每条线段长度，其中 0 < a[i] < 100。
 
 ## 输出描述
 
@@ -31,7 +32,8 @@
 ```
 
 **说明：**
-可以组成2个直角三角形（3，4，5）、（5，12，13）。
+
+可以组成2个直角三角形(3,4,5)、(5,12,13)。
 
 ### 示例二
 
@@ -47,63 +49,52 @@
 ```
 
 **说明：**
-可以组成1个直角三角形（3，4，5）或（5，12，13），5只能使用一次，所以只有1个。
+
+可以组成1个直角三角形(3,4,5)或(5,12,13)，5只能使用一次，所以只有1个。
 
 ## 解题思路
 
-**基本思路：**
-
-直角三角形满足表达式a^2 + b^2 = c^2。求解满足条件的一组值时，类似3Sum，外层循环O(n)，内层循环双指针。
-
-因为题目要求尽可能多的组合，且每条线段只能使用一次。借助visited数组和DFS。
-
-**代码思路：**
-1. 外层循环遍历c的取值
-2. 内层双指针获取满足条件的a和b的取值
-    - 若nums[左] + nums[右] ＜ nums[c]，左指针++；反之，右指针--
-3. 借助visited数组和DFS遍，遍历所有可能的情况。
+1. 遍历每一个测试用例：
+  - 将数组转成`Counter`的元素频次字典。
+  - 遍历所有数组元素：
+      - 如果满足`a**2 + b**2 == c**2`，则计数器累加1。
+  - 将计数器的值放入结果列表中。
+2. 返回结果列表
 
 ## 解题代码
+
 ```python
-def solve_method(N, nums, visited):
-    count = 0
-    for k in range(2, N):
-        c = nums[k]
-        # 排除遍历过的数字
-        if visited[k] == 1:
-            continue
+import math
+from collections import Counter
 
-        i = 0; j = k - 1;
-        while i < j:
-            # 排除遍历过的数字
-            while i < j and visited[i] == 1:
-                i += 1
-            while i < j and visited[j] == 1:
-                j -= 1
-            if i == j:
-                break
 
-            if nums[i] ** 2 + nums[j] ** 2 < c ** 2:
-                i += 1
-            elif nums[i] ** 2 + nums[j] ** 2 > c ** 2:
-                j -= 1
-            else:
-                visited[i] = visited[j] = visited[k] = 1
-                count = 1 + solve_method(N, nums, visited)
-                visited[i] = visited[j] = visited[k] = 0
-                break
-    return count
+def solve_method(arr):
+    result = []
+    for nums in arr:
+        nums = nums[1:]
+
+        count = 0
+        counter = Counter(nums)
+        num_keys = list(counter.keys())
+        for i in range(len(num_keys)):
+            for j in range(i + 1, len(num_keys)):
+                a = num_keys[i]
+                b = num_keys[j]
+                if counter[a] > 0 and counter[b] > 0:
+                    c = math.sqrt(a ** 2 + b ** 2)
+                    if c in num_keys and counter[c] > 0:
+                        counter[a] -= 1
+                        counter[b] -= 1
+                        counter[c] -= 1
+                        count += 1
+        result.append(count)
+    return result
+
 
 if __name__ == "__main__":
-    # 1
-    # 7 3 4 5 6 5 12 13
-    # 7 3 4 5 6 6 12 13
-    T = int(input())
-    for _ in range(T):
-        line = list(map(int, input().split()))
-        N = line[0]
-        print(solve_method(N, sorted(line[1:]), [0] * N))
+    arr = [[7, 3, 4, 5, 6, 5, 12, 13]]
+    assert solve_method(arr) == [2]
 
-    assert solve_method(7, [3, 4, 5, 6, 5, 12, 13], [0] * 7) == 2
-    assert solve_method(7, [3, 4, 5, 6, 6, 12, 13], [0] * 7) == 1
+    arr = [[7, 3, 4, 5, 6, 6, 12, 13]]
+    assert solve_method(arr) == [1]
 ```

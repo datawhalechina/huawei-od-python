@@ -64,6 +64,11 @@
         * [243 无向图染色问题、红黑图](questions200/243_undirected-graph-coloring-problem.md) 
         * [244 最优资源分配](questions200/244_optimal-resource-allocation.md) 
         * [245 最佳对手](questions200/245_best-opponent.md) 
+        * [246 最多几个直角三角形](questions200/246_at-most-how-many-right-triangles.md) 
+        * [247 最多等和不相交连续子序列](questions200/247_max-count-of-equal-and-disjoint-contiguous-subsequences.md) 
+        * [248 最少数量线段覆盖](questions200/248_min-number-of-segments-covered.md) 
+        * [249 最差产品奖](questions200/249_worst-product-award.md) 
+        * [250 服务中心选址、服务中心的最佳位置](questions200/250_best-location-for-service-center.md) 
     * 其他100分题
         * [001 AI识别面板](others100/001_AI-recognition-panel.md)
         * [002 GPU调度](others100/002_GPU-scheduling.md)
