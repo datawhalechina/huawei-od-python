@@ -79,6 +79,10 @@
         * [258 组装新的数组](questions200/258_assemble-new-array.md) 
         * [259 统一限载货物数最小值](questions200/259_min-number-of-uniform-weight-limit.md) 
         * [260 统计匹配的二元组个数](questions200/260_count-the-number-of-matching-pairs.md) 
+        * [261 统计差异值大于相似值二元组个数](questions200/261_comparison-of-similarities-and-differences.md) 
+        * [262 解压缩算法](questions200/262_decompression-algorithm.md) 
+        * [263 计算网络信号](questions200/263_calculate-network-signal.md) 
+        * [264 递增字符串](questions200/264_increment-string.md) 
     * 其他100分题
         * [001 AI识别面板](others100/001_AI-recognition-panel.md)
         * [002 GPU调度](others100/002_GPU-scheduling.md)
