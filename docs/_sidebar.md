@@ -74,6 +74,11 @@
         * [253 查找树中的元素、查找二叉树节点](questions200/253_search-elements-in-the-tree.md) 
         * [254 求最大数字](questions200/254_find-the-largest-number.md) 
         * [255 狼羊过河、羊狼农夫过河](questions200/255_wolf-sheep-crossing-the-river.md) 
+        * [256 硬件产品销售方案](questions200/256_hardware-product-sales-plan.md) 
+        * [257 组合出合法最小数](questions200/257_combine-the-legal-minimum.md) 
+        * [258 组装新的数组](questions200/258_assemble-new-array.md) 
+        * [259 统一限载货物数最小值](questions200/259_min-number-of-uniform-weight-limit.md) 
+        * [260 统计匹配的二元组个数](questions200/260_count-the-number-of-matching-pairs.md) 
     * 其他100分题
         * [001 AI识别面板](others100/001_AI-recognition-panel.md)
         * [002 GPU调度](others100/002_GPU-scheduling.md)
