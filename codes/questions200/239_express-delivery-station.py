@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 239_Express-delivery-station.py
+@file: 239_express-delivery-station.py
 @time: 2023/7/24
 @project: huawei-od-python
 @desc: 239 快递业务站

@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 232_Removing-extra-whitespace.py
+@file: 232_removing-extra-whitespace.py
 @time: 2023/8/14
 @project: huawei-od-python
 @desc: 232 去除多余空格

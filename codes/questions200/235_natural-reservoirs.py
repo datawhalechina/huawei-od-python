@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 235_Natural-reservoirs.py
+@file: 235_natural-reservoirs.py
 @time: 2023/8/14
 @project: huawei-od-python
 @desc: 235 天然蓄水池

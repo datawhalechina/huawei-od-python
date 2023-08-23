@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 234_Soldiers-crossing-the-river.py
+@file: 234_soldiers-crossing-the-river.py
 @time: 2023/8/14
 @project: huawei-od-python
 @desc: 234 士兵过河 
