@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 233_Intercepting-spam.py
+@file: 233_intercepting-spam.py
 @time: 2023/8/17
 @project: huawei-od-python
 @desc: 233 垃圾信息拦截 

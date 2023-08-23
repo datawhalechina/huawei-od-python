@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 231_Interval-connector.py
+@file: 231_interval-connector.py
 @time: 2023/8/14
 @project: huawei-od-python
 @desc: 231 区间连接器

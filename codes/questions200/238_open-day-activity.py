@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 238_Open-day-activity.py
+@file: 238_open-day-activity.py
 @time: 2023/8/22
 @project: huawei-od-python
 @desc: 238 开放日活动

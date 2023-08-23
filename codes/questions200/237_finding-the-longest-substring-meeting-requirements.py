@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 237_Finding-the-longest-substring-meeting-requirements.py
+@file: 237_finding-the-longest-substring-meeting-requirements.py
 @time: 2023/7/30
 @project: huawei-od-python
 @desc: 237 寻找符合要求的最长子串

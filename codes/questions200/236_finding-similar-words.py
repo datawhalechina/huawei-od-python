@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author: ZhouLixuan
-@file: 236_Finding-similar-words.py
+@file: 236_finding-similar-words.py
 @time: 2023/8/19
 @project: huawei-od-python
 @desc: 236 寻找相似单词
