@@ -8,6 +8,7 @@
 @desc: 239 快递业务站
 """
 
+
 def solve_method(N, stations_relations):
     cover = set()
     res = 0
@@ -16,11 +17,12 @@ def solve_method(N, stations_relations):
         if i not in cover:
             res += 1
             cover.add(i)
-        for j in range(N):
+        for j in filter(lambda x: x != i, range(N)):
             if stations_relations[i][j] == 1:
                 cover.add(j)
 
     return res
+
 
 if __name__ == '__main__':
     stations_relations = [

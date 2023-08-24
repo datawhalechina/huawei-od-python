@@ -8,26 +8,31 @@
 @desc: 238 开放日活动
 """
 
+
 def solve_method(target_sum, bucket_balls):
     total = sum(bucket_balls)
     if total <= target_sum:
         # 整体小球总数未超过范围
         return []
-    
-    tmp = [0] * len(bucket_balls)
-    sub = [0] * len(bucket_balls)
 
+    # 各桶中剩余的球列表
+    remainder_balls = [0] * len(bucket_balls)
+    # 各桶中取出的球列表
+    drop_balls = [0] * len(bucket_balls)
+
+    # 从大到小遍历容量值
     for i in range(target_sum, 0, -1):
         for k in range(len(bucket_balls)):
             # 进行取球尝试
-            sub[k] = bucket_balls[k] - i if bucket_balls[k] - i > 0 else 0
-            tmp[k] = i if bucket_balls[k] - i > 0 else bucket_balls[k]
-        if sum(tmp) <= target_sum:
+            drop_balls[k] = bucket_balls[k] - i if bucket_balls[k] - i > 0 else 0
+            remainder_balls[k] = i if bucket_balls[k] - i > 0 else bucket_balls[k]
+        if sum(remainder_balls) <= target_sum:
             # 达到要求即可返回
-            return sub
+            return drop_balls
+
 
 if __name__ == '__main__':
-    bucket_balls = [2,3,2,5,5,1,4]
+    bucket_balls = [2, 3, 2, 5, 5, 1, 4]
     assert solve_method(14, bucket_balls) == [0, 1, 0, 3, 3, 0, 2]
 
     bucket_balls = [1, 2, 3]

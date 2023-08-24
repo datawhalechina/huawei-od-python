@@ -7,60 +7,62 @@
 @project: huawei-od-python
 @desc: 231 区间连接器
 """
-import re
+
 
 def solve_method(regions, linkers):
-    # 将区间按照左端点升序排列
-    regions.sort(key = lambda x: (x[0], x[1]))
+    # 将区间按照左端点从小到大排列
+    regions.sort(key=lambda x: (x[0], x[1]))
 
-    region = None
+    prev_region = None
     i = 0
     # 合并重叠和相邻的区间
     while i < len(regions):
-        next = regions[i]
-        if region is None:
-            region = next
-        elif region[1] >= next[0]:
-            if region[1] < next[1]:
-                region[1] = next[1]
+        cur_region = regions[i]
+        if prev_region is None:
+            prev_region = cur_region
+        elif prev_region[1] >= cur_region[0]:
+            # 如果重叠
+            if prev_region[1] < cur_region[1]:
+                # 合并区域
+                prev_region[1] = cur_region[1]
             regions.pop(i)
         else:
-            region = next 
+            prev_region = cur_region
             i += 1
 
-    gaps = [0]
-    region = None
+    distances = [0]
+    prev_region = None
     # 计算合并后，区间之间的距离
     for i in range(len(regions)):
-        next = regions[i]
-        if region is not None:
-            gap = next[0] - region[1]
-            gaps.append(gap)
-        region = next
+        cur_region = regions[i]
+        if prev_region is not None:
+            gap = cur_region[0] - prev_region[1]
+            distances.append(gap)
+        prev_region = cur_region
 
-    # 将距离和连接器长度 按照升序排列
-    gaps.sort()
+    # 将距离和连接器长度按照从小到大排列
+    distances.sort()
     linkers.sort()
-    
+
     i = 0
     j = 0
     # 遍历计算连接器是否足够连接距离
-    while i < len(gaps) and j < len(linkers):
-        if linkers[j] >= gaps[i]:
-            gaps[i] = 0
+    while i < len(distances) and j < len(linkers):
+        if linkers[j] >= distances[i]:
+            distances[i] = 0
             i += 1
             j += 1
         else:
             j += 1
 
-    return sum(1 for g in gaps if g > 0) + 1
+    return len(list(filter(lambda x: x > 0, distances))) + 1
+
 
 if __name__ == '__main__':
-    regions = [[1,10], [15, 20], [18, 30], [33, 40]]
+    regions = [[1, 10], [15, 20], [18, 30], [33, 40]]
     linkers = [5, 4, 3, 2]
     assert solve_method(regions, linkers) == 1
 
-    regions = [[1,2], [3, 5], [7, 10], [15, 20], [30, 100]]
+    regions = [[1, 2], [3, 5], [7, 10], [15, 20], [30, 100]]
     linkers = [5, 4, 3, 2, 1]
     assert solve_method(regions, linkers) == 2
-    

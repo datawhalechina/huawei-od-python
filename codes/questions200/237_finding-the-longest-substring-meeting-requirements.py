@@ -7,33 +7,25 @@
 @project: huawei-od-python
 @desc: 237 寻找符合要求的最长子串
 """
+from collections import Counter
 
-def solve_method(c, s):
-    l = 0
-    result = 0
-    d = {}
 
-    for i in range(len(s)):
-        temp = s[i]
-        if temp == c:
-            d.clear()
-            l = i + 1
-            continue
+def solve_method(ch, chars):
+    chars_lst = chars.split(ch)
 
-        # 记录当前字符的出现次数
-        d[temp] = d.get(temp, 0) + 1
+    result = []
+    for sub_chars in chars_lst:
+        counter = Counter(sub_chars)
+        # 判断子串的任意字符最多出现2次
+        if all([True if v <= 2 else False for k, v in counter.items()]):
+            result.append(sub_chars)
 
-        # 当前字符出现次数超出2次, 找到第一个出现的位置的下一个位置作为起点l
-        while d[temp] == 3:
-            rmChar = s[l]
-            l += 1
-            d[rmChar] -= 1
+    # 将满足条件的子串按照子串长度从大到小排序
+    result.sort(key=lambda x: len(x), reverse=True)
+    # 返回最长的子串
+    return len(result[0]) if len(result) != 0 else 0
 
-        # 更新结果, 记录符合条件的子串长度的最大值
-        result = max(result, i - l + 1)
-
-    return result
 
 if __name__ == '__main__':
-    assert solve_method('D',"ABC123") == 6
-    assert solve_method('D',"ABACD1231") == 4
+    assert solve_method('D', "ABC123") == 6
+    assert solve_method('D', "ABACABD12321") == 5
