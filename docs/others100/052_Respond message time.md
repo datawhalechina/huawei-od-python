@@ -9,6 +9,7 @@ IGMP协议中，有一个字段称作最大响应时间（MaxResponseTime），H
 当 `MaxRespCode` ＜128， `MaxRespTime` ＝ `MaxRespCode`；
 
 当 `MaxRespCode` ＞＝128，`MaxRespTime ＝（mant ｜0x10）＜＜（exp＋3）`； 
+
 `|0| 123|4567 |`
 
 `|1|exp | mant|`
@@ -40,6 +41,16 @@ HOST发送响应报文的时间
 11
 ```
 
+**说明**
+
+收到3个报文：
+
+·第0秒收到第1个报文，响应时间为20秒，则要到0＋20＝20秒响应；
+
+·第1秒收到第2个报文，响应时间为10；则要到1＋10＝11秒响应，与第上面的报文的响应时间比较获得响应时间最小为11秒；
+
+·第8秒收到第3个报文，响应时间为20秒，则要到8＋20＝28秒响应；与第上面的报文的响应时间比较获得响应时间最小为11秒；最终得到最小响应报文时间为11秒
+
 ### 示例二
 
 **输入：**
@@ -54,53 +65,36 @@ HOST发送响应报文的时间
 ```text
 260
 ```
-**编码思路**
+**说明**
 
-这个题目需要对一系列的字符串进行判断，分别对应三个情况：
+ 收到2个报文：
 
-·缺勤超过1次
+·第0秒收到第1个报文，响应时间为255秒，则要到（15｜0x10）＜＜（7＋3）＝31744秒响应；（mant＝15，exp＝7）
 
-1．没有连续的迟到／早退
+·第200秒收到第2个报文，响应时间为60；则要到200＋60＝260秒响应，与第上面的报文的响应时间比较获得响应时间最小为260秒；
 
-2．任意连续7次考勤缺勤／迟到／早退不超过3次
-
-针对每个字符串列表，依次进行上述三个判断，判断过程中注意细节问题，如判断缺勤次数需要使用count函数，判断连续缺勤或迟到／ 早退需要使用zip函数等。
-
-**核心知识点**
-1. 列表（list）的基本操作，如创建、遍历、添加、删除等 
-2. 列表推导式和生成器表达式的使用
-3. 字符串（str）的基本操作，如切片、拼接、查找、替换等 
-4. 迭代器（iterator）和生成器（generator）的概念及使用 
-5. zip 函数和count 函数的使用
+最终得到最小响应报文时间为260秒
 
 
 ## 解题代码
 
 ```python
-def solve_method(days):
-    res = []  # 初始化结果列表
-    for day in days:  # 遍历每一天的状态
-        absent = day.count("absent")  # 计算 "absent" 的数量
-        # 检查是否有超过1个 "absent" 或连续的 "late" 或 "leaveearly"
-        if absent > 1 or any(
-                cur in ("late", "leaveearly") and next in ("late", "leaveearly") for cur, next in zip(day, day[1:])):
-            res.append("false")  # 如果满足条件，则添加 "false" 到结果列表
-            continue
-        # 将每天的状态转换为整数列表，其中 "present" 转换为0，其他状态转换为1
-        ints = [1 if item != "present" else 0 for item in day]
-        # 检查整数列表的长度是否小于或等于7，并且总和是否大于或等于3
-        if len(ints) <= 7 and sum(ints) >= 3:
-            res.append("false")  # 如果满足条件，则添加 "false" 到结果列表
-        else:
-            # 检查任何连续的7天是否有3天或更多的非 "present" 状态
-            flag = any(sum(ints[i:i + 7]) >= 3 for i in range(len(ints) - 7))
-            res.append(str(not flag).lower())  # 添加结果到结果列表
-    print("".join(res))  # 打印结果列表
+def calculate_resp_time(T, M):
+    # 如果M大于或等于128，则进行特定的位操作
+    if M >= 128:
+        # 提取M的位4-7，与0x10进行逻辑或操作，然后根据M的位0-2值左移
+        M = ((M>>3) & 0xF| 0x10) << (M & 0x7 +3)
 
-if __name__ == "__main__":
-    n = int(input())  # 读取天数
-    days = [input().split() for _ in range(n)]  # 读取每一天的状态
-    solve_method(days)  # 调用解决方法
+     # 返回T和新计算的M值的和
+    return T+M
+if __name__ == '__main__':
+
+    C = int(input("Enter the number of test cases: "))
+    # 使用列表推导式，对C个测试用例调用calculate_resp_time函数，并找到最小响应时间
+    min_resp_time = min(calculate_resp_time(*map(int,input().split()))for _ in range (C))
+
+    print("Minimum response time:", min_resp_time)  # 打印最小响应时间
+    
 
 ```
 
