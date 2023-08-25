@@ -10,20 +10,17 @@
 
 
 def solve_method(nums, weight):
-    nums = sorted(nums)
-    ans = 0
+    nums.sort()
+    count = 0
     sum_weight = 0
     for i in range(len(nums)):
         sum_weight += nums[i]
         if sum_weight > weight:
-            return ans
+            return count
         else:
-            ans += 1
-    return ans
+            count += 1
+    return count
 
 
 if __name__ == '__main__':
-    nums = list(map(int, input().strip().split(',')))
-    weight = int(input().strip())
-    res = solve_method(nums, weight)
-    print(res)
+    assert solve_method([5, 10, 2, 11], 20) == 3

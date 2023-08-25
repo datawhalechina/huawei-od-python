@@ -10,14 +10,18 @@
 
 
 def solve_method(matrix, word):
-    def check(row, col, k, visited, word, matrix, m, n):
+    def dfs(row, col, k, visited, word):
+        # 如果出界、字母已访问过、该位置的字母不是目标字母，则没有找到，继续遍历
         if row < 0 or row > m - 1 or col < 0 or col > n - 1 or matrix[row][col] != word[k] or [row, col] in visited:
             return []
+        # 添加该字母的坐标存入已访问列表中
         visited.append([row, col])
+        # 如果遍历到最后一个单词，则表示找到了单词，返回该字母的坐标
         if k == len(word) - 1:
             return [[row, col]]
+        # 上下左右进行寻找目标单词的下一个字母
         for d1, d2 in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
-            res = check(row + d1, col + d2, k + 1, visited, word, matrix, m, n)
+            res = dfs(row + d1, col + d2, k + 1, visited, word)
             if res:
                 return [[row, col]] + res
         return []
@@ -27,18 +31,16 @@ def solve_method(matrix, word):
         for j in range(n):
             if matrix[i][j] == word[0]:
                 visited = []
-                res = check(i, j, 0, visited, word, matrix, m, n)
+                res = dfs(i, j, 0, visited, word)
                 if res:
-                    return res
-    return []
+                    # 如果找到了，则返回单词的所有坐标
+                    return [i for x in res for i in x]
+    return "N"
 
 
 if __name__ == '__main__':
-    N = int(input().strip())
-    matrix = [input().strip().split(',') for _ in range(N)]
-    word = input().strip()
-    res = solve_method(matrix, word)
-    if res:
-        print(','.join([','.join([str(item[0]), str(item[1])]) for item in res]))
-    else:
-        print('N')
+    matrix = [["A", "C", "C", "F"],
+              ["C", "D", "E", "D"],
+              ["B", "E", "S", "S"],
+              ["F", "E", "C", "A"]]
+    assert solve_method(matrix, "ACCESS") == [0, 0, 0, 1, 0, 2, 1, 2, 2, 2, 2, 3]

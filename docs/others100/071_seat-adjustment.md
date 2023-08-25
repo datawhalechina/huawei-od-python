@@ -49,28 +49,23 @@
 ```
 
 ## 解题思路
-数组长度为n，则最多可以坐n//2 + 1人，首先判断首位是否可以再坐人，之后遍历数组，使用贪心算法，越靠左侧位置可以
-再坐人，优先安排。
+
+1. 如果座位数小于3，当座位都是空的时候，返回1，否则返回0。
+2. 如果座位数的空位小于一半，则返回0。
+3. 遍历所有座位：
+    - 如果座位有人，则继续遍历。
+    - 如果第一个位置和第二个位置是空的，则第一个位置可坐人。
+    - 如果最后一个位置和倒数第二个位置是空的，则最后一个位置可坐人。
+    - 如果前一个和后一个均为0，则当前位置可坐人。
+4. 返回可以坐人的座位数。    
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 071_seat-adjustment
-@time:  24/8/2023 上午 10:31
-@project:  huawei-od-python 
-"""
-
-
 def solve_method(nums):
     if len(nums) < 3:
-        if sum(nums) > 0:
-            return 0
-        else:
-            return 1
+        return 0 if sum(nums) > 0 else 1
+
     if sum(nums) >= len(nums) // 2 + 1:
         return 0
     ans = 0
@@ -79,21 +74,24 @@ def solve_method(nums):
         if nums[i] == 1:
             continue
         elif i == 0 and nums[i + 1] == 0:
+            # 如果第一个位置和第二个位置是空的，则第一个位置可坐人
             ans += 1
             nums[i] = 1
         elif i == n - 1 and nums[i - 1] == 0:
+            # 如果最后一个位置和倒数第二个位置是空的，则最后一个位置可坐人
             ans += 1
+            nums[i] = 1
         else:
+            # 如果前一个和后一个均为0，则当前位置可坐人
             if nums[i - 1] == 0 and nums[i + 1] == 0:
                 ans += 1
                 nums[i] = 1
     return ans
 
 
-if __name__=='__main__':
-    nums = list(map(int,input().strip().split(' ')))
-    res = solve_method(nums)
-    print(res)
-
+if __name__ == '__main__':
+    assert solve_method([1, 0, 0, 0, 1]) == 1
+    assert solve_method([0, 0, 0, 0, 0]) == 3
+    assert solve_method([1, 0, 0, 0, 0, 0]) == 2
 ```
 

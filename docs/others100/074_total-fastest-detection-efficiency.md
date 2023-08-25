@@ -37,36 +37,29 @@
 
 ## 解题思路
 
-贪心算法，在考虑每一名志愿者时，都要最大化收益,先将数组初始化为1名志愿者都没有的效率，之后每增加一位志愿者，
-到要使得效率提升是最大的。
+1. 遍历所有的采样员：
+    - 当有1个志愿者，增加20%；每增加1个志愿者，效率提升10%，最多提升30%。使用数组保存所有的提升效率。
+2. 计算当没有志愿者协助时，每个采样员的效率是80%。
+3. 选取志愿者能提升效率最高的分配给采样员，计算总和。
+4. 返回结果，即总最快检测效率。
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 074_total-fastest-detection-efficiency
-@time:  24/8/2023 下午 4:42
-@project:  huawei-od-python 
-"""
-
-
-def solve_method(nums, num_volunteer):
+def solve_method(samplers, num_volunteer):
     profit = []
-    for p in nums:
+    for p in samplers:
+        # 当有1个志愿者，增加20%
+        # 每增加1个志愿者，效率提升10%，最多提升30%
         profit.extend([p * 0.2, p * 0.1, p * 0.1, p * 0.1])
-    nums = [i * 0.8 for i in nums]
-    return int(sum(nums) + sum(sorted(profit, reverse=True)[:num_volunteer]))
+    # 没有志愿者协助时，每个采样员的效率是80%
+    samplers = [i * 0.8 for i in samplers]
+    # 选取志愿者能提升效率最高的分配给采样员，计算总和
+    return sum(samplers) + sum(sorted(profit, reverse=True)[:num_volunteer])
 
 
 if __name__ == '__main__':
-    n1, n2 = map(int, input().strip().split(' '))
-    nums = list(map(int, input().strip().split(' ')))
-    res = solve_method(nums, n2)
-    print(res)
-
-
+    samplers = [200, 200]
+    assert solve_method(samplers, 2) == 400
 ```
 

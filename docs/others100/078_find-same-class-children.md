@@ -37,50 +37,45 @@
 
 **说明**
 
-- 2的同班标记为Y，因此和1同班。
-- 3的同班标记位N，因此和1,2不同班
-- 4的同班标记位Y，因此和3同班。
+- 2的同班标记为`Y`，因此和1同班。
+- 3的同班标记位`N`，因此和1,2不同班
+- 4的同班标记位`Y`，因此和3同班。
 所以，1和2同班，3和4同班。
+
+## 解题思路
+
+1. 初始化两个班级。
+2. 遍历所有小朋友：
+    - 如果不同班，则换到另一个班，再分班。
+    - 如果同班，则直接分班。
+3. 将班级按照第一个编号小的排在前面。
+4. 返回分班结果。
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 078_find-same-class-children
-@time:  23/8/2023 下午 11:57
-@project:  huawei-od-python 
-"""
-
-
-def solve_method(s):
+def solve_method(line):
     try:
-        queue = s.split(' ')
-        class1, class2 = [int(queue.pop(0).split('/')[0])], []
-        prev = 1
-        while queue:
-            id_, flag = queue.pop(0).split('/')
-            if (flag == 'Y' and prev == 1) or (flag == 'N' and prev == 2):
-                class1.append(int(id_))
-                prev = 1
-            else:
-                class2.append(int(id_))
-                prev = 2
-        class1 = sorted(class1)
-        class2 = sorted(class2)
-        if class1[0] < class2[0]:
-            return '\n'.join([' '.join(map(str, class1)), ' '.join(map(str, class2))])
-        else:
-            return '\n'.join([' '.join(map(str, class2)), ' '.join(map(str, class1))])
+        classes = [[], []]
+        class_no = 0
+        for i, p in enumerate(line):
+            p_id, p_flag = p.split("/")
+
+            if p_flag == "N":
+                # 如果不同班，则换到另一个班
+                class_no = not class_no
+
+            # 进行分班
+            classes[class_no].append(int(p_id))
+
+        # 按照第一个编号小的排在第一行
+        classes.sort(key=lambda x: x[0])
+        return classes
     except:
-        return 'ERROR'
+        return "ERROR"
 
 
 if __name__ == '__main__':
-    s = input().strip()
-    res = solve_method(s)
-    print(res)
+    assert solve_method(["1/N", "2/Y", "3/N", "4/Y"]) == [[1, 2], [3, 4]]
 ```
 

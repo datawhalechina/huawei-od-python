@@ -71,7 +71,14 @@
 
 ## 解题思路
 
-拓扑排序，每次剔除入度为0的节点，同时更新节点入度，直到所有节点入度为0
+1. 构建图。
+2. 初始化图中节点（任务项）的值。
+3. 初始化途中节点的入度和出度。
+4. 遍历图中左右的节点：
+    - 把入度为0的节点，加入到节点列表中。
+    - 遍历所有入度为0的节点，并把相关联节点的入度减1。
+    - 计数器累加1。
+5. 返回计数器的值，即部署次数。    
 
 ## 解题代码
 
@@ -85,49 +92,52 @@ class Node:
         self.edges = edges
 
 
-class Edge:
-    def __init__(self, from_, to_, weight=None):
-        self.from_ = from_
-        self.to_ = to_
-        self.weight = weight
-
-
 class Graph:
-    def __init__(self, nodes=None, edges=None):
-        self.edges = edges
+    def __init__(self, nodes=None):
         self.nodes = nodes
 
 
 def solve_method(num_node, edge_lst):
-    graph = Graph(nodes=dict(), edges=set())
+    # 构建图
+    graph = Graph(nodes=dict())
+    # 初始化节点的值
     for val in range(num_node):
         graph.nodes[val] = Node(val, nexts=[], edges=[])
+    # 初始化节点的入度和出度
     for from_, to_ in edge_lst:
         graph.nodes[from_].nexts.append(to_)
         graph.nodes[to_].in_ += 1
+
     zeroMap = []
-    ans = 0
+    count = 0
     while graph.nodes:
+        # 把入度为0的节点，加入到节点列表中
         for node in graph.nodes:
             if graph.nodes[node].in_ == 0:
                 zeroMap.append(node)
+        # 遍历所有入度为0的节点，并把相关联节点的入度减1
         while zeroMap:
             node = zeroMap.pop()
             for next_node in graph.nodes[node].nexts:
                 graph.nodes[next_node].in_ -= 1
             graph.nodes.pop(node)
-        ans += 1
-    return ans
+        count += 1
+    return count
 
 
 if __name__ == '__main__':
-    n = int(input().strip())
-    num_edges = int(input().strip())
-    edges = []
-    for _ in range(num_edges):
-        edges.append(map(int, input().strip().split(' ')))
-    res = solve_method(n, edges)
-    print(res)
+    taskNum = 5
+    relations = [[0, 4],
+                 [1, 2],
+                 [1, 3],
+                 [2, 3],
+                 [2, 4]]
+    assert solve_method(taskNum, relations) == 3
 
+    taskNum = 5
+    relations = [[0, 3],
+                 [0, 4],
+                 [1, 3]]
+    assert solve_method(taskNum, relations) == 2
 ```
 

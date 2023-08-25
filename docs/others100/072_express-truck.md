@@ -35,41 +35,29 @@
 
 ## 解题思路
 
-将输入的重量按从小到大的顺序排序，然后依次选取重量，
-如果累加的总重量小于等于容量，就继续选取下一个重量；否则结束选取。最后输出选取的重量数。
+1. 将输入的重量按从小到大的顺序排序，
+2. 遍历所有快递：
+    - 如果累加的快递总重量小于等于货车载重，就继续选取下一个快递，计数器累加1；
+    - 否则，结束遍历。
+3. 返回计数器的值，即已选取的快递个数。
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 072_express-truck
-@time:  24/8/2023 上午 11:58
-@project:  huawei-od-python 
-"""
-
-
 def solve_method(nums, weight):
-    nums = sorted(nums)
-    ans = 0
+    nums.sort()
+    count = 0
     sum_weight = 0
     for i in range(len(nums)):
         sum_weight += nums[i]
         if sum_weight > weight:
-            return ans
+            return count
         else:
-            ans += 1
-    return ans
+            count += 1
+    return count
 
 
 if __name__ == '__main__':
-    nums = list(map(int, input().strip().split(',')))
-    weight = int(input().strip())
-    res = solve_method(nums, weight)
-    print(res)
-
-
+    assert solve_method([5, 10, 2, 11], 20) == 3
 ```
 
