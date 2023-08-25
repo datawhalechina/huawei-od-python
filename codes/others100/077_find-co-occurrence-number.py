@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 077_find-co-occurrence-number
-@time:  23/8/2023 下午 8:25
-@project:  huawei-od-python 
+@time:  2023/8/23 20:25
+@project:  huawei-od-python
+@desc: 077 找出两个整数数组中同时出现的整数
 """
 from collections import Counter
 

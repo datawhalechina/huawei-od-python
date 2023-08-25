@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 076_discount-fruit
-@time:  30/7/2023 下午 10:41
-@project:  huawei-od-python 
+@time:  2023/7/30 22:41
+@project:  huawei-od-python
+@desc: 076 打折买水果
 """
 
 

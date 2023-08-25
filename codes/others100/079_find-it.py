@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 080_find-word
-@time:  30/7/2023 下午 4:19
-@project:  huawei-od-python 
+@time:  2023/7/30 16:19
+@project:  huawei-od-python
+@desc: 079 找到它
 """
 
 

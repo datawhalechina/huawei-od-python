@@ -49,50 +49,35 @@ s,sdf134,A2c4bd,523[]
 
 **说明：**
 
-第2个箱子中的 Abcd，与密码不完全匹配，不符合要求。
+第2个箱子中的`Abcd`，与密码不完全匹配，不符合要求。
 
 **备注：**
 
-箱子中字符拼出的字符串与密码的匹配忽略大小写，且要求与密码完全匹配，如密码 abc 匹配 aBc，
-但是密码 abc 不匹配 abcd
+箱子中字符拼出的字符串与密码的匹配忽略大小写，且要求与密码完全匹配，如密码`abc`匹配`aBc`，但是密码`abc`不匹配`abcd`。
 
 ## 解题思路
-+ 将每个箱子的字符串剔除非字母字符并全部转换为小写，然后对字符串排序重构字符串。
-+ 遍历所有箱子判断字符串是否相等
 
-   
+1. 遍历所有字符串：
+    - 将字符串进行过滤，取出所有字母。
+    - 将字符串按照字典序进行排序。
+    - 如果字符串与密码相同，则返回索引。
+2. 如果找不到，则返回-1。    
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 063_escape-room-game
-@time:  17/8/2023 上午 10:48
-@project:  huawei-od-python 
-"""
-from typing import List
-import re
-
-
-def solve_method(key: str, boxes: List[str]) -> int:
-    pattern = r'[^a-zA-Z]+'
-    boxes = [''.join(sorted(re.sub(pattern, '', s).lower())) for s in boxes]
-    for index, s in enumerate(boxes):
-        if s == key:
+def solve_method(key, boxes) -> int:
+    key_lst = list(key)
+    for index, chars in enumerate(boxes):
+        chars = [char.lower() for char in chars if char.isalpha()]
+        chars.sort()
+        if chars == key_lst:
             return index
     return -1
 
 
 if __name__ == '__main__':
-    key = input().strip()
-    boxes = input().strip().split(',')
-    res = solve_method(key, boxes)
-    print(res)
-
-
-
+    assert solve_method("abc", ["s", "sdf134", "A2c4b"]) == 2
+    assert solve_method("abc", ["s", "sdf134", "A2c4bd", "523[]"]) == -1
 ```
 

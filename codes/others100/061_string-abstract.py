@@ -3,47 +3,40 @@
 """
 @author:  zhangchao
 @file: 061_string-abstract
-@time:  13/8/2023 下午 5:45
-@project:  huawei-od-python 
+@time:  2023/8/13 17:45
+@project:  huawei-od-python
+@desc: 061 字符串摘要
 """
-import re
-
-pattern = r"[^a-zA-Z]+"
 
 
 def solve_method(s):
     n = len(s)
     index = 0
-    item_list = []
-    s = re.sub(pattern, '', s)
+    result = []
     s = s.lower()
-
-    def count(s, c, start, end):
-        ans = 0
-        for i in range(start, end):
-            if s[i] == c:
-                ans += 1
-        return ans
 
     while index < n:
         if index == n - 1:
-            item_list.append(f'{s[index]}0')
+            result.append(s[index] + "0")
         if s[index] == s[index + 1]:
+            # 如果是连续字符
             start, index = index, index + 1
+            # 统计相同字符出现次数
             while index < n - 1 and s[index] == s[index + 1]:
                 index += 1
             freq = index - start + 1
-            item_list.append(f'{s[start]}{freq}')
+            result.append(s[start] + str(freq))
             index += 1
         else:
-            freq = count(s, s[index], index + 1, n)
-            item_list.append(f'{s[index]}{freq}')
+            # 如果是非连续字符
+            freq = s.count(s[index], index + 1, n)
+            result.append(s[index] + str(freq))
             index += 1
-    item_list.sort(key=lambda x: (-int(x[1]), ord(x[0])))
-    return ''.join(item_list)
+    # 将结果列表按照数字从大到小、字符按字典序排序
+    result.sort(key=lambda x: (-int(x[1]), x[0]))
+    return "".join(result)
 
 
 if __name__ == '__main__':
-    s = input()
-    res = solve_method(s)
-    print(res)
+    assert solve_method("aabbcc") == "a2b2c2"
+    assert solve_method("bAaAcBb") == "a3b2b2c0"

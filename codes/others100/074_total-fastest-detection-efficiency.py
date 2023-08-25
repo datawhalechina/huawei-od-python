@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 074_total-fastest-detection-efficiency
-@time:  24/8/2023 下午 4:42
-@project:  huawei-od-python 
+@time:  2023/8/24 16:42
+@project:  huawei-od-python
+@desc: 074 总最快检测效率
 """
 
 

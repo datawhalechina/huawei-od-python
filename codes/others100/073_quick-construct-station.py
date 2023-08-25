@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 073_quick-construct-station
-@time:  24/8/2023 下午 2:57
-@project:  huawei-od-python 
+@time:  2023/8/24 14:57
+@project:  huawei-od-python
+@desc: 073 快速开租建站
 """
 
 

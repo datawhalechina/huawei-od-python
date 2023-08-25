@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 071_seat-adjustment
-@time:  24/8/2023 上午 10:31
-@project:  huawei-od-python 
+@time:  2023/8/24 10:31
+@project:  huawei-od-python
+@desc: 071 座位调整
 """
 
 

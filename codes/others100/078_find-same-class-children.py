@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 078_find-same-class-children
-@time:  23/8/2023 下午 11:57
-@project:  huawei-od-python 
+@time:  2023/8/23 23:57
+@project:  huawei-od-python
+@desc: 078 找出同班小朋友
 """
 
 

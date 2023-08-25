@@ -47,46 +47,39 @@
 
 ## 解题思路
 
-无向图求连通分量个数，可以使用深度优先遍历来解决
+1. 初始化已经广播的服务器`cover`。
+2. 遍历所有的服务器：
+    - 如果该服务器未广播，需要广播的服务器数量累加1。
+    - 继续遍历其他所有服务器，如果与其他服务器直连，加入到已经广播的服务器集合中。
+3. 返回结果，即需要广播的服务器数量。  
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 070_broadcast-server
-@time:  23/8/2023 下午 7:46
-@project:  huawei-od-python 
-"""
-
-
 def solve_method(nums):
-    def dfs(nums, visited, index):
-        visited[index] = True
-        for j in range(len(nums)):
-            if nums[index][j] == 1 and not visited[j]:
-                dfs(nums, visited, j)
-
-    n = len(nums)
-    visited = [False] * n
+    N = len(nums)
+    cover = set()
     count = 0
-    for i in range(n):
-        if not visited[i]:
-            dfs(nums, visited, i)
+
+    for i in range(N):
+        if i not in cover:
             count += 1
+            cover.add(i)
+        for j in filter(lambda x: x != i, range(N)):
+            if nums[i][j] == 1:
+                cover.add(j)
+
     return count
 
 
 if __name__ == '__main__':
-    nums = [list(map(int, input().strip().split(' ')))]
-    n = len(nums[0])
-    for _ in range(n-1):
-        nums.append(list(map(int, input().strip().split(' '))))
-    res = solve_method(nums)
-    print(res)
+    nums = [[1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]]
+    assert solve_method(nums) == 3
 
-
+    nums = [[1, 1],
+            [1, 1]]
+    assert solve_method(nums) == 1
 ```
 

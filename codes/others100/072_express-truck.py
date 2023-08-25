@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 072_express-truck
-@time:  24/8/2023 上午 11:58
-@project:  huawei-od-python 
+@time:  2023/8/24 11:58
+@project:  huawei-od-python
+@desc: 072 快递货车
 """
 
 

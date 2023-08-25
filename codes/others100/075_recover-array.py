@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 075_recover-array
-@time:  24/8/2023 下午 5:04
-@project:  huawei-od-python 
+@time:  2023/8/24 17:04
+@project:  huawei-od-python
+@desc: 075 恢复数字序列
 """
 from collections import Counter
 

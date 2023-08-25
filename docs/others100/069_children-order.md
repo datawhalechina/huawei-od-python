@@ -71,40 +71,35 @@ xxx
 出现非法参数情况，返回空数组。
 
 ## 解题思路
-遍历数组，如果当前下标为偶数且当前元素小于下一个元素，交换当前下标和下一个下标的元素；
-如果当前下标为奇数且当前元素大于下一个元素，交换当前下标和下一个下标的元素。
+
+1. 检查输入的数组是否合法，如果不合法，则返回空数组。
+2. 遍历所有小朋友的身高：
+    - 当索引为奇数时，如果当前的小朋友身高比后一个小朋友的身高要高，则需要交换。
+    - 当索引为偶数时（0也算作偶数），如果当前的小朋友身高比后一个小朋友的身高要矮，则需要交换。
+3. 返回交换之后的结果。    
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 069_children-order
-@time:  23/8/2023 下午 7:19
-@project:  huawei-od-python 
-"""
+def solve_method(nums):
+    # 检查参数是否合法
+    if all([False if str(x).isdigit() else True for x in nums]):
+        return []
 
-
-def solve_method(line):
-    nums = line.strip().split(' ')
-    try:
-        nums = list(map(int, nums))
-    except:
-        return '[]'
     for i in range(len(nums) - 1):
         if i & 1 == 1 and nums[i] > nums[i + 1]:
+            # 当索引为奇数时，如果当前的小朋友身高比后一个小朋友的身高要高，则需要交换
             nums[i], nums[i + 1] = nums[i + 1], nums[i]
         elif i & 1 == 0 and nums[i] < nums[i + 1]:
+            # 当索引为偶数时，0也算作偶数，如果当前的小朋友身高比后一个小朋友的身高要矮，则需要交换
             nums[i], nums[i + 1] = nums[i + 1], nums[i]
-    return ' '.join(nums)
+            
+    return nums
 
 
 if __name__ == '__main__':
-    line = input()
-    res = solve_method(line)
-    print(res)
-
+    assert solve_method([4, 1, 3, 5, 2]) == [4, 1, 5, 2, 3]
+    assert solve_method([1, 1, 1, 1, 1]) == [1, 1, 1, 1, 1]
+    assert solve_method(["xxx"]) == []
 ```
 
