@@ -3,32 +3,34 @@
 """
 @author:  zhangchao
 @file: 070_broadcast-server
-@time:  23/8/2023 下午 7:46
-@project:  huawei-od-python 
+@time:  2023/8/23 19:46
+@project:  huawei-od-python
+@desc: 070 广播服务器
 """
 
 
 def solve_method(nums):
-    def dfs(nums, visited, index):
-        visited[index] = True
-        for j in range(len(nums)):
-            if nums[index][j] == 1 and not visited[j]:
-                dfs(nums, visited, j)
-
-    n = len(nums)
-    visited = [False] * n
+    N = len(nums)
+    cover = set()
     count = 0
-    for i in range(n):
-        if not visited[i]:
-            dfs(nums, visited, i)
+
+    for i in range(N):
+        if i not in cover:
             count += 1
+            cover.add(i)
+        for j in filter(lambda x: x != i, range(N)):
+            if nums[i][j] == 1:
+                cover.add(j)
+
     return count
 
 
 if __name__ == '__main__':
-    nums = [list(map(int, input().strip().split(' ')))]
-    n = len(nums[0])
-    for _ in range(n-1):
-        nums.append(list(map(int, input().strip().split(' '))))
-    res = solve_method(nums)
-    print(res)
+    nums = [[1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]]
+    assert solve_method(nums) == 3
+
+    nums = [[1, 1],
+            [1, 1]]
+    assert solve_method(nums) == 1

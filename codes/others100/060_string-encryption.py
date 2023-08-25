@@ -3,8 +3,9 @@
 """
 @author:  zhangchao
 @file: 060_string-encryption
-@time:  29/7/2023 下午 11:55
-@project:  huawei-od-python 
+@time:  2023/7/29 23:55
+@project:  huawei-od-python
+@desc: 060 字符串加密
 """
 
 
