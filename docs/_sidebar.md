@@ -140,7 +140,6 @@
         * [044 压缩报文还原](others100/044_decode-compressed-string.md)
         * [045 去重求和](others100/045_sum-number.md)
         * [048 吃火锅](others100/048_hot-pot.md)
-        * [060 字符串加密](others100/060_string-encryption.md)  
         * [061 字符串摘要](others100/061_string-abstract.md)  
         * [062 字符匹配](others100/062_string-match.md)  
         * [063 密室逃生游戏](others100/063_escape-room-game.md)  
