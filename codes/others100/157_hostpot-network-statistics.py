@@ -19,8 +19,12 @@ while True:
         # 如果是数字，则输出Top N的页面
         n = int(line)
         top_urls = get_top_urls(counter, n)
-        for url in top_urls:
-            print(url)
+        for i in range(len(top_urls)):
+            if i ==len(top_urls)-1:
+                print(top_urls[i])
+            else:
+                print(top_urls[i],end=",")
+
     else:
         # 如果是URL，则更新计数器
         update_counter(counter, line)
