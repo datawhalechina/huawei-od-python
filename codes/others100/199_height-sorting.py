@@ -8,7 +8,12 @@
 @desc: 199 身高排序
 """
 
-h, n = map(int, input().split())
-highs = list(map(int, input().split()))
-highs.sort(key=lambda x: (abs(x - h), x))
-print(' '.join(map(str, highs)))
+
+def solve_method(H, N, heights):
+    heights.sort(key=lambda x: (abs(x - H), x))
+    return heights
+
+
+if __name__ == '__main__':
+    heights = [95, 96, 97, 98, 99, 101, 102, 103, 104, 105]
+    assert solve_method(100, 10, heights) == [99, 101, 98, 102, 97, 103, 96, 104, 95, 105]

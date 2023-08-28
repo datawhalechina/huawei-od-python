@@ -1,4 +1,4 @@
-# 197跳格子（2）
+# 197 跳格子（2）
 
 ## 题目描述
 
@@ -54,67 +54,44 @@
 
 ## 解题思路
 
-1. `def dpfunc(nums):`: 定义一个函数 `dpfunc`，该函数接受一个数字列表 `nums` 作为参数。
+**基本思路：** 使用动态规划方法求解。
 
-2. `dp = [0] * len(nums)`: 创建一个名为 `dp` 的列表，用于存储每个位置的最大和方案。
-
-3. `dp[0] = nums[0]`: 初始化 `dp` 列表的第一个元素为 `nums` 列表的第一个元素，因为只有一个数字时最大和即为该数字本身。
-
-4. 在接下来的循环中，遍历从索引 1 到列表末尾的范围，表示每个位置的状态转移：
-
-   a. `if i == 1:`: 如果当前位置是索引 1，即第二个数字。
-
-   - `dp[i] = max(nums[i], dp[i - 1])`: 在这种情况下，我们选择当前数字或者前一个位置的最大和，取两者中较大的一个作为当前位置的最大和。
-
-   b. 否则（对于索引大于等于 2 的情况）。
-
-   - `dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])`: 在这种情况下，我们可以选择当前数字或者选择前两个位置的数字和加上当前数字，取两者中较大的一个作为当前位置的最大和。
-
-5. `return dp[len(nums) - 1]`: 返回 `dp` 列表的最后一个元素，即最终的最大和方案。
-
-6. `def main():`: 定义主函数 `main`。
-
-7. `strings = input().split()`: 从标准输入读取一行字符串，并将其按空格分割为字符串列表。
-
-8. `if len(strings) == 1:`: 如果输入只包含一个数字。
-
-   - `print(int(strings[0]))`: 直接输出这个数字并将其转换为整数。
-
-9. 否则，当输入包含多个数字时。
-
-   - `numsStart = [int(x) for x in strings[:-1]]`: 将输入的字符串列表转换为整数列表，不包含最后一个数字。
-   - `numsEnd = [int(x) for x in strings[1:]]`: 将输入的字符串列表转换为整数列表，不包含第一个数字。
-   - `res = max(dpfunc(numsStart), dpfunc(numsEnd))`: 分别计算以第一个数字开头和以最后一个数字结尾的情况下的最大和方案，并取两者中较大的一个作为结果。
-   - `print(res)`: 输出最终的结果。
+1. 分别对去掉最后一个格子或者去掉第一个格子的数组进行动态规划求最大和，防止跳连续的格子：
+   - 确定dp数组以及下标的含义：：`dp[i]`表示第`i`个位置的最大和。
+   - 确定递推公式：
+      - 当`i`为1时，第二个值为前一个与当前值的最大值，公式为`dp[i] = max(nums[i], dp[i - 1])`。
+      - 当`i`为其他值时，选择前一个值与跳一个之后加上该值的最大值，公式为`dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])`。
+   - dp数组初始化：第1个值为数组的第一个值，其他元素为0。
+   - 确定遍历顺序：从1到数组长度`len(nums)`。
+2. 返回最大和。   
 
 ## 解题代码
 
 ```python
 def dpfunc(nums):
+    # dp[i]表示第i个位置的最大和
     dp = [0] * len(nums)
     dp[0] = nums[0]
 
     for i in range(1, len(nums)):
         if i == 1:
+            # 第二个值为前一个与当前值的最大值
             dp[i] = max(nums[i], dp[i - 1])
         else:
+            # 选择前一个值与跳一个之后加上该值的最大值
             dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
-
+    
     return dp[len(nums) - 1]
 
 
-def main():
-    strings = input().split()
-    if len(strings) == 1:
-        print(int(strings[0]))
-        return
+def solve_method(nums):
+    # 去掉最后一个格子或者去掉第一个格子，防止连续
+    res = max(dpfunc(nums[:-1]), dpfunc(nums[1:]))
+    return res
 
-    numsStart = [int(x) for x in strings[:-1]]
-    numsEnd = [int(x) for x in strings[1:]]
 
-    res = max(dpfunc(numsStart), dpfunc(numsEnd))
-    print(res)
-
-main()
+if __name__ == '__main__':
+    assert solve_method([2, 3, 2]) == 3
+    assert solve_method([1, 2, 3, 1]) == 4
 ```
 

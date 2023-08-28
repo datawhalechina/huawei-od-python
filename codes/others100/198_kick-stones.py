@@ -9,29 +9,33 @@
 """
 
 
-def solve_method(n):
+def solve_method(K):
+    if K <= 1 or K >= 100:
+        return "ERROR!"
+
     nums = [i for i in range(1, 101)]
-    max_index = len(nums) - 1
-    index = 0
+    # 用于K的计数
     count = 0
-    num_n = 0
-    while count < 98:
-        while True:
-            if index > max_index:
-                index = 0
-            if nums[index] != -1:
-                num_n += 1
-            if num_n == n:
-                num_n = 0
-                break
-            index += 1
+    # 当前遍历到的位置
+    index = 0
+    while len(nums) >= K:
+        # 开始计数第count个
         count += 1
-        nums[index] = -1
+        if count == K:
+            # 如果到达了第K个，将此石子踢出
+            nums.pop(index)
+            # 从0开始重新计数到K
+            count = 0
+        else:
+            # 继续下一个石子
+            index += 1
 
-    for item in nums:
-        if item != -1:
-            print(item, end=" ")
+        if index == len(nums):
+            # 如果已经循环了一圈，则从0位置开始继续循环报数
+            index = 0
+
+    return nums
 
 
-k = int(input())
-solve_method(k)
+if __name__ == '__main__':
+    assert solve_method(3) == [58, 91]

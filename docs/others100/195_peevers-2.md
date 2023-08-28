@@ -68,54 +68,58 @@
 
 ## 解题思路
 
-1. `def dfs(nums, remaining, combination, indices, index):`: 这是深度优先搜索函数的定义，它接受五个参数：`nums` 表示数字列表，`remaining` 表示还需要选择几个数字，`combination` 是当前已选择的数字组合，`indices` 是当前已选择数字的索引组合，`index` 表示当前遍历的索引。
-2. `global minIndexSum, targetCount, result`: 声明要在函数内部使用的全局变量。
-3. `if remaining == 0:`: 如果需要选择的数字个数为 0，即已经选择了 3 个数字。
-   - 在这个条件下，计算当前数字组合的和 `total` 和索引之和 `indexSumTemp`。
-   - 如果数字组合的和等于给定的目标值 `targetCount`，并且索引之和小于当前最小索引之和 `minIndexSum`，则更新 `minIndexSum` 和 `result`。
-4. `else:`: 否则，还需要选择更多的数字。
-   - 进入一个循环，遍历从当前索引 `index` 开始到数字列表的末尾。
-     - `combination.append(nums[i])`: 将当前数字添加到组合中。
-     - `indices.append(i)`: 将当前数字的索引添加到索引列表中。
-     - 递归调用 `dfs` 函数，同时更新剩余需要选择的数字数量为 `remaining - 1`，当前组合，当前索引列表，以及递增的索引 `i + 1`。
-     - `combination.pop()`: 回溯，移除刚添加的数字。
-     - `indices.pop()`: 回溯，移除刚添加的索引。
-5. `minIndexSum = float('inf')`: 初始化最小索引之和为正无穷大。
-6. `targetCount = int(input())`: 从标准输入读取目标和的值。
-7. `nums = list(map(int, input().strip(' [\] ').split(',')))`: 从标准输入读取包含数字的字符串，将其处理为数字列表。
-8. `result = []`: 初始化结果列表为空。
-9. `dfs(nums, 3, [], [], 0)`: 调用深度优先搜索函数，开始寻找满足条件的数字组合。
+**基本思路：** 本题类似于三数之和，使用双指针求解。
+
+1. 将数组按照值和索引的二元组形式重新存储。
+2. 按照值从小到大排序。
+3. 使用双指针遍历数组：
+    - 左指针从当前元素的下一个位置开始。
+    - 右指针从数组的最后一个位置开始。
+    - 比较左右指针：
+        - 如果当前三个步数之和等于房子的总格数，并且索引之和最小，则保存结果。
+        - 如果小于总格数，则左指针向右移，增大和数。
+        - 如果大于总格数，则右指针向左移，减小和数。
+4. 将结果按照索引顺序从小到大排序，并仅返回元素的值。   
 
 ## 解题代码
 
 ```python
-def dfs(nums, remaining, combination, indices, index):
-    global minIndexSum, targetCount, result
-
-    if remaining == 0:
-        total = 0
-        indexSumTemp = 0
-        for i in range(3):
-            total += combination[i]
-            indexSumTemp += indices[i]
-        if total == targetCount and indexSumTemp < minIndexSum:
-            minIndexSum = indexSumTemp
-            result = combination[:]
-    else:
-        for i in range(index, len(nums)):
-            combination.append(nums[i])
-            indices.append(i)
-            dfs(nums, remaining - 1, combination, indices, i + 1)
-            combination.pop()
-            indices.pop()
+import math
 
 
-minIndexSum = float('inf')
-targetCount = int(input())
-nums = list(map(int, input().strip(' [\] ').split(',')))
-result = []
-dfs(nums, 3, [], [], 0)
-output = '[' + ', '.join(map(str, result)) + '] '
-print(output)
+def solve_method(target, nums):
+    nums = [(n, i) for i, n in enumerate(nums)]
+    # 按照值从小到大排序
+    nums = sorted(nums, key=lambda x: x[0])
+    result = []
+    min_index_sum = math.inf
+    for i in range(len(nums) - 2):
+        # 左指针从当前元素的下一个位置开始
+        left = i + 1
+        # 右指针从数组的最后一个位置开始
+        right = len(nums) - 1
+        while left < right:
+            current_sum = nums[i][0] + nums[left][0] + nums[right][0]
+            index_sum = nums[i][1] + nums[left][1] + nums[right][1]
+            if current_sum == target and index_sum < min_index_sum:
+                # 如果当前三个步数之和等于房子的总格数，并且索引之和最小，则返回结果
+                result = [nums[i], nums[left], nums[right]]
+                min_index_sum = index_sum
+            elif current_sum < target:
+                # 如果小于总格数，则左指针向右移，增大和数
+                left += 1
+            else:
+                # 如果大于总格数，则右指针向左移，减小和数
+                right -= 1
+
+    # 按照索引顺序从小到大排序
+    result.sort(key=lambda x: x[1])
+    return [x[0] for x in result]
+
+
+if __name__ == '__main__':
+    assert solve_method(9, [1, 4, 5, 2, 0, 2]) == [4, 5, 0]
+    assert solve_method(9, [1, 5, 2, 0, 2, 4]) == [5, 2, 2]
+    assert solve_method(12, [-1, 2, 4, 9]) == [-1, 4, 9]
 ```
 

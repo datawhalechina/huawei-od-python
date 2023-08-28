@@ -21,6 +21,22 @@
 **输入：**
 
 ```text
+4
+100 100 120 130
+40 30 60 50
+```
+
+**输出：**
+
+```text
+2134
+```
+
+### 示例二
+
+**输入：**
+
+```text
 3
 90 110 90 
 45 60 45
@@ -34,26 +50,26 @@
 
 ## 解题思路
 
-首先定义了一个函数 `solve_method`，该函数接受三个参数：人数 `n`、身高列表 `height` 和体重列表 `weight`。然后，在循环中，对于每个人，将其身高、体重和索引信息封装为元组，添加到名为 `arr1` 的列表中。接下来，使用 `sorted` 函数对 `arr1` 进行排序，排序依据是元组中的身高。排序后的结果被存储在名为 `arr2` 的列表中。主程序部分首先从输入中获取人数、身高列表和体重列表，然后调用 `solve_method` 函数，获取按照身高排序后的人的信息列表。最后，通过遍历 `arr2` 列表，输出每个人的索引，实现了根据身高排序并输出索引的功能。
+1. 将学生的编号和身高进行重新存储，得到列表`heights`。
+2. 将学生的身高列表和体重列表进行重新存储，每个元素是三元组，分别表示学生的编号、身高、体重。
+3. 将身高从低到高、体重从小到大排序。
+4. 返回学习的编号组成的字符串。
 
 ## 解题代码
 
 ```python
-def solve_method(n, height, weight):
-    arr1 = []
-    for i in range(n):
-        arr1.append(((height[i], weight[i]),i+1))
+def solve_method(n, heights, weights):
+    heights = [(i + 1, h) for i, h in enumerate(heights)]
+    students = [(h[0], h[1], w) for h, w in zip(heights, weights)]
+    
+    # 将身高从低到高、体重从小到大排序
+    students.sort(key=lambda x: (x[1], x[2]))
 
-    arr2 = sorted(arr1, key=lambda x: x[0])
-    return arr2
+    return "".join([str(x[0]) for x in students])
 
 
-n = int(input())
-height = list(map(int, input().split()))
-weight = list(map(int, input().split()))
-arr2 = solve_method(n, height, weight)
-for i in arr2:
-    print(i[1], end='')
-                                         
+if __name__ == '__main__':
+    assert solve_method(4, [100, 100, 120, 130], [40, 30, 60, 50]) == "2134"
+    assert solve_method(3, [90, 110, 90], [45, 60, 45]) == "132"                                       
 ```
 

@@ -14,6 +14,7 @@
 1. 你可以从一个格子跳到任意一个开启的格子。
 2. 没有前置依赖条件的格子默认就是开启的。
 3. 如果总数是`N`，则所有的格子编号为`[0, 1, 2, 3, ..., N-1]`连续的数组。
+4. 仅有一个格子与一个格子之间的依赖，不会存在需要开启两个格子，才能开启后续的格子的情况。
 
 其中：
 - 1 <= N < 500
@@ -141,44 +142,68 @@ yes
 
 ## 解题思路
 
-本题的目标是实现了一个跳格子游戏的逻辑，核心思路是利用栈和字典，按照行列分别存储已经走过的格子，然后遍历每一个空白格子，判断它是否可以到达边界，最后判断是否所有的空白格子都不能到达边界，从而判断游戏是否可以成功。
+1. 初始化格子开启字典`step_map`，`key`为前一个格子，`value`为被开启格子的列表。
+2. 得到没有前置条件的格子`visited`。
+3. 访问所有需要依赖条件的格子：
+    - 如果存在环，则返回`no`。
+    - 如果无法开启对应的格子（即不存在起始格子），则返回`no`。
+4. 如果所有的格子都访问过了，则返回`yes`。
 
 ## 解题代码
 
 ```python
-from typing import List
+from collections import defaultdict
 
 
-def skip_grid(n: int，grids : List[List[int]])-> bool:
-    x =[None] * n
-    map = {}
-    for i in range (len(grids)) :
-        a = grids[i]
-        if a[0] not in map:
-            map[a[0]] =[]
-        map[a[0] ] . append(a[1])
-        x[a[1]] = a[0]
-    stack =[]
-    for i in range(n):
-        if x[i] is None:
-            stack. append(i)
-    if not stack:
-        return False
-    while stack:
-        index = stack. pop()
-        x[index] = -1
-        if index not in map:
-            continue
-            for item in map[index]:
-                if x[item] != -1:
-                    stack. append(item)
-    return all(val -= -1 for val in x)  
+def solve_method(n, steps):
+    # 格子开启字典，key为前一个格子，value为被开启格子的列表
+    step_map = defaultdict(list)
+    # 得到没有前置条件的格子
+    visited = set(range(n))
+    for start, node in steps:
+        step_map[start].append(node)
+        visited.discard(node)
+
+    while len(step_map) != 0:
+        # 如果还有剩余的格子没有开启
+        visited_update = set()
+        for node in visited:
+            nodes = step_map.get(node, [])
+            if nodes:
+                if not set(nodes).difference(visited):
+                    # 如果存在环，则返回no
+                    return "no"
+                else:
+                    # 开启对应的格子
+                    visited_update = visited_update.union(set(nodes))
+                    step_map.pop(node)
+        if visited_update:
+            visited = visited.union(visited_update)
+        else:
+            # 如果无法开启对应的格子，则返回no
+            return "no"
+
+    if len(visited) == n:
+        return "yes"
 
 
 if __name__ == '__main__':
-    n = 2
-    grids =[[1,0]，[0，1]]
-    r = skip_grid(n, grids)
-    print( "yes" if r else "no")
+    steps = [[0, 1], [0, 2]]
+    assert solve_method(3, steps) == "yes"
+
+    steps = [[1, 0], [0, 1]]
+    assert solve_method(2, steps) == "no"
+
+    steps = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5]]
+    assert solve_method(6, steps) == "yes"
+
+    steps = [[4, 3], [0, 4], [2, 1], [3, 2]]
+    assert solve_method(5, steps) == "yes"
+
+    steps = [[1, 2], [1, 0]]
+    assert solve_method(4, steps) == "yes"
+
+    steps = [[1, 2], [2, 3], [3, 1]]
+    assert solve_method(4, steps) == "no"
 ```
 

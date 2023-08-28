@@ -30,37 +30,47 @@
 
 ## 解题思路
 
-这段代码实现的是"约瑟夫环 "问题的解决方法。给定一个正整数n，假设有一个由1到100的整数组成的列表，初始时列表中所有的数字都没有被标记（标记为-1)。从列表的第一个数字开始，从1开始计数，每数到第n个数字时，将该数字标记为-1，直到列表中所有数字都被标记为止。最后输出没有被标记的数字。
+1. 如果输入参数`K`小于等于1或者大于等于100，输出`ERROR!`。
+2. 初始化100个石子的编号`nums`。   
+3. 初始化用于`K`计数的`count`、初始化当前遍历到的位置`index`。   
+4. 使用`while`循环遍历：
+    - 开始计数，如果到达了第`K`个，则将此石子踢出，并修改`count`值从0开始重新计数到K。
+    - 如果没有达到第`K`个石子，则继续下一个石子。
+    - 如果已经循环了一圈，则从0位置开始继续循环报数。
+5. 返回结果，即剩余石子的编号`nums`。
 
 ## 解题代码
 
 ```python
-def solve_method(n):
-    nums = [i for i in range(1,101)]
-    max_index = len(nums) - 1
-    index = 0
+def solve_method(K):
+    if K <= 1 or K >= 100:
+        return "ERROR!"
+
+    nums = [i for i in range(1, 101)]
+    # 用于K的计数
     count = 0
-    num_n = 0
-    while count < 98:
-        while True:
-            if index > max_index:
-                index = 0
-            if nums[index] != -1:
-                num_n += 1
-            if num_n == n:
-                num_n = 0
-                break
-            index += 1
+    # 当前遍历到的位置
+    index = 0
+    while len(nums) >= K:
+        # 开始计数第count个
         count += 1
-        nums[index] = -1
+        if count == K:
+            # 如果到达了第K个，将此石子踢出
+            nums.pop(index)
+            # 从0开始重新计数到K
+            count = 0
+        else:
+            # 继续下一个石子
+            index += 1
 
-    for item in nums:
-        if item != -1:
-            print(item, end=" ")
+        if index == len(nums):
+            # 如果已经循环了一圈，则从0位置开始继续循环报数
+            index = 0
+
+    return nums
 
 
-
-k = int(input())
-solve_method(k)
+if __name__ == '__main__':
+    assert solve_method(3) == [58, 91]
 ```
 

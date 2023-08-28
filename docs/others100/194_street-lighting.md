@@ -39,38 +39,29 @@
 
 ## 解题思路
 
-本题的目的是解决以下问题:给定一个包含n个整数的数组，每个整数代表一个圆的半径，将这些圆画在平面直角坐标系中，求坐标系中没有被任何圆覆盖的点的数量。
-
-1. 输入整数n和包含n个整数的数组 ints 。
-2. 用 bytearray 类型的变量bytes_创建一个长度为(n-1)*100的字节数组，用于表示每个点是否被圆覆盖。初始值为О，表示所有点都未被覆盖。
-3. 对于数组 ints 中的每个整数，计算其对应圆覆盖的区域，并将这个区域中的所有点在 bytes_ 中标记为1，表示这些点已被覆盖。
-4. 统计 bytes_中值为0的元素个数，即为未被任何圆覆盖的点的数量。
+1. 记录前一个路灯的照明半径`prev`。
+2. 遍历后续的路灯：
+    - 如果两个路灯照明总和小于100，则累加无法照明的区间长度。
+    - 将`prev`设置为当前路灯，继续遍历。
+3. 返回结果，即无法照明的区间的长度和。    
 
 ## 解题代码
 
 ```python
-def main():
-    n = int(input())
-    ints = list(map(int, input().split()))
-    solve_method(ints)
+def solve_method(nums):
+    prev = nums[0]
+    result = 0
+    for i in range(1, len(nums)):
+        if prev + nums[i] < 100:
+            result += 100 - (prev + nums[i])
+        prev = nums[i]
+
+    return result
 
 
-def solve_method(ints):
-    bytes_ = bytearray((len(ints) - 1) * 100)
-
-    for i in range(len(ints)):
-        pos = i * 100
-        left = max(pos - ints[i], 0)
-        right = min(pos + ints[i], len(bytes_))
-
-        for k in range(left, right):
-            bytes_[k] = 1
-
-    count = bytes_.count(0)
-    print(count)
-
-
-
-main()
+if __name__ == '__main__':
+    assert solve_method([50, 50]) == 0
+    assert solve_method([50, 40]) == 10
+    assert solve_method([50, 40, 30, 20, 10]) == 160
 ```
 

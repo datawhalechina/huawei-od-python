@@ -45,7 +45,7 @@ hello,2,ok,0,bye,0,test,0,one,1,two,1,a,0
 ```text
 3
 hello test one
-ok bye tow
+ok bye two
 a
 ```
 
@@ -53,7 +53,7 @@ a
 
 如题目描述，最大嵌套级别为3：
 - 嵌套级别为1的评论是`hello test one`。
-- 嵌套级别为2的评论是`ok bye tow`。
+- 嵌套级别为2的评论是`ok bye two`。
 - 嵌套级别为3的评论是`a`。
 
 ![192_comment-sample1](images/192_comment-sample1.png)
@@ -94,61 +94,59 @@ E J
 
 ## 解题思路
 
-1. `def ensure_level_exists(tree, level):`: 定义一个函数，用于确保树结构中存在给定的层级。如果当前树结构的层级少于要求的层级，会通过添加空的子列表来创建新的层级。
-2. `def print_tree(tree):`: 定义打印树结构的函数。输出整个树的结构，首先输出树的层数，然后逐层输出各个节点。
-3. `def recursive(nodes, level, child_count, tree):`: 定义递归构建树结构的函数。根据给定的节点列表、层级、子节点数量以及树结构，通过递归的方式构建整个树。
-4. 在 `main()` 函数中：
-   - `comments = input().split(",")`: 从输入读取一行评论，按逗号分割为评论列表。
-   - 初始化一个空列表 `tree`，表示树的结构。
-   - 将 `comments` 列表复制到 `nodes`，`nodes` 用于迭代构建树。
-   - 初始化层级 `level` 为 1。
-   - 使用一个循环，遍历 `nodes` 列表，逐步构建树结构。
-     - 弹出一个评论作为当前节点 `comment`。
-     - 调用 `ensure_level_exists(tree, level)`，确保树结构中存在当前层级。
-     - 在当前层级 `level - 1` 中添加当前评论 `comment`。
-     - 弹出一个整数，表示当前评论的子节点数量 `child_count`。
-     - 调用 `recursive(nodes, level + 1, child_count, tree)`，根据子节点数量递归构建子树。
-5. 最后，调用 `print_tree(tree)` 打印构建好的树结构。
+1. 遍历所有节点：
+    - 构建本层的节点列表。
+    - 取出节点的字符串和子评论个数，按照评论个数，递归向下层列表中添加节点。
+2. 返回按照层级的评论字符串列表。
 
 ## 解题代码
 
 ```python
-def ensure_level_exists(tree,level):
+def ensure_level_exists(tree, level):
     if len(tree) < level:
+        # 如果本层列表不存在，则创建一个
         tree.append([])
 
 
-def print_tree(tree) :
-    print(len (tree))
-    for nodes in tree:
-        print(" ".join (nodes) )
-def recursive (nodes, level, child_count, tree) :
-    for i in range (child_count):
-        comment = nodes. pop(0)
-        ensure_level_exists(tree,level)
-        tree[level - 1 ].append(comment)
-        count = int(nodes.pop(0))
-        if count > 0:
-            recursive(nodes, level + 1,count, tree)
-
-
-
-def main():
-    comments = input().split(",")
-
-    tree = []
-    nodes = comments.copy()
-
-    level = 1
-    while nodes:
+def recursive(nodes, level, child_count, tree):
+    for i in range(child_count):
         comment = nodes.pop(0)
         ensure_level_exists(tree, level)
         tree[level - 1].append(comment)
+        count = int(nodes.pop(0))
+        if count > 0:
+            # 继续向下一层的列表中添加节点
+            recursive(nodes, level + 1, count, tree)
+
+
+def solve_method(line):
+    nodes = line.split(",")
+    tree = []
+    level = 1
+    while nodes:
+        comment = nodes.pop(0)
+        # 构建一层的节点列表
+        ensure_level_exists(tree, level)
+        tree[level - 1].append(comment)
         child_count = int(nodes.pop(0))
+        # 继续遍历，向下一层的列表中添加节点
         recursive(nodes, level + 1, child_count, tree)
 
-    print_tree(tree)
+    result = []
+    for nodes in tree:
+        result.append(" ".join(nodes))
 
-main()
+    return result
+
+
+if __name__ == '__main__':
+    line = "hello,2,ok,0,bye,0,test,0,one,1,two,1,a,0"
+    assert solve_method(line) == ["hello test one", "ok bye two", "a"]
+
+    line = "A,5,A,0,a,0,A,0,a,0,A,0"
+    assert solve_method(line) == ["A", "A a A a A"]
+
+    line = "A,3,B,2,C,0,D,1,E,0,F,1,G,0,H, 1,I,1,J,0,K,1,L,0,M,2,N,0,O,1,P,0"
+    assert solve_method(line) == ["A K M", "B F H L N O", "C D G I P", "E J"]
 ```
 

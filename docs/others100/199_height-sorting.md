@@ -35,18 +35,22 @@
 99 101 98 102 97 103 96 104 95 105
 ```
 
-
-
 ## 解题思路
 
-将高度列表按距离h的差值排序。对于相同距离，按照高度升序排序。这样，我们可以保证得到距离h最近的高度。
+1. 将身高按照与小明身高的之差的绝对值从小到大进行排序。
+2. 返回排序之后的结果。
 
 ## 解题代码
 
 ```python
-h, n = map(int, input().split())
-highs = list(map(int, input().split()))
-highs.sort(key=lambda x: (abs(x - h), x))
-print(' '.join(map(str, highs)))
+def solve_method(H, N, heights):
+    heights.sort(key=lambda x: (abs(x - H), x))
+    return heights
+
+
+if __name__ == '__main__':
+    heights = [95, 96, 97, 98, 99, 101, 102, 103, 104, 105]
+    assert solve_method(100, 10, heights) == [99, 101, 98, 102, 97, 103, 96, 104, 95, 105]
+
 ```
 

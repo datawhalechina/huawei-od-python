@@ -9,18 +9,16 @@
 """
 
 
-def solve_method(n, height, weight):
-    arr1 = []
-    for i in range(n):
-        arr1.append(((height[i], weight[i]), i + 1))
+def solve_method(n, heights, weights):
+    heights = [(i + 1, h) for i, h in enumerate(heights)]
+    students = [(h[0], h[1], w) for h, w in zip(heights, weights)]
 
-    arr2 = sorted(arr1, key=lambda x: x[0])
-    return arr2
+    # 将身高从低到高、体重从小到大排序
+    students.sort(key=lambda x: (x[1], x[2]))
+
+    return "".join([str(x[0]) for x in students])
 
 
-n = int(input())
-height = list(map(int, input().split()))
-weight = list(map(int, input().split()))
-arr2 = solve_method(n, height, weight)
-for i in arr2:
-    print(i[1], end='')
+if __name__ == '__main__':
+    assert solve_method(4, [100, 100, 120, 130], [40, 30, 60, 50]) == "2134"
+    assert solve_method(3, [90, 110, 90], [45, 60, 45]) == "132"

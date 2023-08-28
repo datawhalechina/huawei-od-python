@@ -9,12 +9,21 @@
 """
 
 
-def solve(M, N, K, trap):
+def solve_method(M, N, K, L):
+    """
+    :param M: 超级玛丽当前的生命数
+    :param N: 吊桥的长度
+    :param K: 缺失木板数
+    :param L: 缺失木板编号数组
+    :return: 通过此关的吊桥走法个数
+    """
     bridge = [True] * (N + 2)
-    for i in range(K):
-        bridge[trap[i]] = False
+    for i in L:
+        bridge[i] = False
 
+    # dp[i][j]表示达到位置i并剩余j条生命的方法数
     dp = [[0] * (M + 2) for _ in range(N + 2)]
+    # 表示从起点出发，剩余M条生命的方案数为1
     dp[0][M] = 1
 
     for i in range(1, len(dp)):
@@ -31,7 +40,5 @@ def solve(M, N, K, trap):
 
 
 if __name__ == "__main__":
-    M, N, K = map(int, input().split())
-    trap = list(map(int, input().split()))
-    s = solve(M, N, K, trap)
-    print(s)
+    assert solve_method(2, 2, 1, [2]) == 4
+    assert solve_method(1, 3, 2, [1, 3]) == 1

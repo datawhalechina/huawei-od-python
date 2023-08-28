@@ -9,25 +9,18 @@
 """
 
 
-def main():
-    n = int(input())
-    ints = list(map(int, input().split()))
-    solve_method(ints)
+def solve_method(nums):
+    prev = nums[0]
+    result = 0
+    for i in range(1, len(nums)):
+        if prev + nums[i] < 100:
+            result += 100 - (prev + nums[i])
+        prev = nums[i]
+
+    return result
 
 
-def solve_method(ints):
-    bytes_ = bytearray((len(ints) - 1) * 100)
-
-    for i in range(len(ints)):
-        pos = i * 100
-        left = max(pos - ints[i], 0)
-        right = min(pos + ints[i], len(bytes_))
-
-        for k in range(left, right):
-            bytes_[k] = 1
-
-    count = bytes_.count(0)
-    print(count)
-
-
-main()
+if __name__ == '__main__':
+    assert solve_method([50, 50]) == 0
+    assert solve_method([50, 40]) == 10
+    assert solve_method([50, 40, 30, 20, 10]) == 160
