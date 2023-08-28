@@ -1,4 +1,15 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 158_guess-password.py
+@time: 2023/8/29 0:20
+@project: huawei-od-python
+@desc: 158 猜密码
+"""
+
 from itertools import combinations
+
 
 def get_possible_combinations(digits, min_length):
     # 生成所有可能的组合
@@ -10,6 +21,7 @@ def get_possible_combinations(digits, min_length):
     combinations_list.sort(key=lambda x: (len(x), x))
 
     return combinations_list
+
 
 # 读取输入
 digits = input().split(",")

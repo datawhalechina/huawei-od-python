@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 152_pipeline.py
+@time: 2023/8/29 0:18
+@project: huawei-od-python
+@desc: 152 流水线
+"""
+
+
 def calculate_processing_time(m, n, job_times):
     job_times.sort()  # 将作业处理时间按升序排序
     pipelines = [0] * m  # 初始化流水线的处理时间为0
@@ -5,10 +16,9 @@ def calculate_processing_time(m, n, job_times):
 
     for i in range(n):
         min_pipeline = min(pipelines)  # 找到处理时间最短的流水线
-        #total_time += min_pipeline  # 更新总时长
+        # total_time += min_pipeline  # 更新总时长
         index = pipelines.index(min_pipeline)  # 找到最短处理时间的流水线的索引
         pipelines[index] += job_times[i]  # 将当前作业分配给最短处理时间的流水线
-
 
     total_time += max(pipelines)
 

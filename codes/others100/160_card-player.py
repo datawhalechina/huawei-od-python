@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 160_card-player.py
+@time: 2023/8/29 0:21
+@project: huawei-od-python
+@desc: 160 玩牌高手
+"""
+
+
 def calculate_max_score(scores):
     n = len(scores)
     dp = [0] * (n + 1)

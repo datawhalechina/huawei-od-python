@@ -1,4 +1,16 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 151_caving.py
+@time: 2023/8/29 0:17
+@project: huawei-od-python
+@desc: 151 洞穴探险
+"""
+
 import re
+
+
 # 该代码首先使用正则表达式从输入数据中提取所有的坐标，并进行合法性判断。然后计算每个坐标相对于总部的距离，并找到距离最大的坐标。最后返回最远足迹到达的坐标。如果输入数据中没有合法的坐标，则返回总部坐标(0,0)。
 
 def get_farthest_coordinate(data):

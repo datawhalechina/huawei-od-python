@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 153_sliding-window.py
+@time: 2023/8/29 0:18
+@project: huawei-od-python
+@desc: 153 滑动窗口
+"""
+
+
 def max_sliding_window_sum(N, nums):
     if window_size > N:
         return 0
@@ -15,6 +26,7 @@ def max_sliding_window_sum(N, nums):
         max_sum = max(max_sum, window_sum)
 
     return max_sum
+
 
 # 读取输入
 N = int(input())

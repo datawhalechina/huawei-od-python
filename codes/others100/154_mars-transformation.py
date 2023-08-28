@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: HuRuiFeng
+@file: 154_mars-transformation.py
+@time: 2023/8/29 0:19
+@project: huawei-od-python
+@desc: 154 火星改造、宜居星球改造计划
+"""
+
 from collections import deque
 
 
