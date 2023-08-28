@@ -6,7 +6,7 @@
 
 游戏的地图由`N`个方格组成，每个方格上至多2个传送门，通过传送门可将参与者传送至指定的其它方格。同时，每个方格上标注了三个数字：
 1. 第一个数字`id`：代表方格的编号，从0到`N-1`，每个方格各不相同。
-2. 第二个数字`parent-id`：代表从编号为`parent-id`的方格可以通过传送门传送到当前方格（-1则表示没有任何方格可以通过传送门传送到此方格，这样的方格在地图中有且仅有一个）。
+2. 第二个数字`parent_id`：代表从编号为`parent_id`的方格可以通过传送门传送到当前方格（-1则表示没有任何方格可以通过传送门传送到此方格，这样的方格在地图中有且仅有一个）。
 3. 第三个数字`value`：取值在`[100，100]`的整数值，正整数代表参与者得到相应取值单位的食物，负整数代表失去相应数值单位的食物（参与者可能存在临时持有食物为负数的情况），0则代表无变化。
 
 此外，在地图设计时，保证了参与者不可能到达相同的方格两次，并且至少有一个方格的`value`是正整数。
@@ -22,7 +22,7 @@
 
 第一行输入一个数字`N`，表示方格的个数。
 
-第2行至第`N+1`行，第一个数字是`id`，第二个数字是`parent-id`，第三个数字是`value`。
+第2行至第`N+1`行，第一个数字是`id`，第二个数字是`parent_id`，第三个数字是`value`。
 
 ## 输出描述
 
@@ -80,42 +80,67 @@
 
 ## 解题思路
 
-这是一道经典的二叉树路径问题，可以使用深度优先搜索(DFS)来解决。我们可以从根节点开始，递归地计算每个节点的最大路径和，然后取其中的最大值作为答案。在递归过程中，可以使用一个哈希表来记录已经计算过的节点的最大路径和，避免重复计算。
+**基本思路：** 使用深度优先搜索DFS求解。
 
-1.通过一个for循环，将节点的信息以 `[pid, val]` 的形式存储在 `nodes` 字典中，键为 `id`。
-
-2.定义dfs函数，假如节点的父节点为-1，说明是根节点，如果不是，那么递归调用dfs来找出父节点的最大路径值，并与当前节点的值相加，与当前节点值相比，取max
-
-3.定义max_val为负无穷，然后通过for循环来找出最大的最大路径值
-
-
+1. 构建方格`id`字典，`key`为方格`id`，`value`为能传送的方格`id`和食物。
+2. 遍历所有方格，使用深度优先搜索计算获得最多的食物：
+    - 确定参数：方格`n_id`。
+    - 终止条件：返回到达方格`n_id`能最多获得的食物。
+    - 递归处理：
+        - 如果该点的传送点为-1，则设置该点最多获得的食物为字典中对应的食物。
+        - 否则，计算该点获得的食物与加上传送点获得食物的最大值。
+3. 遍历比较，获取最多的食物。
+4. 返回最多可以获得的食物。
 
 ## 解题代码
 
 ```python
-n = int(input())
-nodes = {}
-for i in range(n):
-    id, pid, val = map(int, input().split(" "))
-    if id < 0 or id >= n or pid < -1 or pid >=n:
-        continue
-    nodes[id] = [pid, val]
-dp = {}
+import math
 
-def dfs(i):
-    if i not in dp:
-        if nodes[i][0] == -1:
-            dp[i] = nodes[i][1]
-        else:
-            dp[i] = max(nodes[i][1], nodes[i][1] + dfs(nodes[i][0]))
-    return dp[i]
 
-max_val = -float("inf")
-for i in reversed(range(n)):
-    if i not in nodes:
-        continue
-    max_val = max(max_val, dfs(i))
+def solve_method(grids):
+    def dfs(n_id):
+        nonlocal dp
+        if n_id not in dp:
+            if nodes[n_id][0] == -1:
+                dp[n_id] = nodes[n_id][1]
+            else:
+                dp[n_id] = max(nodes[n_id][1], nodes[n_id][1] + dfs(nodes[n_id][0]))
+        return dp[n_id]
 
-print(max_val)
+    n = len(grids)
+    # 方格id字典，key为方格id，value为能传送的方格id和食物
+    nodes = {}
+    for i in range(n):
+        node_id, pid, val = grids[i]
+        if node_id < 0 or node_id >= n or pid < -1 or pid >= n:
+            continue
+        nodes[node_id] = [pid, val]
+
+    max_val = -math.inf
+    # dp[i]表示到达该点能获得的最大食物
+    dp = {}
+    for i in reversed(range(n)):
+        if i not in nodes:
+            continue
+        max_val = max(max_val, dfs(i))
+
+    return max_val
+
+
+if __name__ == '__main__':
+    arr = [[0, 1, 8],
+           [1, -1, -2],
+           [2, 1, 9],
+           [4, 0, -2],
+           [5, 4, 3],
+           [3, 0, -3],
+           [6, 2, -3]]
+    assert solve_method(arr) == 9
+
+    arr = [[0, -1, 3],
+           [1, 0, 1],
+           [2, 0, 2]]
+    assert solve_method(arr) == 5
 ```
 

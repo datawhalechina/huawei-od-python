@@ -63,21 +63,20 @@ front furthest
 
 ## 解题思路
 
-该代码的功能是从字符串s中提取单词，再按字典序排序·并输出以pre开头的单词，如果没有，则输出 pre。该算法的关键是使用正则表达式和集合数据类型，前者用于匹配单词，后者用于去重和查找以pre 开头的单词。
-
-1.使用正则表达式 `re.findall(r'\w+', s)` 对字符串 `s` 进行匹配，提取出所有的单词，并将它们保存在列表 `words` 中，将 `words` 列表转换为集合 `word_set`，以去除重复的单词。
-
-2.如果单词以给定前缀 `pre` 开头，则将其添加到 `result` 列表中。
-
-3.如果 `result` 列表为空，则将给定前缀 `pre` 添加到 `result` 中。
+1. 使用正则表达式，获取所有的单词（如果遇到缩略形式，判定为两个单词），存入列表`words`。
+2. 对`words`使用`set`进行去重。
+3. 遍历列表：当单词满足前缀，则加入结果列表中。
+4. 对结果列表进行字典序排序。
+5. 返回结果列表拼接成的字符串。
 
 ## 解题代码
 
 ```python
 import re
 
-def solve_method(s, pre):
-    words = re.findall(r'\w+', s)
+
+def solve_method(line, pre):
+    words = re.findall(r'\w+', line)
     word_set = set(words)
 
     result = []
@@ -88,11 +87,17 @@ def solve_method(s, pre):
     if not result:
         result.append(pre)
 
-    print(' '.join(sorted(result)))
+    result.sort()
+    return " ".join(result)
+
 
 if __name__ == '__main__':
-    s = input()
-    pre = input()
-    solve_method(s, pre)
+    assert solve_method("I love you", "He") == "He"
+
+    line = """The furthest distance in the world,
+              Is not between life and death,
+              But when I stand in front or you,
+              Yet you don't know that I love you. """
+    assert solve_method(line, "f") == "front furthest"
 ```
 

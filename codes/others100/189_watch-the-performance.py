@@ -8,32 +8,32 @@
 @desc: 189 观看文艺汇演问题、最多能看几场演出
 """
 
-num_of_dice = int(input())
-num_of_sides = int(input())
-dice_strings = input().split()
 
-rolls = [0] * num_of_dice
-k = int(input())
+def solve_method(show_times):
+    times = []
+    for start_time, duration in show_times:
+        times.append([start_time, start_time + duration])
 
-for i in range(num_of_sides):
-    rolls[int(dice_strings[i]) - 1] = 1
+    # 按照结束时间进行排序
+    times.sort(key=lambda x: x[1])
+    result = 1
 
-left = 0
-right = 0
-count = 0
-result = 0
+    prev_start_time = times[0][1]
+    for i in range(1, len(times)):
+        start_time, end_time = times[i]
+        if start_time - prev_start_time >= 15:
+            # 如果15分钟能赶得上，则可以看这场演出
+            result += 1
+            prev_start_time = end_time
 
-while right < num_of_dice:
-    while right < num_of_dice and count <= k:
-        if rolls[right] == 1:
-            count += 1
-        right += 1
+    return result
 
-        if count <= k:
-            result = max(right - left, result)
-    while left <= right and count > k:
-        if rolls[left] == 1:
-            count -=1
-        left += 1
 
-print(result)
+if __name__ == '__main__':
+    show_times = [[720, 120],
+                  [840, 120]]
+    assert solve_method(show_times) == 1
+
+    show_times = [[0, 60],
+                  [90, 60]]
+    assert solve_method(show_times) == 2

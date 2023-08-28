@@ -38,30 +38,25 @@
 
 ## 解题思路
 
-该算法基于暴力枚举，枚举每对数字之间形成的矩形面积并计算最大面积。时间复杂度为О(n^2)，其中 n为数组长度。由于Python中的列表可以自动扩容，因此无需预先设定数组大小。
-
-1.遍历longs列表的每个元素索引i
-
-2.遍历从i+1开始到longs列表末尾的每个元素索引j
-
-3.计算矩阵面积，并实时更新较大值
+1. 遍历数组：
+    - 计算两个数字的最小值的距离乘积。
+    - 比较并得到最大值。
+2. 返回最大值，即最大太阳板的面积。    
 
 ## 解题代码
 
 ```python
-import sys
-#从标准输入读取一行并去除首尾的空白字符
-line = sys.stdin.readline().strip()
+def solve_method(nums):
+    result = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            area = min(nums[i], nums[j]) * (j - i)
+            result = max(result, area)
 
-longs = list(map(int, line.split(",")))
+    return result
 
-res = 0
 
-for i in range(len(longs)):
-    for j in range(i+1, len(longs)):
-        area = min(longs[i], longs[j]) * (j-i)
-        res = max(res,area)
-
-print(res)
+if __name__ == '__main__':
+    assert solve_method([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 25
 ```
 

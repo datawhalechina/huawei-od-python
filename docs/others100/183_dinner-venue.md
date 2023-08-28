@@ -45,67 +45,76 @@
 
 ## 解题思路
 
-bfs广度优先搜索函数的定义
+**基本思路：** 使用广度优先搜索BFS求解。
 
-1.定义队列queue，集合visited，用于记录已经访问过的点
-
-2.进入while循环，使用popleft取出队首的点坐标(r, c)，假如(r, c)等于目标点坐标end_spot，则说明找到了一条路径，返回True
-
-3.使用for循环遍历4个方向的偏移量，并根据偏移量计算新的点坐标
-
-4.进行边界判断，如果新的点超出迷宫范围或者是障碍物，则跳过该点；如果新点不在visited中，则将其加入队列和visited
-
-5.如果循环结束仍然没有找到目标点，则返回False
-
-bfs广度优先搜索函数的调用
-
-1.使用一个嵌套的循环遍历所有的目标点，对于每个目标点，检查是否存在一条从任意起始点到该目标点的路径
-
-2.如果所有的目标点都存在路径，则将计数器count加1，输出最终的count
-
-
+1. 遍历所有地点，得到起始地点`start_spots`、聚会地点`end_spot`。
+2. 使用广度优先搜索BFS：
+    - 确定参数：当前地点的坐标`row`和`col`、聚会地点`end_spot`。
+    - 终止条件：
+        - 能到达聚会地点，返回True。
+        - 当所有地点都访问过，当还是没有到达聚会地点，返回False
+    - 递归处理：
+        - 访问当前地点的上下左右各个地点，并依次存放到待遍历地点`queue`。
+        - 如果超出边界，或者遇到障碍物，则继续遍历地点。
+3. 如果两个起始地点都能达到聚会地点，则聚会地点的个数累加1。
+4. 返回能到达的聚会地点的个数。
 
 ## 解题代码
 
 ```python
 from collections import deque
 
-def bfs(row,col):
-    queue = deque([(row,col)])
-    visited = set([(row,col)])
-    while queue:
-        r,c=queue.popleft()
 
-        if (r,c)==end_spot:
-            return True
-        for dr,dc in [(-1,0),(1,0),(0,-1),(0,1)]:
-            nr,nc = r+dr,c+dc
-            if not (0 <= nr <m and 0 <= nc <n) or map_[nr][nc] == "1":
-                continue
-            if (nr,nc) not in visited:
-                queue.append((nr,nc))
-                visited.add((nr,nc))
+def solve_method(arr):
+    m = len(arr)
+    n = len(arr[0])
+    # 起始地点
+    start_spots = []
+    # 聚会地点
+    end_spots = []
+    for i in range(m):
+        for j in range(n):
+            if arr[i][j] == 2:
+                start_spots.append((i, j))
+            elif arr[i][j] == 3:
+                end_spots.append((i, j))
+    count = 0
 
-    return False
+    def bfs(row, col, end_spot):
+        # 待遍历的地点
+        queue = deque([(row, col)])
+        # 已访问的地点
+        visited = {(row, col)}
+        while queue:
+            r, c = queue.popleft()
 
-n,m = map(int,input().split())
-map_ = [input().split() for _ in range(m)]
+            # 能到达聚会地点，返回True
+            if (r, c) == end_spot:
+                return True
+            # 访问上下左右的地点
+            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                nr, nc = r + dr, c + dc
+                # 如果超出边界，或者遇到障碍物，则继续遍历
+                if not (0 <= nr < m and 0 <= nc < n) or arr[nr][nc] == 1:
+                    continue
+                if (nr, nc) not in visited:
+                    queue.append((nr, nc))
+                    visited.add((nr, nc))
+        # 当所有地点都访问过，当还是没有到达聚会地点，返回False
+        return False
 
-start_spots = []
-end_spots = []
+    for end_spot in end_spots:
+        if all(bfs(start_spot[0], start_spot[1], end_spot) for start_spot in start_spots):
+            count += 1
 
-for i in range(m):
-    for j in range(n):
-        if map_[i][j] == "2":
-            start_spots.append((i,j))
-        elif map_[i][j]== "3":
-            end_spots.append((i,j))
-count = 0
+    return count
 
-for end_spot in end_spots:
-    if all(bfs(start_spot[0],start_spot[1]) for start_spot in start_spots):
-        count +=1
 
-print(count)
+if __name__ == '__main__':
+    arr = [[2, 1, 0, 3],
+           [0, 1, 2, 1],
+           [0, 3, 0, 0],
+           [0, 0, 0, 0]]
+    assert solve_method(arr) == 2
 ```
 

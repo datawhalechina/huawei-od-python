@@ -8,18 +8,16 @@
 @desc: 185 航天器
 """
 
-import sys
 
-# 从标准输入读取一行并去除首尾的空白字符
-line = sys.stdin.readline().strip()
+def solve_method(nums):
+    result = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            area = min(nums[i], nums[j]) * (j - i)
+            result = max(result, area)
 
-longs = list(map(int, line.split(",")))
+    return result
 
-res = 0
 
-for i in range(len(longs)):
-    for j in range(i + 1, len(longs)):
-        area = min(longs[i], longs[j]) * (j - i)
-        res = max(res, area)
-
-print(res)
+if __name__ == '__main__':
+    assert solve_method([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]) == 25

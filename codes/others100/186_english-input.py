@@ -7,12 +7,11 @@
 @project: huawei-od-python
 @desc: 186 英文输入法
 """
-
 import re
 
 
-def solve_method(s, pre):
-    words = re.findall(r'\w+', s)
+def solve_method(line, pre):
+    words = re.findall(r'\w+', line)
     word_set = set(words)
 
     result = []
@@ -23,10 +22,15 @@ def solve_method(s, pre):
     if not result:
         result.append(pre)
 
-    print(' '.join(sorted(result)))
+    result.sort()
+    return " ".join(result)
 
 
 if __name__ == '__main__':
-    s = input()
-    pre = input()
-    solve_method(s, pre)
+    assert solve_method("I love you", "He") == "He"
+
+    line = """The furthest distance in the world,
+              Is not between life and death,
+              But when I stand in front or you,
+              Yet you don't know that I love you. """
+    assert solve_method(line, "f") == "front furthest"

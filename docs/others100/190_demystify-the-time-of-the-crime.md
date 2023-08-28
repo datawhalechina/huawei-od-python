@@ -46,40 +46,56 @@
 
 ## 解题思路
 
-这段代码实现的是给定一个24小时格式的时间字符串，返回下一个最小的有效时间，其中有效时间指的是由原始时间中的数字组成的最小的能够表示有效时间的时间，即在小时范围[0,23]内，分钟范围[0,59]内能够组成的最小时间。
-
-代码中的函数 solve_method 接收一个字符串参数time，用于表示输入的时间，返回值为一个字符串，表示下一个最小的有效时间。在函数内部，首先将时间字符串中的数字提取出来并存入 nums 列表中，然后使用 map 函数将小时和分钟转换为整数类型的 h 和 m 变量。接着，通过两层循环将可能的时间存入 lst 列表中，并进行排序。
+1. 得到时间中出现过的数字，存入列表`nums`中。
+2. 得到当前时间的小时`h`和分钟`m`。
+3. 得到由这些数字组成的时间，存入列表`lst`中。
+4. 如果分钟数不大，可得到当前小时的时刻的最近分钟，返回结果。
+5. 如果当前时间的分钟数很大，则得到后面小时的时刻，返回结果。
+6. 上述两个条件都不满足，则得到第二天的最近时刻的最小分钟数，返回结果。
 
 ## 解题代码
 
 ```python
-def solve_method(time: str) -> str:
-    nums = [int(c) for c in time if c !=":"]
-    h , m = map(int, time.split(":"))
-    lst = []
+def solve_method(time):
+    # 得到时间中出现过的数字
+    nums = [int(c) for c in time if c != ":"]
+    # 得到小时和分钟
+    h, m = map(int, time.split(":"))
+    lst = set()
+    # 得到由这些数字组成的时间
     for i in nums:
         for j in nums:
             if i <= 5:
-                lst.append(i * 10 + j)
-    lst.sort()
+                lst.add(i * 10 + j)
+    lst = list(sorted(lst))
+
+    # 当前小时的时刻的最近分钟
     for i in lst:
         if i <= m:
             continue
         return format_time(h, i)
+
+    # 当前时间的分钟数很大，则是后面小时的时刻
     if h != 23:
-        for i in lst :
+        for i in lst:
             if i <= h:
                 continue
             if i <= 23:
+                # 得到最近小时的时刻最小分钟数
                 return format_time(i, lst[0])
-    return format_time(lst[0],lst[0])
 
-def format_time(h: int, m: int) -> str:
+    # 第二天的最近时刻的最小分钟数
+    return format_time(lst[0], lst[0])
+
+
+def format_time(h, m):
     return f"{h:02d}:{m:02d}"
 
+
 if __name__ == "__main__":
-    t = input()
-    ret = solve_method(t)
-    print(ret)
+    assert solve_method("20:12") == "20:20"
+    assert solve_method("23:59") == "22:22"
+    assert solve_method("20:59") == "22:00"
+    assert solve_method("23:09") == "23:20"
 ```
 

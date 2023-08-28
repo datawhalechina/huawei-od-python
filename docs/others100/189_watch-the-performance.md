@@ -52,43 +52,43 @@
 
 ## 解题思路
 
-1. 题解时基于时间段的排序和贪心策略。
-2. 我们使用一个二维数组times来存储每个时间段的起始时间和结束时间。
-3. 按照结束时间对时间段进行排序。
-4. 初始化一个变量t为第一个时间段的结束时间，以及一个变量result为初始值1，表示最多能观看的一场。
-5. 遍历排序后的时间段数组，对于每个时间段，获取其初始时间l和结束时间r。如果当前时间段的起始时间与前一个时间段的结束时间之差大于等于15分钟，则表示多增一场，将result值加一，并更新t为当前时间段的结束时间。
+1. 将演出的时间段重新按照起止时间存储。
+2. 按照演出结束时间进行排序。
+3. 遍历所有演出：
+    - 如果15分钟能赶得上，则可以看这场演出，计数值累加1。
+    - 用`prev_start_time`存储当前演出的结束时间，用于与下场演出的开始时间比较。
+4. 返回计数值。    
 
 ## 解题代码
 
 ```python
-num_of_dice = int(input())
-num_of_sides = int(input())
-dice_strings = input().split()
+def solve_method(show_times):
+    times = []
+    for start_time, duration in show_times:
+        times.append([start_time, start_time + duration])
+    
+    # 按照结束时间进行排序
+    times.sort(key=lambda x: x[1])
+    result = 1
 
-rolls = [0] * num_of_dice
-k = int(input())
+    prev_start_time = times[0][1]
+    for i in range(1, len(times)):
+        start_time, end_time = times[i]
+        if start_time - prev_start_time >= 15:
+            # 如果15分钟能赶得上，则可以看这场演出
+            result += 1
+            prev_start_time = end_time
 
-for i in range(num_of_sides):
-    rolls[int(dice_strings[i]) - 1] = 1
+    return result
 
-left = 0
-right = 0
-count = 0
-result = 0
 
-while right < num_of_dice:
-    while right < num_of_dice and count <= k:
-        if rolls[right] == 1:
-            count += 1
-        right += 1
+if __name__ == '__main__':
+    show_times = [[720, 120],
+                  [840, 120]]
+    assert solve_method(show_times) == 1
 
-        if count <= k:
-            result = max(right - left, result)
-    while left <= right and count > k:
-        if rolls[left] == 1:
-            count -=1
-        left += 1
-
-print(result)
+    show_times = [[0, 60],
+                  [90, 60]]
+    assert solve_method(show_times) == 2
 ```
 

@@ -68,31 +68,27 @@ baba
 
 ## 解题思路
 
-对字符串segment进行分割，得到一个字符串列表segments ;
-使用itertools , permutations函数计算字符串列表segments的全排列，并将结果存储在_permutation_list 中;。将permutation_list中的所有元素组合成一个字符串，并去重，得到新的字符串列表;
+1. 使用`itertools`包的`permutations`进行排列组合。
+2. 将每个元素组合成字符串。
+3. 将列表按照字典序排序。
+4. 返回结果列表。
 
 ## 解题代码
 
 ```python
 import itertools
-def solve_method(n,segment):
-    segement = segment.split(" ")
-    #使用itertools.permutations函数对segement列表进行排列组合，返回一个包含所有可能排列的列表permutation_list
-    permutation_list = list(itertools.permutations(segement))
-    #通过列表推导式和set函数，将permutation_list中的元组转换为字符串，并去除重复的元素。
-    permutation_list = list(set(["".join(i) for i in permutation_list]))
-    permutation_list.sort()
-    for item in permutation_list:
-        print(item)
 
-def main():
-    n=int(input().strip())
-    segment = input().strip()
-    solve_method(n,segment)
+
+def solve_method(fragments):
+    fragments = list(itertools.permutations(fragments))
+    fragments = list(set(["".join(i) for i in fragments]))
+    fragments.sort()
+    return fragments
+
 
 if __name__ == '__main__':
-    main()
-        
-    
+    assert solve_method(["a", "b", "c"]) == ["abc", "acb", "bac", "bca", "cab", "cba"]
+    assert solve_method(["a", "b", "a"]) == ["aab", "aba", "baa"]
+    assert solve_method(["a", "b", "ab"]) == ["aabb", "abab", "abba", "baab", "baba"]
 ```
 

@@ -43,49 +43,50 @@
 
 ## 解题思路
 
-1. 在 while 循环内部，有另一个 while 循环，直到 `count` 小于等于 `k`。 
+**基本思路：** 使用双指针求解。
 
-   a. 如果 `rolls[right]` 的值为 1，则增加 `count` 的计数。 
-
-   b. 增加 `right` 的值。 
-
-   c. 如果 `count` 仍然小于等于 `k`，则将当前子数组的长度（`right - left`）与 `result` 的值进行比较，并将较大的值存储在 `result` 中。
-
-2. 内部 while 循环结束后，有另一个 while 循环，直到 `left` 小于等于 `right` 且 `count` 大于 `k`。 a. 如果 `rolls[left]` 的值为 1，则减少 `count` 的计数。 b. 增加 `left` 的值。
-
-
+1. 将需要补种的胡杨树位置设为1，已成活的位置设为0。
+2. 使用双指针：
+    - 得到连续补种`K`棵之后，并且不为1的位置`right`。
+    - 如果已经找到K个，计算补种之后的连续胡杨树的个数，得到最大连续胡杨树的个数。
+    - 找到在[left, right]中第一个为1的位置，然后加1，更新左指针`left`，并减去多加的个数。
+3. 返回结果，即最多的连续胡杨树的个数。    
 
 ## 解题代码
 
 ```python
-num_of_dice = int(input())
-num_of_sides = int(input())
-dice_strings = input().split()
+def solve_method(N, M, trees, K):
+    rolls = [0] * N
 
-rolls = [0] * num_of_dice
-k = int(input())
+    for tree in trees:
+        rolls[tree - 1] = 1
 
-for i in range(num_of_sides):
-    rolls[int(dice_strings[i]) - 1] = 1
+    left = 0
+    right = 0
+    count = 0
+    result = 0
 
-left = 0
-right = 0
-count = 0
-result = 0
+    while right < N:
+        while right < N and count <= K:
+            if rolls[right] == 1:
+                # 如果找到需要补种的胡杨树，则count累加1
+                count += 1
+            right += 1
 
-while right < num_of_dice:
-    while right < num_of_dice and count <= k:
-        if rolls[right] == 1:
-            count += 1
-        right += 1
+            if count <= K:
+                # 如果已经找到K个，计算补种之后的连续胡杨树的个数
+                result = max(right - left, result)
 
-        if count <= k:
-            result = max(right - left, result)
-    while left <= right and count > k:
-        if rolls[left] == 1:
-            count -=1
-        left += 1
+        # 找到在[left, right]中第一个为1的位置，然后加1，更新左指针
+        left = rolls.index(1, left, right) + 1
+        # 减去多加的个数
+        count -= 1
+    return result
 
-print(result)
+
+if __name__ == '__main__':
+    assert solve_method(10, 3, [2, 4, 7], 1) == 6
+    assert solve_method(10, 3, [2, 4, 7], 2) == 8
+    assert solve_method(10, 3, [2, 4, 7], 3) == 10
 ```
 

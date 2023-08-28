@@ -60,33 +60,38 @@
 
 ## 解题思路
 
-1.找到 ints数组中所有小于base的元素并将其存入arr中。这些元素被视为已排序的部分。
-
-2.定义计数器count并将其初始化为ints的长度减去arr的长度。我们还定义了两个指针i和j，分别指向arr的开头和结尾。
-
-3.在while循环中，我们检查arr[i] + arr[j]是否大于或等于基准值base。如果是，则增加计数器count，并移动指针以查找下一对元素。否则，只需要移动指针i。（此时的 arr数组按升序排列，因此arr[i]之后的所有元素都大于arr[i]，也不可能与arr[j]之和小于或等于base）
+1. 找到小于最低能力值的人，存入列表`arr`。
+2. 大于等于最低能力值的人，都可以自成一队，计算队伍个数`count`。
+3. 使用双指针遍历数组`arr`：
+    - 如果最小值和最大值加起来小于最低能力值，可以组成一队，`count`累加1。
+    - 否则左指针向右移，
+4. 返回`count`结果值，即能够组成的最多团队数量。    
 
 ## 解题代码
 
 ```python
-def solve_method(n, ints, base):
-    arr = sorted(filter(lambda x: x < base,ints))
-    count = n - len(arr)
+def solve_method(nums, min_power):
+    # 过滤出小于最低能力值的人
+    arr = sorted(filter(lambda x: x < min_power, nums))
+    # 大于等于最低能力值的人，都可以自成一队
+    count = len(nums) - len(arr)
+    # 双指针遍历
     i, j = 0, len(arr) - 1
     while i < j:
-        if arr[i] + arr[j] >= base:
+        if arr[i] + arr[j] >= min_power:
+            # 如果最小值和最大值加起来小于最低能力值，可以组成一队
             count += 1
             i += 1
             j -= 1
         else:
+            # 否则左指针向右移
             i += 1
-    print(count)
+    return count
 
 
-n = int(input().strip())#总人数
-ints = list(map(int, input().split()))#每个人的能力
-base = int(input().strip())#队伍最低能力值
-solve_method(n, ints, base)
-    
+if __name__ == '__main__':
+    assert solve_method([3, 1, 5, 7, 9], 8) == 3
+    assert solve_method([3, 1, 5, 7, 9, 2, 6], 8) == 4
+    assert solve_method([3, 1, 5, 6, 9], 8) == 2
 ```
 

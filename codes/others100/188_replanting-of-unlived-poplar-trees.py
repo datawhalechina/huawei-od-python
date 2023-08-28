@@ -8,32 +8,37 @@
 @desc: 188 补活未成活胡杨树
 """
 
-num_of_dice = int(input())
-num_of_sides = int(input())
-dice_strings = input().split()
 
-rolls = [0] * num_of_dice
-k = int(input())
+def solve_method(N, M, trees, K):
+    rolls = [0] * N
 
-for i in range(num_of_sides):
-    rolls[int(dice_strings[i]) - 1] = 1
+    for tree in trees:
+        rolls[tree - 1] = 1
 
-left = 0
-right = 0
-count = 0
-result = 0
+    left = 0
+    right = 0
+    count = 0
+    result = 0
 
-while right < num_of_dice:
-    while right < num_of_dice and count <= k:
-        if rolls[right] == 1:
-            count += 1
-        right += 1
+    while right < N:
+        while right < N and count <= K:
+            if rolls[right] == 1:
+                # 如果找到需要补种的胡杨树，则count累加1
+                count += 1
+            right += 1
 
-        if count <= k:
-            result = max(right - left, result)
-    while left <= right and count > k:
-        if rolls[left] == 1:
-            count -= 1
-        left += 1
+            if count <= K:
+                # 如果已经找到K个，计算补种之后的连续胡杨树的个数
+                result = max(right - left, result)
 
-print(result)
+        # 找到在[left, right]中第一个为1的位置，然后加1，更新左指针
+        left = rolls.index(1, left, right) + 1
+        # 减去多加的个数
+        count -= 1
+    return result
+
+
+if __name__ == '__main__':
+    assert solve_method(10, 3, [2, 4, 7], 1) == 6
+    assert solve_method(10, 3, [2, 4, 7], 2) == 8
+    assert solve_method(10, 3, [2, 4, 7], 3) == 10

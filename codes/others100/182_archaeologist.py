@@ -11,20 +11,14 @@
 import itertools
 
 
-def solve_method(n, segment):
-    segement = segment.split(" ")
-    permutation_list = list(itertools.permutations(segement))
-    permutation_list = list(set(["".join(i) for i in permutation_list]))
-    permutation_list.sort()
-    for item in permutation_list:
-        print(item)
-
-
-def main():
-    n = int(input().strip())
-    segment = input().strip()
-    solve_method(n, segment)
+def solve_method(fragments):
+    fragments = list(itertools.permutations(fragments))
+    fragments = list(set(["".join(i) for i in fragments]))
+    fragments.sort()
+    return fragments
 
 
 if __name__ == '__main__':
-    main()
+    assert solve_method(["a", "b", "c"]) == ["abc", "acb", "bac", "bca", "cab", "cba"]
+    assert solve_method(["a", "b", "a"]) == ["aab", "aba", "baa"]
+    assert solve_method(["a", "b", "ab"]) == ["aabb", "abab", "abba", "baab", "baba"]
