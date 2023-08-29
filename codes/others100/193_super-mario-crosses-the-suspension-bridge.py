@@ -17,28 +17,31 @@ def solve_method(M, N, K, L):
     :param L: 缺失木板编号数组
     :return: 通过此关的吊桥走法个数
     """
-    bridge = [True] * (N + 2)
-    for i in L:
-        bridge[i] = False
 
-    # dp[i][j]表示达到位置i并剩余j条生命的方法数
-    dp = [[0] * (M + 2) for _ in range(N + 2)]
-    # 表示从起点出发，剩余M条生命的方案数为1
+    # dp[i][j]表示走到第i个位置时，此时生命值为j时的走法数
+    dp = [[0 for _ in range(M + 1)] for _ in range(N + 2)]
+    # 当在初始位置时，生命值为M，走法数为1
     dp[0][M] = 1
 
-    for i in range(1, len(dp)):
-        for j in range(1, len(dp[0]) - 1):
-            k = j + 1 if not bridge[i] else j
-            if i == 1:
-                dp[i][j] = dp[i - 1][k]
-            elif i == 2:
-                dp[i][j] = dp[i - 1][k] + dp[i - 2][k]
+    # 遍历每一个位置
+    for i in range(1, N + 2):
+        # 寻找生命值从0到M的走法
+        for j in range(M + 1):
+            # 如果遇到陷阱，（该步已经扣除了一次生命值）则从上一个j+1的生命值累加
+            if i in L:
+                # 循环中的j最大为m，而推导式中有j+1，所以j最大为m-1
+                if j < M:
+                    # 损失一次生命，加上三种走法
+                    dp[i][j] = dp[i - 1][j + 1] + dp[i - 2][j + 1] + dp[i - 3][j + 1]
             else:
-                dp[i][j] = dp[i - 1][k] + dp[i - 2][k] + dp[i - 3][k]
-    res = sum(dp[N + 1][: len(dp[0]) - 1])
-    return res
+                # 没有陷阱，不损失生命，加上三种走法
+                dp[i][j] = dp[i - 1][j] + dp[i - 2][j] + dp[i - 3][j]
+
+    # 去掉第一列生命值为0的次数，生命值从1开始到M，求和总次数
+    return sum(dp[N + 1][1:])
 
 
 if __name__ == "__main__":
     assert solve_method(2, 2, 1, [2]) == 4
     assert solve_method(1, 3, 2, [1, 3]) == 1
+    assert solve_method(3, 10, 2, [4, 7]) == 504
