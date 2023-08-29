@@ -1,20 +1,19 @@
 # 077 找出两个整数数组中同时出现的整数
 
 ## 题目描述
-现有两个整数数组，需要你找出两个数组中同时出现的整数，并按照如
-下要求输出：
-1. 有同时出现的整数时，先按照同时出现次数
-(整数在两个数组中都出现并且按照出现次数较少的那个次数进行归类)，然后按照出现次数从小到大依次按行输出。
-2. 没有同时出现的整数时，输出NULL。
 
+现有两个整数数组，需要你找出两个数组中同时出现的整数，并按照如下要求输出：
+
+1. 有同时出现的整数时，先按照同时出现次数（整数在两个数组中都出现并且按照出现次数较少的那个次数）进行归类，然后按照出现次数从小到大依次按行输出。
+2. 没有同时出现的整数时，输出`NULL`。
 
 ## 输入描述
-第一行为第一个整数数组，第二行为第二个整数数组，
-每行数据中整数与整数之间以英文逗号分隔，
-整数的取值范围为[-200,200]，数组长度的范围为[1,10000]之间的整数。
+
+第一行是第一个整数数组，第二行为第二个整数数组。每行数据中整数与整数之间以`,`分隔，其中整数的取值范围为`[-200,200]`，数组长度的范围为`[1,10000]`之间的整数。
+
 ## 输出描述
-按照出现次数从小到大依次按行输出，每行输出的格式为:出现次数:该出现次数下的整数升序排序的结果。
-格式中的":"为英文冒号，整数间以英文逗号分隔。
+
+按照出现次数从小到大依次按行输出，每行输出的格式为：`出现次数:该出现次数下的整数升序排序的结果`。格式中的`:`为英文冒号，整数间以英文逗号分隔。
 
 ## 示例描述
 
@@ -30,8 +29,10 @@
 ```text
 NULL
 ```
+
 **说明**
-两个整数数组没有同时出现的整数，输出NULL。
+
+两个整数数组没有同时出现的整数，输出`NULL`。
 
 ### 示例二
 
@@ -40,56 +41,62 @@ NULL
 5,8,11,3,6,8,8,-1,11,2,11,11
 11,2,11,8,6,8,8,-1,8,15,3,-9,11
 ```
+
 **输出：**
 ```text
 1:-1,2,3,6
 3:8,11
 ```
+
 **说明：**
-两个整数数组中同时出现的整数为-1、2、3、6、8、11，
-其中同时出现次数为1的整数为-1,2,3,6(升序排序)，
-同时出现次数为3的整数为8,11(升序排序)，
-先升序输出出现次数为1的整数，再升序输出出现次数为3的整数。
+
+两个整数数组中同时出现的整数为-1、2、3、6、8、11，其中同时出现次数为1的整数为-1,2,3,6（升序排序），同时出现次数为3的整数为8,11（升序排序），先升序输出出现次数为1的整数，再升序输出出现次数为3的整数。
+
+## 解题思路
+
+1. 使用`Counter`求交集，可得到两个整数数组同时出现的整数和出现次数。
+2. 如果交集不存在，则返回`NULL`。
+3. 如果交集存在：
+    - 得到每个次数下对应的整数。
+    - 对次数按从小到大排序。
+    - 将每个次数下的整数从小到大排序。
+    - 按格式返回结果列表。
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 077_find-co-occurrence-number
-@time:  23/8/2023 下午 8:25
-@project:  huawei-od-python 
-"""
-from collections import Counter
+from collections import Counter, defaultdict
 
 
 def solve_method(nums1, nums2):
-    c1 = dict(Counter(nums1))
-    c2 = dict(Counter(nums2))
-    common = set(c1.keys()) & set(c2.keys())
-    record = dict()
-    for number in common:
-        freq = min(c1[number], c2[number])
-        if freq not in record:
-            record[freq] = [number]
-        else:
-            record[freq].append(number)
-    items = sorted(record.items())
-    items = [[item[0], sorted(item[1])] for item in items]
-    output = []
-    for item in items:
-        output.append(f'{item[0]}:' + ','.join(map(str, item[1])))
+    c1 = Counter(nums1)
+    c2 = Counter(nums2)
 
-    return '\n'.join(output)
+    c = c1 & c2
+    if not c:
+        return "NULL"
+    else:
+        freq_num = defaultdict(list)
+        # 得到每个次数下对应的整数
+        for k, v in c.items():
+            freq_num[v].append(k)
+
+        # 对次数按从小到大排序
+        freq_num = dict(sorted(freq_num.items(), key=lambda x: x[0]))
+        # 将每个次数下的整数从小到大排序
+        freq_num = {k: sorted(v) for k, v in freq_num.items()}
+
+        result = [f"{k}:" + ",".join(map(str, v)) for k, v in freq_num.items()]
+        return result
 
 
 if __name__ == '__main__':
-    nums1 = list(map(int, input().strip().split(',')))
-    nums2 = list(map(int, input().strip().split(',')))
-    res = solve_method(nums1, nums2)
-    print(res)
+    nums1 = [5, 3, 6, -8, 0, 11]
+    nums2 = [2, 8, 8, 8, -1, 15]
+    assert solve_method(nums1, nums2) == "NULL"
 
+    nums1 = [5, 8, 11, 3, 6, 8, 8, -1, 11, 2, 11, 11]
+    nums2 = [11, 2, 11, 8, 6, 8, 8, -1, 8, 15, 3, -9, 11]
+    assert solve_method(nums1, nums2) == ["1:-1,2,3,6", "3:8,11"]
 ```
 

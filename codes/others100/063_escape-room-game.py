@@ -3,24 +3,22 @@
 """
 @author:  zhangchao
 @file: 063_escape-room-game
-@time:  17/8/2023 上午 10:48
-@project:  huawei-od-python 
+@time:  2023/8/17 10:48
+@project:  huawei-od-python
+@desc: 063 密室逃生游戏
 """
-from typing import List
-import re
 
 
-def solve_method(key: str, boxes: List[str]) -> int:
-    pattern = r'[^a-zA-Z]+'
-    boxes = [''.join(sorted(re.sub(pattern, '', s).lower())) for s in boxes]
-    for index, s in enumerate(boxes):
-        if s == key:
+def solve_method(key, boxes) -> int:
+    key_lst = list(key)
+    for index, chars in enumerate(boxes):
+        chars = [char.lower() for char in chars if char.isalpha()]
+        chars.sort()
+        if chars == key_lst:
             return index
     return -1
 
 
 if __name__ == '__main__':
-    key = input().strip()
-    boxes = input().strip().split(',')
-    res = solve_method(key, boxes)
-    print(res)
+    assert solve_method("abc", ["s", "sdf134", "A2c4b"]) == 2
+    assert solve_method("abc", ["s", "sdf134", "A2c4bd", "523[]"]) == -1

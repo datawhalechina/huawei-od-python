@@ -2,14 +2,18 @@
 
 ## 题目描述
 
-给定一个含有N个正整数的数组，
-求出有多少个连续区间(包括单个正整数)，它们的和大于等于x。
+给定一个含有`N`个正整数的数组，求出有多少个连续区间（包括单个正整数），它们的和大于等于`x`。
 
 ## 输入描述
-第一行两个整数N与x (0 < N <= 100000 , 0 <= x <= 10000000 )。第二行有N个正整数(每个正整数小于等于100)。
+
+第一行两个整数`N`与`x`，其中0 < N <= 100000、0 <= x <= 10000000。
+
+第二行有`N`个正整数，每个正整数小于等于100。
 
 ## 输出描述
+
 输出一个整数，表示所求的个数。
+
 ## 示例描述
 
 ### 示例一
@@ -25,6 +29,10 @@
 4
 ```
 
+**说明：**
+
+3+4、4+7、3+4+7、7这四组数据都是大于等于7的，所以输出为4。
+
 ### 示例二
 
 **输入：**
@@ -39,39 +47,30 @@
 ```
 
 ## 解题思路
-遍历以每个位置为起点的子数组，如果当前字数组的和已经超过目标值，往后添加正整数元素的字数组必定也超过目标值。
-   
+
+1. 如果整个数组之和小于目标值，则直接返回0。
+2. 初始化计数器`count`。   
+3. 遍历整个数组：
+    - 如果子数组之和大于等于目标值，计数器累加1。
+4. 返回结果，即计数器的值。    
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 067_search-continuous-scope
-@time:  13/8/2023 下午 11:38
-@project:  huawei-od-python 
-"""
-
-
 def solve_method(nums, target):
     n = len(nums)
-    ans = 0
+    count = 0
     if sum(nums) < target:
-        return ans
+        return count
     for i in range(n):
-        for j in range(i + 1, n + 1):
-            if sum(nums[i:j]) >= target:
-                ans += n - j + 1
-                break
-    return ans
+        for j in range(i, n):
+            if sum(nums[i:j + 1]) >= target:
+                count += 1
+    return count
+
 
 if __name__ == '__main__':
-    N, x = list(map(int, input().strip().split(' ')))
-    nums = list(map(int, input().strip().split(' ')))
-    res = solve_method(nums, x)
-    print(res)
-
+    assert solve_method([3, 4, 7], 7) == 4
+    assert solve_method([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10000) == 0
 ```
 

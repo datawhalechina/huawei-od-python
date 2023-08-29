@@ -1,27 +1,25 @@
 # 064 寻找最大价值的矿堆
 
-
 ## 题目描述
 
-给你一个由'0'(空地)、'1'(银矿)、'2'(金矿）组成的的地图，
-矿堆只能由上下左右相邻的金矿或银矿连接形成。超出地图范围可以认为是空地。
+给你一个由0（空地）、1（银矿）、2（金矿）组成的的地图，矿堆只能由上下左右相邻的金矿或银矿连接形成。超出地图范围可以认为是空地。
+
 假设银矿价值1，金矿价值2，请你找出地图中最大价值的矿堆并输出该矿堆的价值。
 
 ## 输入描述
 
 地图元素信息如：
-
+```text
 22220
-
 00000
-
 00000
-
 11111
+```
 
-地图范围最大300*300，0<=地图元素<=2
+地图范围最大`300*300`，每个元素的取值范围是0 <= 地图元素 <= 2。
 
 ## 输出描述
+
 矿堆的最大价值。
 
 ## 示例描述
@@ -55,6 +53,7 @@
 ```text
 15
 ```
+
 ### 示例三
 
 **输入：**
@@ -71,51 +70,61 @@
 ```
 
 ## 解题思路
-深度遍历每一个矿堆，计算矿堆价值
 
-   
+**基本思路：** 使用深度优先搜索DFS求解。
+
+1. 使用深度优先搜索遍历地图上每一个元素：
+    - 确定参数：当前行坐标`row`和列坐标`col`。
+    - 终止条件：如果超出边界或者已经访问过（标记为-1），则返回0。
+    - 递归处理：
+        - 将该地图元素设置为已经访问过，标记为-1。
+        - 上下左右进行递归搜索，累加所有访问过的矿堆价值。
+        - 比较并得到矿堆的最大价值。
+2. 返回结果，即矿堆的最大价值。
 
 ## 解题代码
 
 ```python
-#!/usr/bin/env python
-# encoding: utf-8
-"""
-@author:  zhangchao
-@file: 064_find-max-value
-@time:  17/8/2023 上午 11:44
-@project:  huawei-od-python 
-"""
-
 def solve_method(nums):
     m, n = len(nums), len(nums[0])
     if m < 1:
         return 0
 
-    def infect(row, col, nums, m, n):
+    def dfs(row, col):
+        nonlocal value
         if row < 0 or row > m - 1 or col < 0 or col > n - 1 or nums[row][col] == 0 or nums[row][col] == -1:
+            # 如果超出边界或者已经访问过（标记为-1），则返回0
             return 0
         else:
             value = nums[row][col]
+            # 已经访问过，标记为-1
             nums[row][col] = -1
             for d1, d2 in [[-1, 0], [1, 0], [0, -1], [0, 1]]:
-                value += infect(row + d1, col + d2, nums, m, n)
+                # 上下左右进行深度优先搜索
+                value += dfs(row + d1, col + d2)
             return value
 
-    ans = -1
+    max_value = -1
     for i in range(m):
         for j in range(n):
             if nums[i][j] == 1 or nums[i][j] == 2:
-                value = infect(i, j, nums, m, n)
-                if value > ans:
-                    ans = value
-    return ans
+                value = dfs(i, j)
+                if value > max_value:
+                    max_value = value
+    return max_value
 
 
 if __name__ == '__main__':
-    n = int(input().strip())
-    nums = [list(map(int, list(input().strip()))) for _ in range(n)]
-    res = solve_method(nums)
-    print(res)
+    arr = [[2, 2, 2, 2, 0],
+           [0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0],
+           [0, 1, 1, 1, 1]]
+    assert solve_method(arr) == 8
+
+    arr = [[2, 2, 2, 2, 0],
+           [0, 0, 0, 2, 0],
+           [0, 0, 0, 1, 0],
+           [0, 1, 1, 1, 1]]
+    assert solve_method(arr) == 15
 ```
 
