@@ -7,32 +7,20 @@
 @project: huawei-od-python
 @desc: 158 猜密码
 """
-
 from itertools import combinations
 
 
-def get_possible_combinations(digits, min_length):
+def solve_method(nums, k):
     # 生成所有可能的组合
     combinations_list = []
-    for length in range(min_length, len(digits) + 1):
-        combinations_list.extend(combinations(digits, length))
+    for length in range(k, len(nums) + 1):
+        combinations_list.extend(combinations(nums, length))
 
     # 按照要求进行排序
-    combinations_list.sort(key=lambda x: (len(x), x))
+    combinations_list.sort()
 
-    return combinations_list
+    return [list(x) for x in combinations_list ]
 
 
-# 读取输入
-digits = input().split(",")
-min_length = int(input())
-
-# 调用函数获取可能的密码组合
-combinations_list = get_possible_combinations(digits, min_length)
-
-# 输出结果
-if combinations_list:
-    for combination in combinations_list:
-        print("".join(combination))
-else:
-    print("None")
+if __name__ == '__main__':
+    assert solve_method([2, 3, 4], 2) == [[2, 3], [2, 3, 4], [2, 4], [3, 4]]

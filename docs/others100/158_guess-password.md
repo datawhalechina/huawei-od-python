@@ -6,7 +6,7 @@
 
 规则如下：
 1. 输出的组合都是从可选的数字范围中选取的，且不能重复。 
-2. 输出的密码教字要按照从小到大的顺序排列，密码组合需要按照字母的顺序，从小到大的顺序排序。 
+2. 输出的密码数字要按照从小到大的顺序排列，密码组合需要按照字母的顺序，从小到大的顺序排序。 
 3. 输出的每一个组合的数字的数量要大于等于密码最小数字数量。 
 4. 如果可能的组合为空，则返回`None`。
 
@@ -48,36 +48,30 @@
 
 ## 解题思路
 
-使用`itertools`库的`combinations`函数生成所有可能的组合，并按照要求进行排序。然后将结果输出。
+1. 遍历k的取值`[k, 数组长度]`：
+    - 使用`itertools`包的`combinations`方法，生成所有可能的组合，存入列表`combinations_list`。
+2. 将列表`combinations_list`按照字典序从小到大排序。
+3. 返回结果列表。
 
 ## 解题代码
 
 ```python
 from itertools import combinations
 
-def get_possible_combinations(digits, min_length):
+
+def solve_method(nums, k):
     # 生成所有可能的组合
     combinations_list = []
-    for length in range(min_length, len(digits) + 1):
-        combinations_list.extend(combinations(digits, length))
+    for length in range(k, len(nums) + 1):
+        combinations_list.extend(combinations(nums, length))
 
     # 按照要求进行排序
-    combinations_list.sort(key=lambda x: (len(x), x))
+    combinations_list.sort()
 
-    return combinations_list
+    return [list(x) for x in combinations_list ]
 
-# 读取输入
-digits = input().split(",")
-min_length = int(input())
 
-# 调用函数获取可能的密码组合
-combinations_list = get_possible_combinations(digits, min_length)
-
-# 输出结果
-if combinations_list:
-    for combination in combinations_list:
-        print("".join(combination))
-else:
-    print("None")
+if __name__ == '__main__':
+    assert solve_method([2, 3, 4], 2) == [[2, 3], [2, 3, 4], [2, 4], [3, 4]]
 ```
 

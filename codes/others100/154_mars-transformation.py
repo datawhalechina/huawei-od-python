@@ -8,80 +8,68 @@
 @desc: 154 火星改造、宜居星球改造计划
 """
 
-from collections import deque
 
-
-def reconstruct_mars_grid(grid):
-    rows = len(grid)
-    if rows == 0:
-        return -1
-    cols = len(grid[0])
-
-    # 统计初始宜居区和待改造区的数量
-    inhabited_count = 0
-    to_be_reconstructed_count = 0
-    for i in range(rows):
-        for j in range(cols):
-            if grid[i][j] == "YES":
-                inhabited_count += 1
-            elif grid[i][j] == "NO":
-                to_be_reconstructed_count += 1
-
-    # 如果待改造区数量为0，则已经全部变成宜居区，返回0
-    if to_be_reconstructed_count == 0:
-        return 0
-
-    # 初始化BFS队列和访问标记数组
-    queue = deque()
-    visited = [[False] * cols for _ in range(rows)]
-
-    # 将初始宜居区加入队列，并标记为已访问
-    for i in range(rows):
-        for j in range(cols):
-            if grid[i][j] == "YES":
-                queue.append((i, j))
-                visited[i][j] = True
-
-    # 定义四个方向的偏移量
-    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-
+def solve_method(grid):
+    rows, cols = len(grid), len(grid[0])
+    # 已经访问过的区域的位置
+    visited = set()
+    # 待处理的区域
+    queue = []
     days = 0
-    while queue:
+    # 当前可居住区域的数量
+    count = 0
+
+    # 将所有初始的YES区域加入队列
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 'YES':
+                queue.append((i, j))
+                visited.add((i, j))
+                count += 1
+
+    # 使用BFS扩展可居住区域
+    while queue and len(visited) != rows * cols:
+        days += 1
         size = len(queue)
         for _ in range(size):
-            x, y = queue.popleft()
-            for dx, dy in directions:
+            x, y = queue.pop(0)
+            count -= 1
+            for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nx, ny = x + dx, y + dy
-                if nx >= 0 and nx < rows and ny >= 0 and ny < cols and not visited[nx][ny]:
-                    if grid[nx][ny] == "NO":
-                        # 将待改造区改造成宜居区
-                        grid[nx][ny] = "YES"
-                        to_be_reconstructed_count -= 1
-                        queue.append((nx, ny))
-                        visited[nx][ny] = True
-        days += 1
+                if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == 'NO' and (nx, ny) not in visited:
+                    queue.append((nx, ny))
+                    visited.add((nx, ny))
+                    count += 1
 
-        # 如果待改造区数量为0，则已经全部变成宜居区，返回天数
-        if to_be_reconstructed_count == 0:
-            return days
-
-    # 如果无法将待改造区全部变成宜居区，返回-1
-    return -1
-
-
-# 读取输入
-grid = []
-while True:
-    try:
-        row = input().split()
-        if not row:
+        if count == 0:
             break
-        grid.append(row)
-    except EOFError:
-        break
 
-# 调用函数计算可改造区是否能全部变成宜居区，以及改造的太阳日天数
-result = reconstruct_mars_grid(grid)
+    # 检查是否所有的NO区域都被转化成YES
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 'NO' and (i, j) not in visited:
+                return -1
 
-# 输出结果
-print(result)
+    return days
+
+
+if __name__ == '__main__':
+    grid = [["YES", "YES", "NO"],
+            ["NO", "NO", "NO"],
+            ["YES", "NO", "NO"]]
+    assert solve_method(grid) == 2
+
+    grid = [["YES", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"]]
+    assert solve_method(grid) == 6
+
+    grid = [["NO", "NA"]]
+    assert solve_method(grid) == -1
+
+    grid = [["YES", "NO", "NO", "YES"],
+            ["NO", "NO", "YES", "NO"],
+            ["NO", "YES", "NA", "NA"],
+            ["YES", "NO", "NA", "NO"]]
+    assert solve_method(grid) == -1

@@ -48,13 +48,25 @@
 
 ## 解题思路
 
-使用动态规划的思想，创建一个长度为`n+1`的列表`dp`，`dp[i]`表示在第`i`轮结束后可以获得的最高总分数。根据题目要求，如果当前轮次小于等于`3`，则总分数置`0`；否则，选择获取该轮牌面分数，将当前总分数加上该轮牌面分数，并与跳过该轮后的总分数比较取较大值。最后返回`dp[n]`，即在所有轮结束后可以获得的最高总分数。
+**基本思路：** 使用动态规划求解。
+
+1. 遍历所有轮次，使用动态规划方法：
+    - 确定dp数组以及下标的含义：
+    - 确定递推公式：
+       - 如果当前轮次小于等于3，则总分数置0，公式为`dp[i]=0`。
+       - 如果选择该轮牌面分数，公式为`dp[i] = dp[i - 1] + scores[i - 1]`。
+       - 跳过该轮，将当前总分数还原为三轮前的总分数，公式为`dp[i-3]`。
+       - 计算两者的最大值，公式为`dp[i] = max(dp[i], dp[i - 3])`。
+    - dp数组初始化：将所有元素都初始化为0。
+    - 确定遍历顺序：从1到`n+1`遍历。
+2. 返回`dp[n]`，即在第`n`轮获得的最高总分数。   
 
 ## 解题代码
 
 ```python
-def calculate_max_score(scores):
+def solve_method(scores):
     n = len(scores)
+    # dp[i]表示第i轮获得的最大总分数
     dp = [0] * (n + 1)
 
     for i in range(1, n + 1):
@@ -69,13 +81,8 @@ def calculate_max_score(scores):
 
     return dp[n]
 
-# 读取输入
-scores = list(map(int, input().split(",")))
 
-# 调用函数计算最高总分数
-max_score = calculate_max_score(scores)
-
-# 输出结果
-print(max_score)
+if __name__ == '__main__':
+    assert solve_method([1, -5, -6, 4, 3, 6, -2]) == 11
 ```
 

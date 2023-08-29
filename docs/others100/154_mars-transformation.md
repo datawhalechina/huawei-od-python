@@ -30,7 +30,7 @@
 ```text
 YES YES NO
 NO NO NO
-NA NO YEA
+YES NO NO 
 ```
 
 **输出：**
@@ -105,117 +105,103 @@ YES NO NA NO
 
 ## 解题思路
 
-使用广度优先搜索（BFS）的思想，首先统计初始宜居区和待改造区的数量。然后将初始宜居区加入BFS队列，并标记为已访问。在每一轮BFS中，遍历队列中的所有宜居区，对每个宜居区的四个方向上的待改造区进行改造，并将改造后的宜居区加入队列。同时更新待改造区的数量和天数。如果待改造区数量为0，则已经全部变成宜居区，返回天数。如果BFS结束后仍有待改造区，表示无法将待改造区全部变成宜居区，返回-1。
+**基本思路：** 使用广度优先搜索BFS求解。
 
+1. 遍历每一个区域，统计已经完成大气改造的区域的数量`count`，将坐标加入到已经访问过的区域的位置列表`visited`，将坐标待处理的区域`queue`，将。
+2. 使用广度优先搜索，遍历可居住区域：
+    - 终止条件：如果都访问了，退出循环。
+    - 遍历处理：将已改造的区域的上下左右进行扩散，天数加1，并加入已经访问过的区域的位置列表中。
+3. 检查是否所有的`NO`区域都被转化成`YES`，如果还存在，则返回-1。
+4. 返回结果，即改造的太阳日天数。
+   
 ## 解题代码
 
 ```python
-from collections import deque
-
-def reconstruct_mars_grid(grid):
-    rows = len(grid)
-    if rows == 0:
-        return -1
-    cols = len(grid[0])
-    
-    # 统计初始宜居区和待改造区的数量
-    inhabited_count = 0
-    to_be_reconstructed_count = 0
-    for i in range(rows):
-        for j in range(cols):
-            if grid[i][j] == "YES":
-                inhabited_count += 1
-            elif grid[i][j] == "NO":
-                to_be_reconstructed_count += 1
-    
-    # 如果待改造区数量为0，则已经全部变成宜居区，返回0
-    if to_be_reconstructed_count == 0:
-        return 0
-    
-    # 初始化BFS队列和访问标记数组
-    queue = deque()
-    visited = [[False] * cols for _ in range(rows)]
-    
-    # 将初始宜居区加入队列，并标记为已访问
-    for i in range(rows):
-        for j in range(cols):
-            if grid[i][j] == "YES":
-                queue.append((i, j))
-                visited[i][j] = True
-    
-    # 定义四个方向的偏移量
-    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-    
+def solve_method(grid):
+    rows, cols = len(grid), len(grid[0])
+    # 已经访问过的区域的位置
+    visited = set()
+    # 待处理的区域
+    queue = []
     days = 0
-    while queue:
+    # 当前可居住区域的数量
+    count = 0
+
+    # 将所有初始的YES区域加入队列
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 'YES':
+                queue.append((i, j))
+                visited.add((i, j))
+                count += 1
+
+    # 使用BFS扩展可居住区域
+    while queue and len(visited) != rows * cols:
+        days += 1
         size = len(queue)
         for _ in range(size):
-            x, y = queue.popleft()
-            for dx, dy in directions:
+            x, y = queue.pop(0)
+            count -= 1
+            for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nx, ny = x + dx, y + dy
-                if nx >= 0 and nx < rows and ny >= 0 and ny < cols and not visited[nx][ny]:
-                    if grid[nx][ny] == "NO":
-                        # 将待改造区改造成宜居区
-                        grid[nx][ny] = "YES"
-                        to_be_reconstructed_count -= 1
-                        queue.append((nx, ny))
-                        visited[nx][ny] = True
-        days += 1
-        
-        # 如果待改造区数量为0，则已经全部变成宜居区，返回天数
-        if to_be_reconstructed_count == 0:
-            return days
-    
-    # 如果无法将待改造区全部变成宜居区，返回-1
-    return -1
+                if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == 'NO' and (nx, ny) not in visited:
+                    queue.append((nx, ny))
+                    visited.add((nx, ny))
+                    count += 1
 
-# 读取输入
-grid = []
-while True:
-    try:
-        row = input().split()
-        if not row:
+        if count == 0:
             break
-        grid.append(row)
-    except EOFError:
-        break
 
-# 调用函数计算可改造区是否能全部变成宜居区，以及改造的太阳日天数
-result = reconstruct_mars_grid(grid)
+    # 检查是否所有的NO区域都被转化成YES
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 'NO' and (i, j) not in visited:
+                return -1
 
-# 输出结果
-print(result)def solve_method(lights):
-    lights_list = []
-    for light in lights:
-        id = light[0]
-        x1 = light[1]
-        y1 = light[2]
-        x2 = light[3]
-        y2 = light[4]
-        # id, x坐标的平均值, y坐标的平均值, 灯高半径
-        lights_list.append([id, (x1 + x2) // 2, (y1 + y2) // 2, (y2 - y1) // 2])
+    return days
 
-    # 将灯按行粗排
-    lights_list.sort(key=lambda x: x[2])
 
-    result = []
+if __name__ == '__main__':
+    grid = [["YES", "YES", "NO"],
+            ["NO", "NO", "NO"],
+            ["YES", "NO", "NO"]]
+    assert solve_method(grid) == 2
 
-    # 设置每一行的起始索引
-    row_start_index = 0
-    # 先使用第1行第1个作为基准灯
-    for i in range(1, len(lights_list)):
-        # 高低偏差超过灯高度的一半
-        if lights_list[i][2] - lights_list[row_start_index][2] > lights_list[row_start_index][3]:
-            # 把之前的灯按x坐标排序，并存入结果列表中
-            lights_list[row_start_index:i] = sorted(lights_list[row_start_index:i], key=lambda x: x[1])
-            result.extend([light[0] for light in lights_list[row_start_index:i]])
-            # 记录新一行对应的灯位置
-            row_start_index = i
+    grid = [["YES", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"]]
+    assert solve_method(grid) == 6
 
-    # 把该行剩余的灯全部加入到结果列表中
-    lights_list[row_start_index:] = sorted(lights_list[row_start_index:], key=lambda x: x[1])
-    result.extend([light[0] for light in lights_list[row_start_index:]])
+    grid = [["NO", "NA"]]
+    assert solve_method(grid) == -1
 
-    return result
+    grid = [["YES", "NO", "NO", "YES"],
+            ["NO", "NO", "YES", "NO"],
+            ["NO", "YES", "NA", "NA"],
+            ["YES", "NO", "NA", "NO"]]
+    assert solve_method(grid) == -1
+
+
+if __name__ == '__main__':
+    grid = [["YES", "YES", "NO"],
+            ["NO", "NO", "NO"],
+            ["YES", "NO", "NO"]]
+    assert solve_method(grid) == 2
+
+    grid = [["YES", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"],
+            ["NO", "NO", "NO", "NO"]]
+    assert solve_method(grid) == 6
+
+    grid = [["NO", "NA"]]
+    assert solve_method(grid) == -1
+
+    grid = [["YES", "NO", "NO", "YES"],
+            ["NO", "NO", "YES", "NO"],
+            ["NO", "YES", "NA", "NA"],
+            ["YES", "NO", "NA", "NO"]]
+    assert solve_method(grid) == -1
 ```
 

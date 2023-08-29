@@ -85,72 +85,46 @@ www.huawei.com,news.qq.com,www.cctv.com
 
 ## 解题思路
 
-使用`Counter`类来实现对`URL`访问次数的统计。在每次输入`URL`时，调用`update_counter`函数更新计数器。在输入数字`N`时，调用`get_top_urls`函数获取访问次数最高的`N`个页面，并按要求进行排序和输出。
+1. 初始化遇到字符串`N`起始的位置`start_pos`。
+2. 初始化计数器`counter`，用于对URL访问次数的统计。
+3. 遍历所有的URL：
+    - 当遇到数字时，取`[start_pos:i]`这一段的字符串数组，更新计数器。
+    - 得到访问次数最高的`N`个页面，并将URL存入结果列表中。
+4. 返回结果列表。    
 
 ## 解题代码
 
 ```python
 from collections import Counter
 
-def update_counter(counter, url):
-    counter[url] += 1
 
-def get_top_urls(counter, n):
-    top_urls = counter.most_common(n)
-    sorted_urls = sorted(top_urls, key=lambda x: (-x[1], x[0]))
-    return [url for url, count in sorted_urls]
-
-# 初始化计数器
-counter = Counter()
-
-while True:
-    # 读取输入
-    line = input().strip()
-
-    if line.isdigit():
-        # 如果是数字，则输出Top N的页面
-        n = int(line)
-        top_urls = get_top_urls(counter, n)
-        for i in range(len(top_urls)):
-            if i ==len(top_urls)-1:
-                print(top_urls[i])
-            else:
-                print(top_urls[i],end=",")
-
-    else:
-        # 如果是URL，则更新计数器
-        update_counter(counter, line)def solve_method(lights):
-    lights_list = []
-    for light in lights:
-        id = light[0]
-        x1 = light[1]
-        y1 = light[2]
-        x2 = light[3]
-        y2 = light[4]
-        # id, x坐标的平均值, y坐标的平均值, 灯高半径
-        lights_list.append([id, (x1 + x2) // 2, (y1 + y2) // 2, (y2 - y1) // 2])
-
-    # 将灯按行粗排
-    lights_list.sort(key=lambda x: x[2])
-
+def solve_method(lines):
     result = []
-
-    # 设置每一行的起始索引
-    row_start_index = 0
-    # 先使用第1行第1个作为基准灯
-    for i in range(1, len(lights_list)):
-        # 高低偏差超过灯高度的一半
-        if lights_list[i][2] - lights_list[row_start_index][2] > lights_list[row_start_index][3]:
-            # 把之前的灯按x坐标排序，并存入结果列表中
-            lights_list[row_start_index:i] = sorted(lights_list[row_start_index:i], key=lambda x: x[1])
-            result.extend([light[0] for light in lights_list[row_start_index:i]])
-            # 记录新一行对应的灯位置
-            row_start_index = i
-
-    # 把该行剩余的灯全部加入到结果列表中
-    lights_list[row_start_index:] = sorted(lights_list[row_start_index:], key=lambda x: x[1])
-    result.extend([light[0] for light in lights_list[row_start_index:]])
-
+    start_pos = 0
+    counter = Counter()
+    for i in range(len(lines)):
+        if lines[i].isdigit():
+            counter.update(lines[start_pos:i])
+            top_urls = counter.most_common(int(lines[i]))
+            result.append([x[0] for x in top_urls])
+            start_pos = i + 1
     return result
+
+
+if __name__ == '__main__':
+    lines = ["news.qq.com", "news.sina.com.cn", "news.qq.com", "news.qq.com",
+             "game.163.com", "game.163.com", "www.huawei.com", "www.cctv.com",
+             "3", "www.huawei.com", "www.cctv.com", "www.huawei.com",
+             "www.cctv.com", "www.huawei.com", "www.cctv.com", "www.huawei.com",
+             "www.cctv.com", "www.huawei.com", "3"]
+    assert solve_method(lines) == [["news.qq.com", "game.163.com", "news.sina.com.cn"],
+                                   ["www.huawei.com", "www.cctv.com", "news.qq.com"]]
+
+    lines = ["news.qq.com", "www.cctv.com", "1",
+             "www.huawei.com", "www.huawei.com", "2",
+             "3"]
+    assert solve_method(lines) == [["news.qq.com"],
+                                   ["www.huawei.com", "news.qq.com"],
+                                   ["www.huawei.com", "news.qq.com", "www.cctv.com"]]
 ```
 

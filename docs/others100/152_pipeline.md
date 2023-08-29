@@ -47,70 +47,35 @@
 
 ## 解题思路
 
-首先将作业处理时间按升序排序，然后使用一个列表`pipelines`来表示每个流水线的处理时间。在每次循环中，找到处理时间最短的流水线，将当前作业分配给它，并更新总时长。最后，处理剩余的作业并更新总时长。最后输出总时长。
-
-请注意，该代码没有对输入进行严格的合法性检查，如输入的范围是否满足要求等。在实际应用中，需要根据具体情况进行适当的输入验证和错误处理。
+1. 将作业处理时间`job_times`按从小到大排序。
+2. 初始化流水线`pipelines`的处理时间为0。
+3. 遍历所有任务：
+    - 找到处理时间最短的流水线。
+    - 将当前作业分配给最短处理时间的流水线。
+4. 返回流水线中的最大时长。    
 
 ## 解题代码
 
 ```python
-def calculate_processing_time(m, n, job_times):
-    job_times.sort()  # 将作业处理时间按升序排序
-    pipelines = [0] * m  # 初始化流水线的处理时间为0
-    total_time = 0  # 总时长
+def solve_method(m, n, job_times):
+    # 将作业处理时间按升序排序
+    job_times.sort()
+    # 初始化流水线的处理时间为0
+    pipelines = [0] * m
 
     for i in range(n):
-        min_pipeline = min(pipelines)  # 找到处理时间最短的流水线
-        #total_time += min_pipeline  # 更新总时长
-        index = pipelines.index(min_pipeline)  # 找到最短处理时间的流水线的索引
-        pipelines[index] += job_times[i]  # 将当前作业分配给最短处理时间的流水线
+        # 找到处理时间最短的流水线
+        min_pipeline = min(pipelines)
+        index = pipelines.index(min_pipeline)
+        # 将当前作业分配给最短处理时间的流水线
+        pipelines[index] += job_times[i]
 
-
-    total_time += max(pipelines)
+    total_time = max(pipelines)
 
     return total_time
 
 
-# 读取输入
-m, n = map(int, input().split())
-job_times = list(map(int, input().split()))
-
-# 调用函数计算总时长
-total_time = calculate_processing_time(m, n, job_times)
-
-# 输出结果
-print(total_time)def solve_method(lights):
-    lights_list = []
-    for light in lights:
-        id = light[0]
-        x1 = light[1]
-        y1 = light[2]
-        x2 = light[3]
-        y2 = light[4]
-        # id, x坐标的平均值, y坐标的平均值, 灯高半径
-        lights_list.append([id, (x1 + x2) // 2, (y1 + y2) // 2, (y2 - y1) // 2])
-
-    # 将灯按行粗排
-    lights_list.sort(key=lambda x: x[2])
-
-    result = []
-
-    # 设置每一行的起始索引
-    row_start_index = 0
-    # 先使用第1行第1个作为基准灯
-    for i in range(1, len(lights_list)):
-        # 高低偏差超过灯高度的一半
-        if lights_list[i][2] - lights_list[row_start_index][2] > lights_list[row_start_index][3]:
-            # 把之前的灯按x坐标排序，并存入结果列表中
-            lights_list[row_start_index:i] = sorted(lights_list[row_start_index:i], key=lambda x: x[1])
-            result.extend([light[0] for light in lights_list[row_start_index:i]])
-            # 记录新一行对应的灯位置
-            row_start_index = i
-
-    # 把该行剩余的灯全部加入到结果列表中
-    lights_list[row_start_index:] = sorted(lights_list[row_start_index:], key=lambda x: x[1])
-    result.extend([light[0] for light in lights_list[row_start_index:]])
-
-    return result
+if __name__ == '__main__':
+    assert solve_method(3, 5, [8, 4, 3, 2, 10]) == 13
 ```
 

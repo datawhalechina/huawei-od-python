@@ -9,8 +9,9 @@
 """
 
 
-def calculate_max_score(scores):
+def solve_method(scores):
     n = len(scores)
+    # dp[i]表示第i轮获得的最大总分数
     dp = [0] * (n + 1)
 
     for i in range(1, n + 1):
@@ -25,11 +26,6 @@ def calculate_max_score(scores):
 
     return dp[n]
 
-# 读取输入
-scores = list(map(int, input().split(",")))
 
-# 调用函数计算最高总分数
-max_score = calculate_max_score(scores)
-
-# 输出结果
-print(max_score)
+if __name__ == '__main__':
+    assert solve_method([1, -5, -6, 4, 3, 6, -2]) == 11
