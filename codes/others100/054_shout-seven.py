@@ -1,9 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:054-Shout Seven.py
-@Date：2023/08/11 0:47
+@author: Kaiwen Zuo
+@file: 054_shout-seven.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 054 喊七
 """
+
+
 def solve_method(line):
     numbers = list(map(int, line.split()))  # 将输入行分割为整数列表
     res = [0] * len(numbers)  # 初始化结果列表

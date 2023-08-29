@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:051_Employee attendance.py
-@Date：2023/08/11 0:47
+@author: Kaiwen Zuo
+@file: 051_employee-attendance.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 051 员工出勤
 """
 
 

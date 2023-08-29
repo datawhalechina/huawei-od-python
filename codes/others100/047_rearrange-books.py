@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+@author: Kaiwen Zuo
+@file: 047_rearrange-books.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 047 叠放书籍
+"""
+
+
 def rearrange_books(nums):
     def getMaxLIS(nums):
         dp = [nums[0]]

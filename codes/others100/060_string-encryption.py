@@ -2,7 +2,7 @@
 # encoding: utf-8
 """
 @author:  zhangchao
-@file: 060_string-encryption
+@file: 060_string-encryption.py
 @time:  2023/7/29 23:55
 @project:  huawei-od-python
 @desc: 060 字符串加密

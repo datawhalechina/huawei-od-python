@@ -1,9 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:050_Highway charging planning.py
-@Date：2023/08/11 0:47
+@author: Kaiwen Zuo
+@file: 050_highway-charging-planning.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 050 高速公路充电技术
 """
+
 # 初始化距离和时间列表
 pd, pt = [], []
 # 初始化备忘录字典，用于存储已计算的解

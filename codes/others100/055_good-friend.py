@@ -1,9 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:055-Good friend.py
-@Date：2023/08/14 21:00
+@author: Kaiwen Zuo
+@file: 055_good-friend.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 055 好朋友
 """
+
+
 def solve_method(n, ints):
     # 如果n为0，则直接打印0并返回
     if n == 0:

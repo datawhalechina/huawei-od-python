@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:058-monogram.py
-@Date：2023/08/14 21:00
+@author: Kaiwen Zuo
+@file: 058_letter-combination.py
+@time: 2023/08/14 21:00
+@project: huawei-od-python
+@desc: 058 字母组合
 """
 
 # 定义数字到字母的映射

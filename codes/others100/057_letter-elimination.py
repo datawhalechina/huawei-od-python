@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:057-Letter elimination music.py
-@Date：2023/08/14 21:00
+@author: Kaiwen Zuo
+@file: 057_letter-elimination.py
+@time: 2023/08/14 21:00
+@project: huawei-od-python
+@desc: 057 字母消消乐
 """
 
 

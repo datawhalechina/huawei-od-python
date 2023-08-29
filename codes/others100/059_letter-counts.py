@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:059-Letter Count.py
-@Date：2023/08/16 13:12
+@author: Kaiwen Zuo
+@file: 059_letter-counts.py
+@time: 2023/08/16 13:12
+@project: huawei-od-python
+@desc: 059 字母计数
 """
 from collections import Counter
 

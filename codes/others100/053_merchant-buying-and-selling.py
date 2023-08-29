@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:053-Merchant buying and selling.py
-@Date：2023/08/11 0:47
+@author: Kaiwen Zuo
+@file: 053_merchant-buying-and-selling.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 053 商人买卖
 """
 
 

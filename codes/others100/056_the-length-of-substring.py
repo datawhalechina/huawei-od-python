@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:056-Subsequence length.py
-@Date：2023/08/14 21:00
+@author: Kaiwen Zuo
+@file: 056_the-length-of-substring.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 056 子序列长度
 """
 
 

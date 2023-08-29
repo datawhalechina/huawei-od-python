@@ -1,9 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# encoding: utf-8
 """
-@Author：Kaiwen Zuo
-@File:046_Singles' Day.py
-@Date：2023/08/11 0:47
+@author: Kaiwen Zuo
+@file: 046_double-eleven.py
+@time: 2023/08/11 0:47
+@project: huawei-od-python
+@desc: 046 双十一
 """
+
+
 def main():
     m = input()
     r = int(input())
@@ -26,6 +31,6 @@ def main():
 
     print(res)
 
+
 if __name__ == '__main__':
     main()
-
