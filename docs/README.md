@@ -28,7 +28,7 @@ docs-----------------------------------------------习题解答
 - [李碧涵](https://github.com/libihan) （Datawhale成员-东南大学-软件开发工程师）
 - [周理璇](https://github.com/Aomferni) （Datawhale成员-电子科技大学-Linux C 软件开发工程师）
 - [李宇鸿](https://github.com/PeakWalkerLYH) （英国利兹大学-软件开发工程师）
-- [陈春龙](https://https://github.com/D-Dragon0318) （广东工业大学-计算机科学与技术）
+- [陈春龙](https://github.com/D-Dragon0318) （广东工业大学-计算机科学与技术）
 - [李昌盛](https://github.com/jackielics) （Datawhale意向成员-杭州电子科技大学-软件开发）
 - [陈希](https://github.com/CompassNull) （东莞理工学院-数据分析）
 - [毛瑞盈](https://github.com/catcooc/) （南京大学-凝聚态物理）
