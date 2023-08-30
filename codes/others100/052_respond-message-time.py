@@ -7,21 +7,28 @@
 @project: huawei-od-python
 @desc: 052 报文响应时间
 """
+import math
 
 
-def calculate_resp_time(T, M):
-    # 如果M大于或等于128，则进行特定的位操作
-    if M >= 128:
-        # 提取M的位4-7，与0x10进行逻辑或操作，然后根据M的位0-2值左移
-        M = ((M >> 3) & 0xF | 0x10) << (M & 0x7 + 3)
+def solve_method(N, response_times):
+    min_value = math.inf
+    for [T, M] in response_times:
+        if M >= 128:
+            # 提取M的位4-7，与0x10进行逻辑或操作，然后根据M的位0-2值左移
+            M = ((M >> 3) & 0xF | 0x10) << (M & 0x7 + 3)
+        resp_time = T + M
+        if resp_time < min_value:
+            min_value = resp_time
 
-    # 返回T和新计算的M值的和
-    return T + M
+    return min_value
 
 
 if __name__ == '__main__':
-    C = int(input("Enter the number of test cases: "))
-    # 使用列表推导式，对C个测试用例调用calculate_resp_time函数，并找到最小响应时间
-    min_resp_time = min(calculate_resp_time(*map(int, input().split())) for _ in range(C))
+    response_times = [[0, 20],
+                      [1, 10],
+                      [8, 20]]
+    assert solve_method(3, response_times) == 11
 
-    print("Minimum response time:", min_resp_time)  # 打印最小响应时间
+    response_times = [[0, 255],
+                      [200, 60]]
+    assert solve_method(2, response_times) == 260

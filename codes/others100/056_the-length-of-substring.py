@@ -9,26 +9,34 @@
 """
 
 
-def solve_method(ints, target_sum):
-    max_len = 0  # 初始化最大长度为0
+def solve_method(nums, target_sum):
+    max_len = -1
 
-    # 遍历整数列表，寻找和为target_sum的子序列
-    for i in range(len(ints)):
-        tmp_sum = 0
-        for j in range(i, len(ints)):
-            tmp_sum += ints[j]
-            if tmp_sum > target_sum:
-                break
-            if tmp_sum == target_sum:
-                max_len = max(max_len, j - i + 1)
+    if sum(nums) < target_sum:
+        return -1
 
-    return -1 if max_len == 0 else max_len
+    left, right = 0, 1
+    while left < len(nums):
+        sub_sum = sum(nums[left:right])
+        if right == len(nums) - 1 and sub_sum < target_sum:
+            break
+
+        if sub_sum == target_sum:
+            length = right - left
+            if max_len < length:
+                max_len = length
+            left += 1
+        elif sub_sum > target_sum:
+            left += 1
+        else:
+            right += 1
+
+    return max_len
 
 
 if __name__ == '__main__':
-    # 从输入读取整数列表和目标和
-    ints = list(map(int, input().strip().split(',')))
-    target_sum = int(input().strip())
+    nums = [1, 2, 3, 4, 2]
+    assert solve_method(nums, 6) == 3
 
-    # 调用函数并打印结果
-    print(solve_method(ints, target_sum))
+    nums = [1, 2, 3, 4, 2]
+    assert solve_method(nums, 20) == -1

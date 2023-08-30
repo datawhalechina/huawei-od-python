@@ -34,45 +34,32 @@
 
 ## 解题思路
 
-题目同力扣354. 俄罗斯套娃信封问题。先对长度进行升序排序，如果遇到长度相同的情况，
-则按照宽度降序排序。之后把所有的宽度作为一个数组，在这个数组上计算LIS的长度就是答案。
-这个解法的关键在于，对于长度相同的书籍，要对其宽度进行降序排序。
-因为两个长度相同的信封不能相互包含的，逆序排序保证在长度相同的书籍中最多只选取一个。
+1. 将书籍按照长度从大到小、宽度从大到小排序。
+2. 初始化可叠放的书的个数`count`为1。
+3. 遍历所有书籍：如果当前书的长度和宽度都小于前一本书，则个数加1。
+4. 返回结果，即可叠放的书的个数。
+
+## 解题代码
 
 ```python
-def rearrange_books(nums):
-    def getMaxLIS(nums):
-        dp = [nums[0]]
-        ans = 1
-        for i in range(1, len(nums)):
-            if nums[i] > dp[-1]:
-                dp.append(nums[i])
-                ans += 1
-            else:
-                l, r = 0, ans - 1
-                while l <= r:
-                    mid = l + (r - l) // 2
-                    if dp[mid] == nums[i]:
-                        l = mid
-                        break
-                    elif dp[mid] > nums[i]:
-                        r = mid - 1
-                    elif dp[mid] < nums[i]:
-                        l = mid + 1
-                dp[l] = nums[i]
+def solve_method(books):
+    # 按照长度从大到小、宽度从大到小排序
+    books.sort(key=lambda x: (x[0], x[1]), reverse=True)
 
-        return ans
+    # 可叠放的书的个数
+    count = 1
+    # 前一本书
+    prev = books[0]
+    for book in books[1:]:
+        # 如果当前书的长度和宽度都小于前一本书，则个数加1
+        if prev[0] > book[0] and prev[1] > book[1]:
+            count += 1
+            prev = book
 
-    nums = sorted(nums, key=lambda x: (x[0], -x[1]))
-    widths = [x[1] for x in nums]
-
-    return getMaxLIS(widths)
+    return count
 
 
 if __name__ == '__main__':
-    nums = eval(input().strip())
-    res = rearrange_books(nums)
-    print(res)
-
+    assert solve_method([[20, 16], [15, 11], [10, 10], [9, 10]]) == 3
 ```
 

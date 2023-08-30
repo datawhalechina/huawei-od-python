@@ -10,23 +10,21 @@
 
 
 def solve_method(strings):
-    a = [1, 2, 4]
     offsets = [0] * 50
-    for i in range(50):
-        if i < 3:
-            offsets[i] = a[i]
-        else:
-            offsets[i] = offsets[i - 1] + offsets[i - 2] + offsets[i - 3]
-    chars = list(strings)
-    for i in range(len(chars)):
-        c = chars[i]
-        chars[i] = chr((ord(c) - 97 + offsets[i]) % 26 + 97)
-    return ''.join(chars)
+    offsets[0:2] = [1, 2, 4]
+    for i in range(3, 51):
+        offsets[i] = offsets[i - 1] + offsets[i - 2] + offsets[i - 3]
+
+    result = []
+    for chars in strings:
+        chars = list(chars)
+        for i in range(len(chars)):
+            c = chars[i]
+            chars[i] = chr((ord(c) - 97 + offsets[i]) % 26 + 97)
+        result.append("".join(chars))
+    return result
 
 
 if __name__ == '__main__':
-    n = int(input().strip())
-    for i in range(n):
-        strings = input().strip()
-        res = solve_method(strings)
-        print(res)
+    assert solve_method(["xy"]) == ["ya"]
+    assert solve_method(["xyabcdef", "abcdefghijk"]) == ["yaeipbwi", "bdgkrdykbxu"]

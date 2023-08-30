@@ -10,23 +10,21 @@
 from collections import Counter
 
 
-def solve_method(line: str) -> None:
+def solve_method(line):
     # 使用Counter计算每个字符的出现次数
     char_counter = Counter(line)
 
-    # 对字符进行排序，首先按出现次数降序，然后按ASCII值升序
-    char_count_pairs = sorted(char_counter.items(), key=lambda item: (-item[1], item[0]))
+    # 按字母出现次数从大到小，如果相等，按照自然顺序排序，小写字母在前，大写字母在后
+    char_count_pairs = sorted(char_counter.items(), key=lambda x: (-x[1], x[0].isupper()))
 
-    # 打印每个字符及其出现次数
+    result = ""
     for char, count in char_count_pairs:
-        print(f"{char}:{count};", end="")
-    print()
+        # 每个字符及其出现次数
+        result += f"{char}:{count};"
 
-
-def main() -> None:
-    line = input().strip()  # 读取输入的字符串
-    solve_method(line)  # 调用solve_method处理字符串
+    return result
 
 
 if __name__ == "__main__":
-    main()  # 如果是主程序，则调用main函数
+    assert solve_method("xyxyXX") == "x:2;y:2;X:2;"
+    assert solve_method("abababb") == "b:4;a:3;"

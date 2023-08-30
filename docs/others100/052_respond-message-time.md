@@ -2,7 +2,7 @@
 
 ## 题目描述
 
-IGMP协议中，有一个字段称作最大响应时间（MaxResponseTime），HOST收到查询报文，解析出`MaxResponseTime`字段后，需 要在`（0,MaxResponseTime］`（单位为秒）时间内选取随机时间回应一个响应报文，如果在随机时间内收到一个新的查询报文，则会根据两者时间的大小，选取小的一方刷新回应时间。
+IGMP协议中，有一个字段称作最大响应时间（MaxResponseTime），HOST收到查询报文，解析出`MaxResponseTime`字段后，需 要在`(0,MaxResponseTime]`（单位为秒）时间内选取随机时间回应一个响应报文，如果在随机时间内收到一个新的查询报文，则会根据两者时间的大小，选取小的一方刷新回应时间。
 
 最大响应时间有如下计算方式：
 - 当`MaxRespCode < 128`时，`MaxRespTime = MaxRespCode`。
@@ -85,25 +85,41 @@ HOST发送响应报文的时间
 
 最终得到最小响应报文时间为260秒。
 
+## 解题思路
+
+1. 遍历每个报文的响应：
+    - 如果最大响应时间字段值大于等于128，则提取`M`的位4-7，与0x10进行逻辑或操作，然后根据`M`的位0-2值左移。
+    - 计算响应时间`T+M`。
+    - 比较并得到最小响应时间。
+2. 返回结果，即最小的响应时间。    
+
 ## 解题代码
 
 ```python
-def calculate_resp_time(T, M):
-    # 如果M大于或等于128，则进行特定的位操作
-    if M >= 128:
-        # 提取M的位4-7，与0x10进行逻辑或操作，然后根据M的位0-2值左移
-        M = ((M>>3) & 0xF| 0x10) << (M & 0x7 +3)
+import math
 
-     # 返回T和新计算的M值的和
-    return T+M
+
+def solve_method(N, response_times):
+    min_value = math.inf
+    for [T, M] in response_times:
+        if M >= 128:
+            # 提取M的位4-7，与0x10进行逻辑或操作，然后根据M的位0-2值左移
+            M = ((M >> 3) & 0xF | 0x10) << (M & 0x7 + 3)
+        resp_time = T + M
+        if resp_time < min_value:
+            min_value = resp_time
+
+    return min_value
+
+
 if __name__ == '__main__':
+    response_times = [[0, 20],
+                      [1, 10],
+                      [8, 20]]
+    assert solve_method(3, response_times) == 11
 
-    C = int(input("Enter the number of test cases: "))
-    # 使用列表推导式，对C个测试用例调用calculate_resp_time函数，并找到最小响应时间
-    min_resp_time = min(calculate_resp_time(*map(int,input().split()))for _ in range (C))
-
-    print("Minimum response time:", min_resp_time)  # 打印最小响应时间
-    
-
+    response_times = [[0, 255],
+                      [200, 60]]
+    assert solve_method(2, response_times) == 260
 ```
 

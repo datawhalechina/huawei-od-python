@@ -8,14 +8,10 @@
 @desc: 050 高速公路充电技术
 """
 
-# 初始化距离和时间列表
-pd, pt = [], []
-# 初始化备忘录字典，用于存储已计算的解
-memo = {}
-
 
 # 动态规划函数
 def dp(pow, dis, N):
+    global pd, pt, memo
     # 如果当前功率大于或等于距离，则返回所需的时间
     if pow >= dis:
         return dis // 100
@@ -36,15 +32,29 @@ def dp(pow, dis, N):
     return memo[key]
 
 
-if __name__ == "__main__":
-    # 读取总距离和元素数量
-    D, n = map(int, input().split())
+def solve_method(D, N, sites):
+    global pd, pt, memo
+    # 初始化备忘录字典，用于存储已计算的解
+    memo = {}
     # 初始化距离和时间列表
-    pd = [0] * n
-    pt = [0] * n
+    pd = [0] * N
+    pt = [0] * N
     # 读取每个元素的距离和时间
-    for i in range(n):
-        pd[i], pt[i] = map(int, input().split())
+    for i in range(N):
+        pd[i], pt[i] = sites[i]
         pd[i] = D - pd[i]
     # 调用动态规划函数并打印结果
-    print(dp(1000, D, n))
+    result = dp(1000, D, N)
+    return result
+
+
+if __name__ == "__main__":
+    sites = [[300, 2],
+             [600, 1],
+             [1000, 0],
+             [1200, 0]]
+    assert solve_method(1500, 4, sites) == 16
+
+    sites = [[300, 0],
+             [600, 0]]
+    assert solve_method(800, 2, sites) == 8

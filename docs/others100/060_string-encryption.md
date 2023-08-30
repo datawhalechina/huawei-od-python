@@ -35,39 +35,33 @@ ya
 
 ## 解题思路
 
-该题的解题逻辑是：
-1. 定义一个列表a，包含数字1，2，4。
-2. 定义一个长度为50的列表offsets，初始值全部为0。
-3. 遍历offsets列表，如果i小于3，将a[i]赋值给offsets[i]；
-如果i>=3，则将offsets[i-1]+offsets[i-2]+offsets[i-3]的结果赋值给offsets [i]。
-4. 遍历strings列表，将每一个字符串转化为字符列表，并将其遍历，对于每一个字符，将其转化为ASCII码，再将其加上
-offsets[i]，模26，再加97，最后再将该ASCII码转化为字符。将每一次转换的字符拼接成字符串并输出。
-5. 输入字符串的数量n，再输入n个字符串，并将它们存入strings 列表中。最后调用solve _method()函数，
-传入strings列表作为参数。
+1. 按照题目中的公式初始化一个长度为50的列表`offsets`，用于表示偏移量。
+2. 遍历每一组测试数据：
+    - 遍历字符串中的每一个字母：
+      - 将字母按照顺序偏移相对应的`offsets`里面的偏移量，公式：`chars[i] = chr((ord(c) - 97 + offsets[i]) % 26 + 97)`。
+3. 返回结果列表。    
    
 ## 解题代码
 
 ```python
 def solve_method(strings):
-    a = [1, 2, 4]
     offsets = [0] * 50
-    for i in range(50):
-        if i < 3:
-            offsets[i] = a[i]
-        else:
-            offsets[i] = offsets[i - 1] + offsets[i - 2] + offsets[i - 3]
-    chars = list(strings)
-    for i in range(len(chars)):
-        c = chars[i]
-        chars[i] = chr((ord(c) - 97 + offsets[i]) % 26 + 97)
-    return ''.join(chars)
+    offsets[0:2] = [1, 2, 4]
+    for i in range(3, 50):
+        offsets[i] = offsets[i - 1] + offsets[i - 2] + offsets[i - 3]
+
+    result = []
+    for chars in strings:
+        chars = list(chars)
+        for i in range(len(chars)):
+            c = chars[i]
+            chars[i] = chr((ord(c) - 97 + offsets[i]) % 26 + 97)
+        result.append("".join(chars))
+    return result
 
 
 if __name__ == '__main__':
-    n = int(input().strip())
-    for i in range(n):
-        strings = input().strip()
-        res = solve_method(strings)
-        print(res)
+    assert solve_method(["xy"]) == ["ya"]
+    assert solve_method(["xyabcdef", "abcdefghijk"]) == ["yaeipbwi", "bdgkrdykbxu"]
 ```
 

@@ -44,10 +44,52 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 本题类似于三数之和，使用双指针求解。
+
+1. 将数组`M`按照商品价格从小到大排序。
+2. 检查是否有至少3个商品，且最便宜的3个商品的总价不超过`R`。   
+3. 使用双指针遍历数组：
+    - 左指针从当前元素的下一个位置开始。
+    - 右指针从数组的最后一个位置开始。
+    - 比较左右指针：
+        - 比较当前三个商品价格之和：
+            - 如果小于购买资金的额度，则比较得到尽可能花费的最大资金额，左指针向右移，增大和数。
+            - 如果大于总格数，则右指针向左移，减小和数。
+4. 返回结果，即尽可能花费的最大资金额。  
 
 ## 解题代码
+
+```python
+def solve_method(M, R):
+    """
+    :param M: 商品价格数组
+    :param R: 购买资金的额度
+    """
+    # 按照商品价格从小到大排序
+    M.sort()
+
+    # 检查是否有至少3个商品，且最便宜的3个商品的总价不超过R
+    if len(M) < 3 or sum(M[:3]) > R:
+        return -1
+
+    max_price = -1
+    for i in range(len(M) - 2):
+        # 左指针从当前元素的下一个位置开始
+        left = i + 1
+        # 右指针从数组的最后一个位置开始
+        right = len(M) - 1
+        while left < right:
+            current_sum = M[i] + M[left] + M[right]
+            if max_price < current_sum <= R:
+                max_price = current_sum
+                left += 1
+            else:
+                right -= 1
+
+    return max_price
+
+
+if __name__ == '__main__':
+    assert solve_method([23, 26, 36, 27], 78) == 76
+    assert solve_method([23, 30, 40], 26) == -1
+```

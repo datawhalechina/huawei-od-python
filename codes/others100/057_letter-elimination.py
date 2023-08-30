@@ -9,22 +9,26 @@
 """
 
 
-def solve_method(m_str):
-    # 使用列表推导式仅保留字母字符
-    linked_list = [c for c in m_str if c.isalpha()]
+def solve_method(chars):
+    # 仅保留字母
+    lst = [c for c in chars if c.isalpha()]
+
+    if len(lst) == 0:
+        # 如果列表中没有字母，则是异常输入，返回0
+        return 0
 
     i = 0
-    # 通过比较相邻字符并删除重复项来迭代列表
-    while linked_list < len(linked_list):
-        if linked_list[i] == linked_list[i + 1]:
-            del linked_list[i:i + 2]
+    while i < len(lst) - 1:
+        if lst[i] == lst[i + 1]:
+            # 当前字符与后一个字符相同时，则删除重复项
+            del lst[i:i + 2]
+            # 位置倒退一个
             i = max(0, i - 1)
         else:
             i += 1
-    return len(linked_list)
+    return len(lst)
 
 
 if __name__ == '__main__':
-    # 去掉首尾空字符串并且输入
-    m_str = input().strip()
-    print(solve_method(m_str))
+    assert solve_method("gg") == 0
+    assert solve_method("mMbccbc") == 3

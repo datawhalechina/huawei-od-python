@@ -63,35 +63,39 @@ mMbccbc
 
 ## 解题思路
 
-**基本思路：**
-
-1. 在一个while死循环中，先记录当前s的长度
-2. 遍历s遇到相邻就删除，记录删除后的s的长度
-3. 如果s当前长度和之前的长度相同，则退出while循环
-4. 否则继续while循环而继续删除下一个相邻字母
+1. 对字符串列表进行过滤，仅保留字母。
+2. 如果列表中没有字母，则是异常输入，返回0。
+3. 使用`while`循环遍历字符串列表：
+   - 如果当前字符与后一个字符相同时，则删除重复项，遍历的当前位置倒退一格。
+   - 否则，继续遍历下一个字符。    
+4. 返回结果，即剩余字符串列表的长度。
 
 ## 解题代码
 
 ```python
-def solve_method(m_str):
-    # 使用列表推导式仅保留字母字符
-    linked_list = [c for c in m_str if c.isalpha()]
+def solve_method(chars):
+    # 仅保留字母
+    lst = [c for c in chars if c.isalpha()]
+
+    if len(lst) == 0:
+        # 如果列表中没有字母，则是异常输入，返回0
+        return 0
 
     i = 0
-    # 通过比较相邻字符并删除重复项来迭代列表
-    while linked_list < len(linked_list):
-        if linked_list[i] == linked_list[i + 1]:
-            del linked_list[i:i + 2]
+    while i < len(lst) - 1:
+        if lst[i] == lst[i + 1]:
+            # 当前字符与后一个字符相同时，则删除重复项
+            del lst[i:i + 2]
+            # 位置倒退一个
             i = max(0, i - 1)
         else:
             i += 1
-    return len(linked_list)
+    return len(lst)
 
 
 if __name__ == '__main__':
-    # 去掉首尾空字符串并且输入
-    m_str = input().strip()
-    print(solve_method(m_str))
+    assert solve_method("gg") == 0
+    assert solve_method("mMbccbc") == 3
 ```
 
 

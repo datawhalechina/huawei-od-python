@@ -56,55 +56,32 @@
   
 ## 解题思路
 
-**编码思路**
-
-该算法的主要思路是利用两层循环分别遍历整个数组，判断当前元素之后是否存在比它更大的数，如果存在，则将它的下标记录在一个列表中，否则将0记录在列表中。最后，输出列表中的每个元素即可。
-
-**核心知识点**
-
-循环语句；
-
-·列表（LinkedList）；
-
-·列表的添加、删除和访问；
-
-·列表元素的遍历；
-
-·列表的切片操作；
-
-·输入输出（包括 print函数、input函数和格式化输出）；
+1. 遍历每一个小朋友的身高：
+    - 如果将找到的第一个更高的身高小朋友，则将该位置存入列表中。
+    - 否则，将0存入列表中。
+2. 返回结果列表。    
 
 ## 解题代码
 
 ```python
-def solve_method(n, ints):
-    # 如果n为0，则直接打印0并返回
-    if n == 0:
-        print(0)
-        return
+def solve_method(n, heights):
+    result = []
 
-    # 使用列表推导式找到每个元素右侧第一个大于它的元素的位置
-    # 如果没有找到，则位置为0
-    res = [next((j for j in range(i + 1, n) if ints[j] > ints[i]), 0) for i in range(n)]
-    # for i in range(n):
-    #     pos=0
-    #     for j in range(i+1, n):
-    #         if ints[j] > ints[i]:
-    #             pos = j
-    #             break
-    #     res.append(pos)
+    for i in range(n):
+        pos = 0
+        for j in range(i + 1, n):
+            if heights[j] > heights[i]:
+                # 将找到的第一个更高的身高小朋友，则将该位置存入列表中
+                pos = j
+                break
 
-    # 打印结果
-    print(*res)
+        result.append(pos)
+
+    return result
 
 
 if __name__ == "__main__":
-    # 从用户输入中读取n和ints
-    n = int(input("Enter the number of elements: "))
-    ints = list(map(int, input("Enter the elements separated by space: ").split()))
-
-    # 调用解决方案方法
-    solve_method(n, ints)
-
+    assert solve_method(2, [100, 95]) == [0, 0]
+    assert solve_method(8, [123, 124, 125, 121, 119, 122, 126, 123]) == [1, 2, 6, 5, 5, 6, 0, 0]
 ```
 
