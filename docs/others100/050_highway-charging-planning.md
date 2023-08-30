@@ -60,48 +60,51 @@
 
 最佳方案是：不进任何休息站充电，800公里的行程耗时8小时。
 
+## 解题思路
+
+1. 计算行驶时间`driving_time`。
+2. 当要行驶的公里数大于1000公里时，需要充电：
+    - 得到当前1000公里内的充电站，并按照充电排队时间从小到大排序。
+    - 在最少排队时间的充电站进行充电，并充电1小时，累加到总休息时间`total_rest_time`中。
+    - 记录当前已行驶公里路程`pos`。
+3. 计算总的行驶时间`total_time`。
+4. 返回结果，即行驶全程的耗时。
+
 ## 解题代码
 
 ```python
-# 初始化距离和时间列表
-pd, pt = [], []
-# 初始化备忘录字典，用于存储已计算的解
-memo = {}
+def solve_method(D, N, sites):
+    # 已行驶公里路程
+    pos = 0
+    # 行驶时间
+    driving_time = D // 100
+    # 休息时间
+    total_rest_time = 0
+    while D > 1000:
+        # 当前1000公里内的充电站
+        _sites = [x for x in sites if pos <= x[0] <= pos + 1000]
+        # 将充电站按照充电排队时间从小到大排序
+        _sites = sorted(_sites, key=lambda x: x[1])
+        # 进站排队充电
+        pos, rest_time = _sites[0]
+        # 充电时间
+        rest_time += 1
+        total_rest_time += rest_time
+        D -= pos
 
-
-# 动态规划函数
-def dp(pow, dis, N):
-    # 如果当前功率大于或等于距离，则返回所需的时间
-    if pow >= dis:
-        return dis // 100
-    key = f"{pow},{dis}"
-    if key in memo:
-        return memo[key]
-    res = float('inf')
-    # 遍历所有可能的选择
-    for i in range(N):
-        # 跳过不合适的选择
-        if dis - pow > pd[i] or pd[i] == dis or dp(1000, pd[i], N) == -1:
-            continue
-        # 计算当前选择的结果，并与之前的结果进行比较
-        res = min(res, (dis - pd[i] // 100 + pt[i] + 1 + dp(1000, pd[i], N)))
-
-    # 如果没有找到解，则返回-1
-    memo[key] = -1 if res == float('inf') else res
-    return memo[key]
+    total_time = driving_time + total_rest_time
+    return total_time
 
 
 if __name__ == "__main__":
-    # 读取总距离和元素数量
-    D, n = map(int, input().split())
-    # 初始化距离和时间列表
-    pd = [0] * n
-    pt = [0] * n
-    # 读取每个元素的距离和时间
-    for i in range(n):
-        pd[i], pt[i] = map(int, input().split())
-        pd[i] = D - pd[i]
-    # 调用动态规划函数并打印结果
-    print(dp(1000, D, n))
+    sites = [[300, 2],
+             [600, 1],
+             [1000, 0],
+             [1200, 0]]
+    assert solve_method(1500, 4, sites) == 16
+
+    sites = [[300, 0],
+             [600, 0]]
+    assert solve_method(800, 2, sites) == 8
 ```
 

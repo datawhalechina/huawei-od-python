@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-@author: Kaiwen Zuo
+@author: HuRuiFeng
 @file: 050_highway-charging-planning.py
 @time: 2023/08/11 0:47
 @project: huawei-od-python
@@ -9,43 +9,27 @@
 """
 
 
-# 动态规划函数
-def dp(pow, dis, N):
-    global pd, pt, memo
-    # 如果当前功率大于或等于距离，则返回所需的时间
-    if pow >= dis:
-        return dis // 100
-    key = f"{pow},{dis}"
-    if key in memo:
-        return memo[key]
-    res = float('inf')
-    # 遍历所有可能的选择
-    for i in range(N):
-        # 跳过不合适的选择
-        if dis - pow > pd[i] or pd[i] == dis or dp(1000, pd[i], N) == -1:
-            continue
-        # 计算当前选择的结果，并与之前的结果进行比较
-        res = min(res, (dis - pd[i] // 100 + pt[i] + 1 + dp(1000, pd[i], N)))
-
-    # 如果没有找到解，则返回-1
-    memo[key] = -1 if res == float('inf') else res
-    return memo[key]
-
-
 def solve_method(D, N, sites):
-    global pd, pt, memo
-    # 初始化备忘录字典，用于存储已计算的解
-    memo = {}
-    # 初始化距离和时间列表
-    pd = [0] * N
-    pt = [0] * N
-    # 读取每个元素的距离和时间
-    for i in range(N):
-        pd[i], pt[i] = sites[i]
-        pd[i] = D - pd[i]
-    # 调用动态规划函数并打印结果
-    result = dp(1000, D, N)
-    return result
+    # 已行驶公里路程
+    pos = 0
+    # 行驶时间
+    driving_time = D // 100
+    # 休息时间
+    total_rest_time = 0
+    while D > 1000:
+        # 当前1000公里内的充电站
+        _sites = [x for x in sites if pos <= x[0] <= pos + 1000]
+        # 将充电站按照充电排队时间从小到大排序
+        _sites = sorted(_sites, key=lambda x: x[1])
+        # 进站排队充电
+        pos, rest_time = _sites[0]
+        # 充电时间
+        rest_time += 1
+        total_rest_time += rest_time
+        D -= pos
+
+    total_time = driving_time + total_rest_time
+    return total_time
 
 
 if __name__ == "__main__":
