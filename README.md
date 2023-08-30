@@ -13,7 +13,7 @@
 
 ### 在线阅读地址
 
-在线阅读地址：https://relph1119.github.io/huawei-od-python
+在线阅读地址：https://datawhalechina.github.io/huawei-od-python
 
 ### 环境安装
 
@@ -40,7 +40,7 @@ docsify serve ./docs
 | :-----: | :--------------------: | :------: |
 | 001~020 |   陈春龙、胡锐锋    |  已完成  |
 | 021~040 |  陈希、胡锐锋   |  已完成  |
-| 041~060 |    左凯文、胡锐锋 |  待审核  |
+| 041~060 |    左凯文、胡锐锋 |  已完成  |
 | 061~080 | 张超、胡锐锋  |  已完成  |
 | 081~100 | 胡锐锋 |  已完成  |
 | 101~120 |   毛瑞盈、胡锐锋    |  已完成  |
@@ -70,20 +70,20 @@ docs-----------------------------------------------习题解答
 **核心贡献者**
 
 - [胡锐锋-项目负责人](https://github.com/Relph1119) （Datawhale成员-华东交通大学-系统架构设计师）
-- [周理璇](https://github.com/Aomferni) （Datawhale成员-电子科技大学-Linux C 软件开发工程师）
-- [李洪荣](https://github.com/duqing12) （东华理工大学-数据科学与大数据技术）
-- [袁畅](https://github.com/voyagebio) （Datawhale意向成员-河海大学-数据分析）
-- [李宇鸿](https://github.com/PeakWalkerLYH) （英国利兹大学-软件开发工程师）
-- [冯亚林](https://github.com/Westwood-Lin) （Datawhale意向成员-南京大学-AI安全）
 - [李碧涵](https://github.com/libihan) （Datawhale成员-东南大学-软件开发工程师）
-- [张超](https://github.com/BITprogramMan) （中国科学技术大学-nlp算法工程师）
+- [周理璇](https://github.com/Aomferni) （Datawhale成员-电子科技大学-Linux C 软件开发工程师）
+- [李宇鸿](https://github.com/PeakWalkerLYH) （英国利兹大学-软件开发工程师）
 - [陈春龙](https://https://github.com/D-Dragon0318) （广东工业大学-计算机科学与技术）
 - [李昌盛](https://github.com/jackielics) （Datawhale意向成员-杭州电子科技大学-软件开发）
 - [陈希](https://github.com/CompassNull) （东莞理工学院-数据分析）
 - [毛瑞盈](https://github.com/catcooc/) （南京大学-凝聚态物理）
+- [冯亚林](https://github.com/Westwood-Lin) （Datawhale意向成员-南京大学-AI安全）
+- [张超](https://github.com/BITprogramMan) （中国科学技术大学-nlp算法工程师）
+- [袁畅](https://github.com/voyagebio) （Datawhale意向成员-河海大学-数据分析）
 - [左凯文](https://github.com/Regankevin) （Datawhale意向成员-华威大学-计算机科学）
-    
-**其他**
+- [李洪荣](https://github.com/duqing12) （东华理工大学-数据科学与大数据技术）
+
+  **其他**
 
 特别感谢 [@Sm1les](https://github.com/Sm1les)、[@LSGOMYP](https://github.com/LSGOMYP) 对本项目的帮助与支持。
 
@@ -94,6 +94,7 @@ docs-----------------------------------------------习题解答
 【3】 [Carl的《代码随想录》](https://programmercarl.com/)  
 
 ## 关注我们
+
 <div align=center>
 <p>扫描下方二维码关注公众号：Datawhale</p>
 <img src="images/qrcode.jpeg" width = "180" height = "180">
