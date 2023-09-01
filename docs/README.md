@@ -44,8 +44,8 @@ docs-----------------------------------------------习题解答
 
 ## 推荐资料
 
-【1】 [Datawhale的《LeetCode算法笔记》](https://github.com/datawhalechina/leetcode-notes)  
-【2】 [Datawhale的《聪明办法学Python（第二版）》](https://github.com/datawhalechina/learn-python-the-smart-way-v2)  
+【1】 [Datawhale的《聪明办法学Python（第二版）》](https://github.com/datawhalechina/learn-python-the-smart-way-v2)   
+【2】 [Datawhale的《LeetCode算法笔记》](https://github.com/datawhalechina/leetcode-notes)   
 【3】 [Carl的《代码随想录》](https://programmercarl.com/)  
 
 ## 关注我们
