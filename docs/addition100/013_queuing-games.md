@@ -50,10 +50,29 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 初始化不满程度值`satisfied_value`为0。
+2. 遍历所有学生：
+   - 如果该学生不是刺头，计算比能力值高的个数，累加不满程度值。
+3. 如果不满程度值大于最大不满程度，则返回1，表示老师无法继续教这个班级。
+4. 否则，返回0，表示老师可以继续教这个班级。
 
 ## 解题代码
+
+```python
+def solve_method(k, prickers_pos, students):
+    satisfied_value = 0
+
+    for i in range(len(students)):
+        if i not in prickers_pos:
+            satisfied_value += sum([1 for j in range(0, i) if students[j] > students[i]])
+
+    if satisfied_value > k:
+        return 1
+    return 0
+
+
+if __name__ == '__main__':
+    prickers_pos = [0, 1]
+    students = [1810, 1809, 1801, 1802]
+    assert solve_method(3, prickers_pos, students) == 1
+```

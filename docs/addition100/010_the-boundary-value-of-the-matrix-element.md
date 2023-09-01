@@ -39,10 +39,28 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 初始化结果列表，设置为矩阵的第一个元素。
+2. 从第二个元素开始，遍历矩阵：
+   - 得到每列元素的最大值，存入结果列表中。
+3. 将结果列表从小到大排序。
+4. 返回结果列表中的第一个元素，即每列元素的最大值的最小值。
 
 ## 解题代码
+
+```python
+def solve_method(arr):
+    result_lst = arr[0]
+    for lst in arr[1:]:
+        result_lst = [max(x, y) for x, y in zip(result_lst, lst)]
+
+    result_lst.sort()
+    return result_lst[0]
+
+
+if __name__ == '__main__':
+    arr = [[1, 2], [3, 4]]
+    assert solve_method(arr) == 3
+
+    arr = [[1, 2]]
+    assert solve_method(arr) == 1
+```

@@ -41,10 +41,34 @@ abcaybec
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 使用双指针法求解。
+
+1. 初始化双指针，分别指向`target`的尾元素、`source`的尾元素。
+2. 由于获取下标较大的位置，则从后向前遍历：
+    - 当两个指针指向的字母相同时，则指针向左移动，继续遍历。
+    - 当遍历得到第一个子序列，则可以返回当前下标。
+3. 如果找不到子序列，则返回-1。    
 
 ## 解题代码
+
+```python
+def solve_method(target, source):
+    t_pos = len(target) - 1
+    s_pos = len(source) - 1
+
+    # 由于获取下标较大的位置，则从后向前遍历
+    while t_pos >= 0 and s_pos >= 0:
+        if target[t_pos] == source[s_pos]:
+            t_pos -= 1
+            if t_pos < 0:
+                # 当遍历得到第一个子序列，则可以返回当前下标
+                return s_pos
+
+        s_pos -= 1
+
+    return -1
+
+
+if __name__ == '__main__':
+    assert solve_method("abc", "abcaybec") == 3
+```

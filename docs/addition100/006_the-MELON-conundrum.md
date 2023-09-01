@@ -58,10 +58,69 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 使用回溯法求解。
+
+1. 如果数组之和不能整除2，说明不能均分，返回-1。
+2. 使用回溯法，找到子序列的和等于数组之和的一半`target_sum`：
+    - 确定参数：索引`index`、子序列之和`curr_sum`。
+    - 终止条件：
+        - 如果子序列之和等于数组之和的一半，并且另一个子序列也同样满足，则将当前子序列存入结果列表中。
+        - 如果子序列之和超过数组之和的一半，或已经遍历完，则直接返回。
+    - 递归处理，遍历所有索引：
+        - 将当前元素加入子序列中。
+        - 递归索引值，并将子序列之和累加当前元素值。
+        - 回溯，在子序列中删除当前元素。
+3. 返回结果列表中子序列最短的长度值。
 
 ## 解题代码
+
+```python
+def remove_elements(arr, sub_arr):
+    result_array = arr.copy()
+
+    for elem in sub_arr:
+        if elem in result_array:
+            result_array.remove(elem)
+
+    return result_array
+
+
+def solve_method(n, nums):
+    total = sum(nums)
+    if total % 2 != 0:
+        return -1
+
+    target_sum = total // 2
+    sub_lst = []
+    result = []
+
+    def backtrack(index, curr_sum):
+        if curr_sum == target_sum:
+            # 得到另一个子序列
+            other_lst = remove_elements(nums, sub_lst[:])
+            # 如果另一个子序列之和也等于数组之和的一半，则存入结果列表中
+            if target_sum == sum(other_lst) and sub_lst[:] not in result:
+                result.append(sub_lst[:])
+                return
+        if curr_sum > target_sum or index >= n:
+            return
+
+        for i in range(index, n):
+            sub_lst.append(nums[i])
+            backtrack(i + 1, curr_sum + nums[i])
+            sub_lst.pop()
+
+    nums.sort()
+    backtrack(0, 0)
+
+    if not result:
+        return -1
+
+    return min(len(x) for x in result)
+
+
+if __name__ == '__main__':
+    assert solve_method(4, [1, 1, 2, 2]) == 2
+    assert solve_method(10, [1, 1, 1, 1, 1, 9, 8, 3, 7, 10]) == 3
+    assert solve_method(4, [1, 5, 5, 8]) == -1
+```

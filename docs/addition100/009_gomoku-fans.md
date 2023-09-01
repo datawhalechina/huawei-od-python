@@ -84,10 +84,60 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. 遍历每一个空闲的位置：
+    - 计算左边连续是当前棋子颜色的个数`left_count`。
+    - 计算右边连续是当前棋子颜色的个数`right_count`。
+    - 如果总长度小于等于5，满足五子棋约束，则将当前棋子位置和总长度存入结果列表中。
+2. 将结果列表按照长度从大到小，与中间的距离从小到大排序。
+3. 返回结果值，即结果列表中第一个值的第一个元素（棋子位置）。   
 
 ## 解题代码
+
+```python
+def solve_method(curr_piece, pieces):
+    result = []
+
+    def get_left_count(index):
+        left = index - 1
+        count = 0
+        while left > -1 and pieces[left] == curr_piece:
+            count += 1
+            left -= 1
+
+        return count
+
+    def get_right_count(index):
+        right = index + 1
+        count = 0
+        while right < len(pieces) and pieces[right] == curr_piece:
+            count += 1
+            right += 1
+
+        return count
+
+    for i, piece in enumerate(pieces):
+        if piece != 0:
+            continue
+
+        left_count = get_left_count(i)
+        right_count = get_right_count(i)
+        total_count = left_count + right_count
+        if total_count <= 5:
+            result.append([i, total_count])
+    
+    # 按照长度从大到小，与中间的距离从小到大排序
+    result.sort(key=lambda x: (-x[1], abs(x[0] - len(pieces) // 2)))
+
+    return result[0][0]
+
+
+if __name__ == '__main__':
+    pieces = [-1, 0, 1, 1, 1, 0, 1, 0, 1, -1, 1]
+    assert solve_method(1, pieces) == 5
+
+    pieces = [-1, 0, 1, 1, 1, 0, 1, 0, 1, -1, 1]
+    assert solve_method(-1, pieces) == 1
+
+    pieces = [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0]
+    assert solve_method(1, pieces) == 5
+```
