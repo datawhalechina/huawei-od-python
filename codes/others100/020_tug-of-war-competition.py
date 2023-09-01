@@ -5,7 +5,7 @@
 @file: 007_tug-of-war-competition.py
 @time: 2023/9/1 11:37
 @project: huawei-od-python
-@desc: 007 拔河比赛
+@desc: 020 拔河比赛
 """
 
 

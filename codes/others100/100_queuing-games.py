@@ -5,7 +5,7 @@
 @file: 013_queuing-games.py
 @time: 2023/9/1 18:25
 @project: huawei-od-python
-@desc: 013 排队游戏
+@desc: 100 排队游戏
 """
 
 

@@ -5,7 +5,7 @@
 @file: 012_determine-the-string-subsequence.py
 @time: 2023/9/1 18:11
 @project: huawei-od-python
-@desc: 012 判断字符串子序列
+@desc: 065 判断字符串子序列
 """
 
 

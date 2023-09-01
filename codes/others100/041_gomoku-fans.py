@@ -5,7 +5,7 @@
 @file: 009_gomoku-fans.py
 @time: 2023/9/1 15:05
 @project: huawei-od-python
-@desc: 009 五子棋迷
+@desc: 041 五子棋迷
 """
 
 

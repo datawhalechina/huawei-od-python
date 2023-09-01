@@ -5,7 +5,7 @@
 @file: 006_the-MELON-conundrum.py
 @time: 2023/9/1 8:54
 @project: huawei-od-python
-@desc: 006 MELON的难题
+@desc: 019 MELON的难题
 """
 
 
