@@ -56,10 +56,42 @@ abcabc
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 使用双指针
+1. 初始化两个指针`i`和`j`分别指向字符串的第二个字符和倒数第二个字符（字符串长度至少为5，说明子串权重需要大于0，所以`i`和`j`初始化时指向正数和倒数第二个字符）；
+2. 初始化阶段，`summ1`的取值为第一个字符的`ASCII`码值，`summ3`的取值为倒数第一个字符的`ASCII`码值，`summ2`的取值为整个字符串的`ASCII`码值之和减去`summ1`和`summ2`再减去分割点；
+3. 每次循环中，计算出以`i`和`j`分割字符串后三个子串的权重
+    - 若权重相等，找到满足条件的分割点
+    - 若第一个子串的权重大于第三个子串的权重，需要左移指针`j`增大第三个子串的权重（更新`summ3`的取值）
+    - 若第一个子串的权重小于第三个子串的权重，需要右移指针`i`增大第一个子串的权重（更新`summ1`的取值）
+    - 若第一个子串的权重等于第三个子串的权重，但和第二个子串权重不等，需同时左移指针`j`和右移指针`i`
+4. 如果指针`j`移动到指针`i`时，仍未找到满足条件的两个分割点，那么输出`0,0`。
 
 ## 解题代码
+```python
+def solve_method(s):
+    n = len(s)
+    i, j = 1, n - 2
+    summ = sum(ord(c) for c in s)
+    summ1 = ord(s[0])
+    summ3 = ord(s[n - 1])
+    while i < j:
+        summ2 = summ - summ1 - summ3 - ord(s[i]) - ord(s[j])
+        if summ1 == summ2 == summ3:
+            return f"{i},{j}"
+        if summ1 > summ3:
+            summ3 += ord(s[j])
+            j -= 1
+        elif summ1 < summ3:
+            summ1 += ord(s[i])
+            i += 1
+        else:
+            summ1 += ord(s[i])
+            summ3 += ord(s[j])
+            i += 1
+            j -= 1
+    return "0,0"
+
+if __name__ == '__main__':
+    assert solve_method("acdbbbca") == "2,5"
+    assert solve_method("abcabc") == "0,0"
+```
