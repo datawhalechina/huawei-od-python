@@ -50,10 +50,38 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+**基本思路：** 模拟算法
+1. 依次遍历各个打印任务
+2. 如果该任务是当前优先级最高的，直接打印即可
+3. 如果不是当前优先级最高的，加入队尾
+> 判定是否当前优先级最高：可以提前将所有任务升序，用`max_idx`标记当前优先级最高的任务
 
 ## 解题代码
+```python
+def solve_method(s):
+    tasks = list(map(int, s.split(',')))
+    task_index = [(task, idx) for idx, task in enumerate(tasks)]
+    n = len(tasks)
+
+    # 标记当前优先级最高的任务
+    tasks.sort()
+    max_idx = n -1
+    # 标记打印顺序
+    res = [0] * n
+    printIdx = 0
+    while task_index:
+        task, idx = task_index.pop(0)
+        # 是优先级最高的任务
+        if task == tasks[max_idx]:
+            res[idx] = printIdx
+            max_idx -= 1
+            printIdx += 1
+        # 不是优先级最高的任务，加入队尾
+        else:
+            task_index.append((task, idx))
+    return ",".join(map(str, res))
+
+if __name__ == '__main__':
+    assert solve_method("9,3,5") == "0,2,1"
+    assert solve_method("1,2,2") == "2,0,1"
+```
