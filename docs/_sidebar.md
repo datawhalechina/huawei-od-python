@@ -97,6 +97,11 @@
         * [044 解压缩算法](questions200/044_decompression-algorithm.md) 
         * [045 计算网络信号](questions200/045_calculate-network-signal.md) 
         * [046 递增字符串](questions200/046_increment-string.md) 
+        * [047 划分字符串](questions200/047_divide-the-string.md) 
+        * [048 可以组成网络的服务器](questions200/048_servers-that-can-make-up-a-network.md) 
+        * [049 增强的strstr](questions200/049_enhanced-strstr.md) 
+        * [050 购物](questions200/050_shopping.md) 
+        * [051 打印任务排序](questions200/051_print-task-sequencing.md) 
     * 其他100分题
         * [001 AI识别面板](others100/001_AI-recognition-panel.md)
         * [002 GPU调度](others100/002_GPU-scheduling.md)

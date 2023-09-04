@@ -1,4 +1,4 @@
-# 005 打印任务排序
+# 051 打印任务排序
 
 ## 题目描述
 
@@ -50,22 +50,22 @@
 
 ## 解题思路
 
-**基本思路：** 模拟算法
-1. 依次遍历各个打印任务
-2. 如果该任务是当前优先级最高的，直接打印即可
-3. 如果不是当前优先级最高的，加入队尾
-> 判定是否当前优先级最高：可以提前将所有任务升序，用`max_idx`标记当前优先级最高的任务
+1. 构建优先级序号列表，每个元素有两个值，分别是任务优先级、任务序号。
+2. 判定是否当前优先级最高：可以提前将所有任务升序，用`max_idx`标记当前优先级最高的任务   
+3. 依次遍历各个打印任务：
+    - 如果该任务是当前优先级最高的，存入结果列表。
+    - 如果不是当前优先级最高的，加入队尾。
+4. 返回结果列表。
 
 ## 解题代码
 ```python
-def solve_method(s):
-    tasks = list(map(int, s.split(',')))
+def solve_method(tasks):
     task_index = [(task, idx) for idx, task in enumerate(tasks)]
     n = len(tasks)
 
     # 标记当前优先级最高的任务
     tasks.sort()
-    max_idx = n -1
+    max_idx = n - 1
     # 标记打印顺序
     res = [0] * n
     printIdx = 0
@@ -79,9 +79,10 @@ def solve_method(s):
         # 不是优先级最高的任务，加入队尾
         else:
             task_index.append((task, idx))
-    return ",".join(map(str, res))
+    return res
+
 
 if __name__ == '__main__':
-    assert solve_method("9,3,5") == "0,2,1"
-    assert solve_method("1,2,2") == "2,0,1"
+    assert solve_method([9, 3, 5]) == [0, 2, 1]
+    assert solve_method([1, 2, 2]) == [2, 0, 1]
 ```

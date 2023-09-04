@@ -1,4 +1,4 @@
-# 002 可以组成网络的服务器
+# 048 可以组成网络的服务器
 
 ## 题目描述
 
@@ -36,34 +36,35 @@
 
 ## 解题思路
 
-**基本思路：** DFS
+**基本思路：** 使用深度优先搜索DFS求解。
 
-1. 枚举矩阵中的每个位置，以该位置为起点进行深度优先搜索，并更新最大连通块大小；
-2. 如果当前位置超出矩阵边界或者当前位置没有服务器，则返回当前连通块大小；
-3. 如果当前位置有服务器，则将其状态改为`0`，表示已经搜索过；
-4. 分别向上、下、左、右四个方向递归搜索，并累加连通块大小；
-5. 返回结果。
+1. 使用深度优先搜索，遍历矩阵中的每一个元素：
+    - 确定参数：元素的坐标`i`和`j`，联通的服务器个数`count`。
+    - 终止条件：如果超出边界，或者该位置为0，则返回服务器个数。
+    - 递归处理：向上下左右四个方向递归搜索，并累加连通区域的大小。
+2. 更新最大的连通区域的大小，并返回结果。    
 
 ## 解题代码
 ```python
 def solve_method(n, m, servers):
+    def dfs(i, j, count):
+        if i < 0 or i >= n or j < 0 or j >= m or servers[i][j] == 0:
+            return count
+        count += 1
+        # 避免重复计算
+        servers[i][j] = 0
+        count = dfs(i + 1, j, count)
+        count = dfs(i - 1, j, count)
+        count = dfs(i, j + 1, count)
+        count = dfs(i, j - 1, count)
+        return count
+    
     max_count = 0
     for i in range(n):
         for j in range(m):
-            max_count = max(max_count, dfs(i, j, n, m, servers, 0))
+            max_count = max(max_count, dfs(i, j, 0))
     return max_count
 
-def dfs(i, j, n, m, servers, count):
-    if i < 0 or i >= n or j < 0 or j >= m or servers[i][j] == 0:
-        return count
-    count += 1
-    # 避免重复计算
-    servers[i][j] = 0
-    count = dfs(i + 1, j, n, m, servers, count)
-    count = dfs(i - 1, j, n, m, servers, count)
-    count = dfs(i, j + 1, n, m, servers, count)
-    count = dfs(i, j - 1, n, m, servers, count)
-    return count
 
 if __name__ == '__main__':
     # n, m = map(int, input().split())
@@ -71,10 +72,12 @@ if __name__ == '__main__':
     # for _ in range(n):
     #     servers.append(list(map(int, input().split())))
 
-    servers1 = [[1, 0],
+    servers = [[1, 0],
                [1, 1]]
-    assert solve_method(2, 2, servers1) == 3
-    servers2 = [[1, 1],
-               [1, 0]]
-    assert solve_method(2, 2, servers2) == 3
+    assert solve_method(2, 2, servers) == 3
+
+    servers = [[1, 0, 0],
+               [1, 0, 1],
+               [0, 1, 1]]
+    assert solve_method(3, 3, servers) == 3
 ```

@@ -1,4 +1,4 @@
-# 003 增强的strstr
+# 049 增强的strstr
 
 ## 题目描述
 
@@ -58,17 +58,21 @@ b[cd]d[eg]
 
 ## 解题思路
 
-**基本思路：**
+**基本思路：** 使用`re`包的`search`函数解题。
 
-采用Python内置的正则表达式模块`re`，通过`re.search`函数在`haystack`中查找`needle`，并返回一个 `MatchObject`对象。如果`MatchObject`存在，则返回其起始位置`match.start()`，否则返回`-1`
+1. 使用`re.search`在`haystack`中查找`needle`。
+2. 如果找到，则使用`start()`方法，返回首次查到的字符串位置。
+3. 如果没有找到，则返回-1。
 
 ## 解题代码
 ```python
 import re
 
+
 def solve_method(haystack, needle):
     match = re.search(needle, haystack)
     return match.start() if match else -1
+
 
 if __name__ == '__main__':
     assert solve_method("abcd", "b[cd]") == 1

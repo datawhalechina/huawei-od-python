@@ -2,20 +2,24 @@
 # encoding: utf-8
 """
 @author: Libihan
-@file: 004_shopping.py
+@file: 050_shopping.py
 @time: 2023/9/3 23:18
 @project: huawei-od-python
-@desc: 004 购物
+@desc: 050 购物
 """
 import heapq
+
 
 class Item:
     def __init__(self, cur_sum, next_idx, next_sum):
         self.cur_sum = cur_sum
         self.next_idx = next_idx
         self.next_sum = next_sum
+
     def __lt__(self, other):
+        # 按照总和排序
         return self.next_sum < other.next_sum
+
 
 def solve_method(n, k, nums):
     nums.sort()
@@ -28,15 +32,17 @@ def solve_method(n, k, nums):
         cur_item = heapq.heappop(pq)
         res.append(cur_item.next_sum)
         k -= 1
-        # 如果当前组合模型还有可合入的下一个元素，则说明可以基于当前组合模型产生一个新组合
+        # 如果当前组合还有可合入的下一个元素，则说明可以基于当前组合产生一个新组合
         if cur_item.next_idx + 1 < n:
-            # 基于当前组合模型产生的新组合，也是本轮最小的组合
-            heapq.heappush(pq, Item(cur_item.next_sum, cur_item.next_idx + 1, cur_item.next_sum + nums[cur_item.next_idx + 1]))
-            # 当前组合需要更新`next_idx`后，重新加入优先队列
+            # 基于当前组合产生的新组合，也是本轮最小的组合
+            heapq.heappush(pq, Item(cur_item.next_sum, cur_item.next_idx + 1,
+                                    cur_item.next_sum + nums[cur_item.next_idx + 1]))
+            # 当前组合需要更新next_idx后，重新加入优先队列
             cur_item.next_idx += 1
             cur_item.next_sum = cur_item.cur_sum + nums[cur_item.next_idx]
             heapq.heappush(pq, cur_item)
     return res
+
 
 if __name__ == '__main__':
     # n, k = map(int, input().split())
