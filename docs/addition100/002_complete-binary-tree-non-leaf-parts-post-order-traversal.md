@@ -41,10 +41,61 @@
 
 ## 解题思路
 
-**基本思路：** xxxxx（注：如果存在基本思路，可编写）
-1. xxxxx
-2. xxxxx
-3. xxxxx
-4. 返回结果。
+1. **函数定义**：
+   - `post_order_non_leaf`: 这个函数是递归函数，负责执行后序遍历并收集非叶子节点的索引。
+   - `main`: 这个函数负责处理用户输入和输出。
 
+2. **后序遍历和非叶子节点的检测**：
+   - **递归基准条件**：如果当前节点的索引超过了列表的长度，则返回一个空列表，这标志着递归的基本情况。
+   - **计算子节点的索引**：使用公式`2 * index + 1`和`2 * index + 2`分别计算左子节点和右子节点的索引。
+   - **递归调用**：按照后序遍历的顺序（左子树，右子树，根节点）进行递归调用。
+   - **非叶子节点的检测**：在每次递归调用后，检查当前节点是否是非叶子节点（即至少有一个子节点），如果是，则将其索引添加到结果列表中。
+
+3. **主函数和用户交互**：
+   - **读取输入**：在`main`函数中，我们提示用户输入一系列整数，并将这些整数存储在列表中。
+   - **调用后序遍历函数**：使用列表和根节点的索引（0）作为参数调用`post_order_non_leaf`函数，以获取非叶子节点的索引列表。
+   - **输出结果**：我们遍历非叶子节点的索引列表，获取对应的值，并将它们打印出来。
+
+4. **返回结果**：
+   - 函数`post_order_non_leaf`返回一个包含所有非叶子节点索引的列表。
+   - 而`main`函数则负责打印这些非叶子节点的值。
 ## 解题代码
+```python
+def post_order_non_leaf(ints, index):
+    """后序遍历完全二叉树并返回非叶子节点的索引。"""
+
+    # 如果索引超出列表范围，返回空列表
+    if index >= len(ints):
+        return []
+
+    # 计算左右子节点的索引
+    left_child = 2 * index + 1
+    right_child = 2 * index + 2
+
+    # 后序遍历：先左子树，再右子树，最后根节点
+    left_result = post_order_non_leaf(ints, left_child)
+    right_result = post_order_non_leaf(ints, right_child)
+
+    # 如果当前节点是非叶子节点，添加到结果中
+    if left_child < len(ints) or right_child < len(ints):
+        return left_result + right_result + [index]
+    return []
+
+
+def main():
+    """主函数：从用户那里读取输入，执行后序遍历，并打印非叶子节点的值。"""
+
+    # 读取并转换输入
+    ints = list(map(int, input("Enter the integers separated by spaces:").split()))
+
+    # 获取非叶子节点的索引
+    non_leaf_index = post_order_non_leaf(ints, 0)
+
+    # 打印非叶子节点的值
+    print("".join(str(ints[i]) for i in non_leaf_index))
+
+
+# 如果此脚本作为主程序运行，则执行main函数
+if __name__ == "__main__":
+    main()
+```
