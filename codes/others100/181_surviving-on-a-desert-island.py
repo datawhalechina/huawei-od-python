@@ -2,34 +2,32 @@
 # encoding: utf-8
 """
 @author: Kaiwen Zuo
-@file: 004_surviving-on-a-desert-island.py
+@file: 181_surviving-on-a-desert-island.py
 @time: 2023/9/4 11:11
 @project: huawei-od-python
-@desc: 
+@desc: 004 荒岛求生
 """
 
 
-def main():
-    # 输入字符串，获取数字列表
-    nums = [int(x) for x in input().split()]
-
+def solve_method(nums):
     # 将正数放入右侧列表，负数的绝对值放入左侧列表
     left = [abs(x) for x in nums if x <= 0]
     right = [x for x in nums if x > 0]
+    right = right[::-1]
+
     # 迭代处理左侧和右侧列表
     while right and left:
-        if left[-1] > right[-1]:
-            left[-1] -= right.pop()
-        elif left[-1] < right[-1]:
-            right[-1] -= left.pop()
+        if left[0] > right[0]:
+            left[0] -= right.pop(0)
+        elif left[0] < right[0]:
+            right[0] -= left.pop(0)
         else:
-            left.pop()
-            right.pop()
+            left.pop(0)
+            right.pop(0)
 
     # 输出最终列表的长度之和
-    print(len(right)+len(left))
+    return len(right) + len(left)
 
 
-# 调用主函数
 if __name__ == "__main__":
-    main()
+    assert solve_method([5, 10, 8, -8, -5]) == 2
